@@ -1,0 +1,129 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %}
+    {% if category_slug %}
+        {% for c in categories %}
+            {% if c.slug == category_slug %}
+                {{ c.name }}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        Products
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+
+    <body>
+    <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+          <br>
+          <div id="main">
+            <button class="openbtn fixed-top" onclick="openNav()">☰ Categories</button>
+          </div>
+
+          <div id="mySidebar" class="sidebar float-left">
+              <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+              <a href="{% url 'index' %}" {% if not category_slug %} style="background-color: lightblue"{% endif %} class="list-group-item">All</a>
+
+                  {% for c in categories %}
+                      <a {% if c.slug == category_slug %} style="background-color: lightblue" {% endif %} href="{{ c.get_absolute_url }}" class="list-group-item">{{ c.name }}</a>
+                  {% endfor %}
+          </div>
+
+
+        <div class="col-sm-3">
+
+            Filters
+
+        </div>
+        <!-- /.col-lg-3 -->
+        <br><br>
+        <strong>{{ keywords | capfirst }}</strong> (All {{ products | length }} results)<hr>
+        <div class="col-lg-6" style="border-radius: 1px; color: black;">
+          <div class="row">
+
+              {% for product in products reversed %}
+                      <div class="list-group blogpost">
+                        <a href="{{ product.get_absolute_url }}" class="list-group-item">
+                            <div class="img-wrap">
+
+                            {% for p_image in product.productimage_set.all %}
+                              <img src="
+                                        {% if p_image.image %}
+                                                {{ p_image.image.url }}
+                                            {% else %}
+                                                {% static 'assets/img/blank_product.jpg' %}
+                                        {% endif %}
+                              " alt="" title="{{ product.title }}" width="50px"/>
+                            {% endfor %}
+
+                          </div>
+                            <center>
+                                <p class="card-title">
+                                    <a href="{{ product.get_absolute_url }}" title="{{ product.title }}">{{ product.title | truncatewords:5 }}</a>
+                                </p>
+
+                                <h5 style="color: red">k{{ product.price }}</h5>
+                            </center>
+                        </a>
+                      </div>
+
+
+              {% endfor %}
+
+
+
+          </div>
+          <!-- /.row -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+        <div class="col-lg-3">
+{#            <div class="row">#}
+{#                <div class="col-lg-1">#}
+{##}
+{#                </div>#}
+{#                #}
+{#                <div class="col-lg-11">#}
+{##}
+{#                </div>#}
+{#            </div>#}
+            <strong style="font-size: 20px">Filters:</strong>
+            <hr>
+            <strong>Brands:</strong>
+            {% for p in products %}
+                {% if p.brand %}
+                    <a href="{% url 'search_filters_brand' p.brand keywords %}" class="btn btn-default">{{ p.brand }}</a>
+                    {% else %}
+                        No Brands::
+                {% endif %}
+            {% endfor %}
+
+            <br>
+            <strong>Price:</strong>
+            {% for p in products %}
+                <a href="#" class="btn btn-default">{{ p.price }}</a>
+            {% endfor %}
+
+
+
+
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+
+
+
+
+  </body>
+
+{% endblock %}

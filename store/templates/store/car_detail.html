@@ -1,0 +1,104 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ product.title }}
+{% endblock %}
+
+
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                {% for img in product.productimage_set.all %}
+                    {% if img.image %}
+                        {% if img.featured %}
+                            <div class="col-xs-12 card">
+                                <br>
+                                <h3>
+                                    Category:
+                                    <a href="{{ product.category.get_absolute_url }}">{{ product.category.category_name }}</a>
+                                    <hr>
+                                </h3>
+                                <img src="{{ img.image.url }}" style="object-fit: contain;" class="img-responsive">
+                                <hr>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+
+                {% for img in product.productimage_set.all %}
+                    {% if not img.featured %}
+                        <div class="col-xs-6">
+                            <a href="" class="thumbnail">
+                                <img src="{{ img.image.url }}" style="object-fit: contain;" class="img-responsive">
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <hr>
+            </div>
+
+            <div class="col-md-8">
+                <div class="col-xs-8 pull-left">
+                    <h3 class="card-title">{{ product.title }}</h3>
+                    <a href="#">Stock: {{ product.stock }}</a> | <a href="#">Sold: 0</a> | <a href="#">Reviews: 0</a> |
+                    <a href="#" class="btn btn-default">Leave Review</a>
+                    <p>Brand: <i style="color: #0b0301; font-size: 20px;"><b>{{ product.brand }}</b></i></p>
+                    <p>Price: <i style="color: #ff8517; font-size: 20px;">K{{ product.price }}</i></p>
+                    <hr>
+                </div>
+
+{#                <div class="col-sm-4 pull-right">#}
+{#                    <br>#}
+{#                    <form action="#" method="POST" class="form-inline pull-right ">#}
+{#                        {% csrf_token %}#}
+{#                        Qty:#}
+{#                        <input name="quantity" id="quantity" class="form-control" type="number" value="1">#}
+{#                        {% if product.productvariation_set.all %}#}
+{#                            {% if product.productvariation_set.sizes %}#}
+{#                                <select name="size" class="form-control">#}
+{#                                    {% for variation in product.productvariation_set.sizes %}#}
+{#                                        <option value="{{ variation.id }}">{{ variation.title | capfirst }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+{#                            {% endif %}#}
+{##}
+{##}
+{#                            {% if product.productvariation_set.colors %}#}
+{#                                <select name="color" class="form-control">#}
+{#                                    {% for variation in product.productvariation_set.colors %}#}
+{#                                        <option value="{{ variation.id }}">{{ variation.title | capfirst }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+{#                            {% endif %}#}
+{##}
+{#                        {% endif %}#}
+{##}
+{#                    </form>#}
+{#                </div>#}
+
+                <div class="col-sm-12">
+{#                    <p>Shipping: Free shipping</p>#}
+                    <br>
+                    <h3>Description</h3>
+                    {{ product.description | safe }}
+                </div>
+
+                <!--Reviews-->
+                <hr>
+                Reviews
+                <br>
+                This is a review
+            <br><hr>
+            This is a review<br><hr>
+            This is a review<br><hr>
+            This is a review<br><hr>
+            This is a review
+            </div>
+        </div>
+    </div>
+{% endblock %}

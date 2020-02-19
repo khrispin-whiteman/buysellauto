@@ -1,0 +1,183 @@
+#iqenq9{
+  font-size:51.616px;
+  font-family:Helvetica, serif;
+  text-align:center;
+}
+
+.center-box{
+  margin-top:0px;
+  margin-right:auto;
+  margin-bottom:0px;
+  margin-left:auto;
+  max-width:500px;
+}
+.center-box:empty{
+  height:75px;
+}
+.badge-icon{
+  font-size:30px;
+}
+.icon-block{
+  padding-top:0px;
+  padding-right:15px;
+  padding-bottom:0px;
+  padding-left:15px;
+}
+.section-title{
+  margin-top:40px;
+  margin-right:0px;
+  margin-bottom:40px;
+  margin-left:0px;
+}
+.blogpost{
+  border-top-color:rgb(238, 238, 238);
+  border-top-style:solid;
+  border-top-width:1px;
+  border-right-color:rgb(238, 238, 238);
+  border-right-style:solid;
+  border-right-width:1px;
+  border-bottom-color:rgb(238, 238, 238);
+  border-bottom-style:solid;
+  border-bottom-width:1px;
+  border-left-color:rgb(238, 238, 238);
+  border-left-style:solid;
+  border-left-width:1px;
+  border-image-outset:0;
+  border-image-repeat:stretch;
+  border-image-slice:100%;
+  border-image-source:none;
+  border-image-width:1;
+  padding-top:20px;
+  padding-right:20px;
+  padding-bottom:20px;
+  padding-left:20px;
+  position:relative;
+  margin-bottom:30px;
+}
+.blogpost .date{
+  z-index:2;
+  position:absolute;
+  background-color:rgb(255, 255, 255);
+  background-position-x:0%;
+  background-position-y:0%;
+  background-repeat:repeat;
+  background-attachment:scroll;
+  background-image:none;
+  background-size:auto auto;
+  background-origin:padding-box;
+  background-clip:border-box;
+  padding-top:8px;
+  padding-right:8px;
+  padding-bottom:8px;
+  padding-left:8px;
+  box-shadow:rgba(116, 116, 116, 0.3) 0px 1px 3px;
+  top:40px;
+  right:-4px;
+}
+.blogpost .img-wrap{
+  width:100%;
+  overflow-x:hidden;
+  overflow-y:hidden;
+  height:240px;
+}
+.blogpost .img-wrap img{
+  width:100%;
+  object-fit:cover;
+  height:100%;
+  transition-property:all;
+  transition-duration:0.4s;
+  transition-timing-function:ease;
+  transition-delay:0s;
+}
+.blogpost .img-wrap:hover img{
+  transform:scale(1.1);
+}
+.blogpost .title{
+  color:rgb(34, 34, 34);
+  font-size:28px;
+}
+.blogmeta{
+  width:100%;
+  clear:both;
+  margin-bottom:10px;
+}
+.blogmeta ul li{
+  position:relative;
+  width:50%;
+}
+.blogmeta ul li span{
+  position:absolute;
+  top:4px;
+  left:28px;
+  margin-bottom:10px;
+}
+.section-title.center{
+  font-family:Helvetica, serif;
+}
+footer.gram-footer ul.collection > li.collection-header, footer.gram-footer ul.collection > li.collection-item{
+  background-color:rgba(0, 0, 0, 0);
+  background-position-x:0px;
+  background-position-y:0px;
+  background-repeat:repeat;
+  background-attachment:scroll;
+  background-image:none;
+  background-size:auto auto;
+  background-origin:padding-box;
+  background-clip:border-box;
+  border-top-color:currentcolor;
+  border-top-style:none;
+  border-top-width:0px;
+  border-right-color:currentcolor;
+  border-right-style:none;
+  border-right-width:0px;
+  border-bottom-color:currentcolor;
+  border-bottom-style:none;
+  border-bottom-width:0px;
+  border-left-color:currentcolor;
+  border-left-style:none;
+  border-left-width:0px;
+  border-image-outset:0;
+  border-image-repeat:stretch;
+  border-image-slice:100%;
+  border-image-source:none;
+  border-image-width:1;
+}
+footer.gram-footer ul.collection{
+  border-top-color:currentcolor;
+  border-top-style:none;
+  border-top-width:0px;
+  border-right-color:currentcolor;
+  border-right-style:none;
+  border-right-width:0px;
+  border-bottom-color:currentcolor;
+  border-bottom-style:none;
+  border-bottom-width:0px;
+  border-left-color:currentcolor;
+  border-left-style:none;
+  border-left-width:0px;
+  border-image-outset:0;
+  border-image-repeat:stretch;
+  border-image-slice:100%;
+  border-image-source:none;
+  border-image-width:1;
+}
+footer.page-footer{
+  margin-top:0px;
+  margin-right:0px;
+  margin-bottom:0px;
+  margin-left:0px;
+}
+#contact input#your-email, #contact textarea#your-message{
+  color:rgb(255, 255, 255);
+}
+.title{
+  text-align:center;
+}
+@media (min-width: 768px){
+  .blogmeta ul li{
+	float:left;
+  }
+  .blogmeta ul li{
+	float:left;
+  }
+}

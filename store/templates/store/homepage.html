@@ -1,0 +1,91 @@
+{% extends 'store/base.html' %}
+{% load staticfiles %}
+{% block title %}
+    {% if category_slug %}
+        {% for c in categories %}
+            {% if c.slug == category_slug %}
+                {{ c.name }}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        Products
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+
+    <body>
+    <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+      <br>
+          <div id="main">
+            <button class="openbtn" onclick="openNav()">☰ Categories</button>
+          </div>
+
+          <div id="mySidebar" class="sidebar float-left" style="background-color: black">
+              <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+              <a href="{% url 'index' %}" {% if not category_slug %} style="background-color: lightblue"{% endif %} class="list-group-item">All</a>
+
+                  {% for c in categories %}
+                      <a {% if c.slug == category_slug %} style="background-color: lightblue" {% endif %} href="{{ c.get_absolute_url }}" class="list-group-item">{{ c.name }}</a>
+                  {% endfor %}
+          </div>
+
+        <!-- /.col-lg-3 -->
+
+        <h1>Featured Products</h1><hr>
+        <div class="col-lg-12">
+          <div class="row">
+
+              {% for product in products reversed %}
+                  <div class="col-sm-5 col-md-3">
+                      <div class="card h-100 blogpost">
+                        <a href="{{ product.get_absolute_url }}">
+                            <div class="img-wrap">
+
+                            {% for p_image in product.productimage_set.all %}
+                              <img src="
+                                        {% if p_image.image %}
+                                                {{ p_image.image.url }}
+                                            {% else %}
+                                                {% static 'assets/img/blank_product.jpg' %}
+                                        {% endif %}
+                              " alt="" style="object-fit: contain;" title="{{ product.title }}"/>
+                            {% endfor %}
+
+                          </div>
+                            <center>
+                                <p class="card-title">
+                                    <a href="{{ product.get_absolute_url }}" title="{{ product.title }}">{{ product.title | truncatewords:5 }}</a>
+                                </p>
+
+                                <h5 style="color: red">k{{ product.price }}</h5>
+
+                            </center>
+                        </a>
+                      </div>
+                    </div>
+
+
+              {% endfor %}
+
+
+
+          </div>
+          <!-- /.row -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+
+  </body>
+
+{% endblock %}
