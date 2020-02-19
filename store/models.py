@@ -45,7 +45,7 @@ class Product(models.Model):
     # description = models.TextField(null=True, blank=True)
     stock = models.IntegerField(null=True, blank=True, default=0)
     sold = models.IntegerField(null=True, blank=True, default=0)
-    description = models.TextField(verbose_name='Description', default='', max_length=10000, )
+    description = HTMLField()
     price = models.DecimalField(decimal_places=2, max_digits=100, default=0.00)
     sale_price = models.DecimalField(decimal_places=2, null=True, blank=True, max_digits=100, default=0.00)
     slug = models.SlugField(unique=True)
@@ -118,6 +118,7 @@ class ProductVariation(models.Model):
 
 class EventType(models.Model):
     event_type_name = models.CharField('Event Type Name', max_length=200)
+    slug = models.SlugField(max_length=150, unique=True, db_index=True)
 
     def __str__(self):
         return self.event_type_name
@@ -126,6 +127,7 @@ class EventType(models.Model):
 class Event(models.Model):
     event_type = models.ForeignKey(EventType, on_delete=models.CASCADE)
     event_name = models.CharField('Event Name', max_length=200)
+    slug = models.SlugField(max_length=150, unique=True, db_index=True)
     event_description = HTMLField()
     event_date = models.DateTimeField('Date Of Event')
 

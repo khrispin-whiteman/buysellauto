@@ -41,6 +41,9 @@ def index(request, category_slug=None):
     return render(request, 'store/index.html', context)
 
 
+
+
+
 def product_detail(request, i_d, slug):
     global cart_items_num
     product = get_object_or_404(Product, id=i_d, slug=slug, active=True)
@@ -131,3 +134,96 @@ def search_filters_brand(request, brand, keywords):
         'keywords': keywords,
     }
     return render(request, 'store/search_view.html', context)
+
+
+def sale_vehicles(request, category_slug=None):
+    category = None
+    categories = Category.objects.all()
+    products = Product.objects.filter(active=True, listing_type='For Sale')
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+
+    keywords = request.GET.get('q')
+    getcat = request.POST.get('p')
+
+    if category_slug:
+        # category = get_object_or_404(Category, slug=category_slug)
+        products = Product.objects.filter(category__slug=category_slug)
+        category = category_slug
+
+    if keywords:
+        products = products.filter(
+            Q(title__icontains=keywords) | Q(user__username__icontains=keywords))
+
+
+    context = {
+        'category_slug': category,
+        'categories': categories,
+        'products': products,
+        'keywords': keywords,
+        'location': location,
+        'event_types': event_types,
+    }
+    return render(request, 'store/index.html', context)
+
+
+def hire_vehicles(request, category_slug=None):
+    category = None
+    categories = Category.objects.all()
+    products = Product.objects.filter(active=True, listing_type='For Hire')
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+
+    keywords = request.GET.get('q')
+    getcat = request.POST.get('p')
+
+    if category_slug:
+        # category = get_object_or_404(Category, slug=category_slug)
+        products = Product.objects.filter(category__slug=category_slug)
+        category = category_slug
+
+    if keywords:
+        products = products.filter(
+            Q(title__icontains=keywords) | Q(user__username__icontains=keywords))
+
+
+    context = {
+        'category_slug': category,
+        'categories': categories,
+        'products': products,
+        'keywords': keywords,
+        'location': location,
+        'event_types': event_types,
+    }
+    return render(request, 'store/index.html', context)
+
+
+def classified_vehicles(request, category_slug=None):
+    category = None
+    categories = Category.objects.all()
+    products = Product.objects.filter(active=True, listing_type='Classified')
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+
+    keywords = request.GET.get('q')
+    getcat = request.POST.get('p')
+
+    if category_slug:
+        # category = get_object_or_404(Category, slug=category_slug)
+        products = Product.objects.filter(category__slug=category_slug)
+        category = category_slug
+
+    if keywords:
+        products = products.filter(
+            Q(title__icontains=keywords) | Q(user__username__icontains=keywords))
+
+
+    context = {
+        'category_slug': category,
+        'categories': categories,
+        'products': products,
+        'keywords': keywords,
+        'location': location,
+        'event_types': event_types,
+    }
+    return render(request, 'store/index.html', context)

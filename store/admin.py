@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 from import_export.admin import ImportExportModelAdmin
 
-from store.models import Product, Category, ProductImage, ProductVariation, Location, Event, EventType
+from store.models import Product, Category, ProductImage, ProductVariation, Location, EventType, Event
 
 
 # Register your models here.
@@ -47,17 +47,19 @@ class LocationAdmin(ImportExportModelAdmin):
 
 
 class EventTypeAdmin(ImportExportModelAdmin):
-    list_display = ('event_type_name', )
-    list_display_links = ('event_type_name',)
-    search_fields = ('event_type_name',)
+    list_display = ('event_type_name', 'slug')
+    list_display_links = ('event_type_name', 'slug')
+    search_fields = ('event_type_name', 'slug')
+    prepopulated_fields = {'slug': ('event_type_name',)}
     list_per_page = 10
 
 
 class EventAdmin(ImportExportModelAdmin):
-    list_display = ('event_type', 'event_name', 'event_date',)
+    list_display = ('event_type', 'event_name', 'slug', 'event_date',)
     list_filter = ('event_type', 'event_date',)
-    search_fields = ('event_type', 'event_name',)
+    search_fields = ('event_type', 'event_name', 'slug')
     list_per_page = 10
+    prepopulated_fields = {'slug': ('event_name',)}
     date_hierarchy = 'event_date'
 
 
