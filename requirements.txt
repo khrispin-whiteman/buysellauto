@@ -1,2 +1,4 @@
-Django==1.11.20
+Django==2.2
 django_import_export==2.0
+django-tinymce==2.8.0
+
