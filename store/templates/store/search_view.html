@@ -19,19 +19,7 @@
     <!-- Page Content -->
     <div class="container">
       <div class="row">
-          <br>
-          <div id="main">
-            <button class="openbtn fixed-top" onclick="openNav()">☰ Categories</button>
-          </div>
 
-          <div id="mySidebar" class="sidebar float-left">
-              <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-              <a href="{% url 'index' %}" {% if not category_slug %} style="background-color: lightblue"{% endif %} class="list-group-item">All</a>
-
-                  {% for c in categories %}
-                      <a {% if c.slug == category_slug %} style="background-color: lightblue" {% endif %} href="{{ c.get_absolute_url }}" class="list-group-item">{{ c.name }}</a>
-                  {% endfor %}
-          </div>
 
 
         <div class="col-sm-3">

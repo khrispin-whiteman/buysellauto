@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #'froala_editor',
     'import_export',
     'tinymce',
+    'businessdirectory',
 ]
 
 MIDDLEWARE = [
@@ -126,7 +127,12 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'school/templates'),)
+TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'store/templates'),)
 
 
 TINYMCE_FILEBROWSER = True
+
+# User Settings
+AUTH_USER_MODEL = 'store.User'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

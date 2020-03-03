@@ -119,7 +119,7 @@
         </div>
     </div>
 
-        <!-- modals -->
+    <!-- modals -->
     <!-- log in -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -158,6 +158,46 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="agaentLogin" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">Log In</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <label class="col-form-label">Username</label>
+                            <input type="text" class="form-control" placeholder=" " name="Name" required="">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Password</label>
+                            <input type="password" class="form-control" placeholder=" " name="Password" required="">
+                        </div>
+                        <div class="right-w3l">
+                            <input type="submit" class="form-control" value="Log in">
+                        </div>
+                        <div class="sub-w3l">
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                                <label class="custom-control-label" for="customControlAutosizing">Remember me?</label>
+                            </div>
+                        </div>
+                        <p class="text-center dont-do mt-3">Don't have an account?
+                            <a href="#" data-toggle="modal" data-target="#exampleModal2">
+                                Register Now</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- register -->
     <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -215,28 +255,45 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="agileits-navi_search">
-                    <form action="#" method="post">
-                        <select id="agileinfo-nav_search" name="agileinfo_search" class="border" required="">
-                            {#                            <option value="">All Categories</option>#}
-                            <option value="">
-                                <a href="{% url 'index' %}"
-                                        {% if not category_slug %} style="background-color: lightblue"
-                                        {% endif %} class="list-group-item">
-                                    All Categories
-                                </a>
-                            </option>
-                            {% for c in categories %}
-                                <option value="">
-                                    <a {% if c.slug == category_slug %}
-                                        style="background-color: lightblue"
-                                    {% endif %}
-                                        href="{{ c.get_absolute_url }}"
-                                        class="list-group-item">{{ c.category_name }}
+                    <ul class="navbar-nav ml-auto text-center mr-xl-5">
+                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Categories
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'index' %}">All Categories</a>
+
+                                {% for c in categories %}
+                                    <a class="dropdown-item" href="{{ c.get_absolute_url }}" class="">
+                                        {{ c.category_name }}
                                     </a>
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </form>
+
+                                {% endfor %}
+                            </div>
+                        </li>
+                    </ul>
+
+
+                    {#                    <select id="agileinfo-nav_search" name="agileinfo_search" class="border" required="">#}
+                    {#                            <option value="">All Categories</option>#}
+                    {##}
+                    {#                            <a href="{% url 'index' %}"#}
+                    {#                                    {% if not category_slug %} style="background-color: lightblue"#}
+                    {#                                    {% endif %} class="list-group-item">#}
+                    {#                                All Categories#}
+                    {#                            </a>#}
+                    {##}
+                    {##}
+                    {#                        {% for c in categories %}#}
+                    {##}
+                    {#                            <a href="{{ c.get_absolute_url }}" class="list-group-item">#}
+                    {#                                {{ c.category_name }}#}
+                    {#                            </a>#}
+                    {##}
+                    {#                        {% endfor %}#}
+                    {#                    </select>#}
+
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -319,81 +376,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false">
-                                Appliances
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="agile_inner_drop_nav_info p-4">
-                                    <h5 class="mb-3">TV, Appliances, Electronics</h5>
-                                    <div class="row">
-                                        <div class="col-sm-6 multi-gd-img">
-                                            <ul class="multi-column-dropdown">
-                                                <li>
-                                                    <a href="#">Televisions</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Home Entertainment Systems</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Headphones</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Speakers</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">MP3, Media Players & Accessories</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Audio & Video Accessories</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Cameras</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">DSLR Cameras</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Camera Accessories</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-6 multi-gd-img">
-                                            <ul class="multi-column-dropdown">
-                                                <li>
-                                                    <a href="#">Musical Instruments</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Gaming Consoles</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">All Electronics</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Air Conditioners</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Refrigerators</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Washing Machines</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Kitchen & Home Appliances</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Heating & Cooling Appliances</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">All Appliances</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+
 
                         <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
@@ -416,7 +399,7 @@
                                                     <a href="#">Auto Shops (0)</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#">Car Hire (0)</a>
+                                                    <a href="{% url 'for_hire' %}">Car Hire ({{ hire_cars | length }})</a>
                                                 </li>
                                                 <li>
                                                     <a href="#">Car Wash (0)</a>
@@ -436,51 +419,51 @@
                                                 <li>
                                                     <a href="#">Motorized Servises (0)</a>
                                                 </li>
-                                                 <li>
+                                                <li>
                                                     <a href="#">Other Products (0)</a>
                                                 </li>
-                                                 <li>
+                                                <li>
                                                     <a href="#">Training (0)</a>
                                                 </li>
-                                                 <li>
+                                                <li>
                                                     <a href="#">Transportation Servises (0)</a>
                                                 </li>
-                                                 <li>
+                                                <li>
                                                     <a href="#">Vehicles (0)</a>
                                                 </li>
                                             </ul>
                                         </div>
-{#                                        <div class="col-sm-6 multi-gd-img">#}
-{#                                            <ul class="multi-column-dropdown">#}
-{#                                                <li>#}
-{#                                                    <a href="#">Musical Instruments</a>#}
-{#                                                </li>#}
-{#                                                <li>#}
-{#                                                    <a href="#">Gaming Consoles</a>#}
-{#                                                </li>#}
-{#                                                <li>#}
-{#                                                    <a href="#">All Electronics</a>#}
-{#                                                </li>#}
-{#                                                <li>#}
-{#                                                    <a href="#">Air Conditioners</a>#}
-{#                                                </li>#}
-{#                                                <li>#}
-{#                                                    <a href="#">Refrigerators</a>#}
-{#                                                </li>#}
-{#                                                <li>#}
-{#                                                    <a href="#">Washing Machines</a>#}
-{#                                                </li>#}
-{#                                                <li>#}
-{#                                                    <a href="#">Kitchen & Home Appliances</a>#}
-{#                                                </li>#}
-{#                                                <li>#}
-{#                                                    <a href="#">Heating & Cooling Appliances</a>#}
-{#                                                </li>#}
-{#                                                <li>#}
-{#                                                    <a href="#">All Appliances</a>#}
-{#                                                </li>#}
-{#                                            </ul>#}
-{#                                        </div>#}
+                                        {#                                        <div class="col-sm-6 multi-gd-img">#}
+                                        {#                                            <ul class="multi-column-dropdown">#}
+                                        {#                                                <li>#}
+                                        {#                                                    <a href="#">Musical Instruments</a>#}
+                                        {#                                                </li>#}
+                                        {#                                                <li>#}
+                                        {#                                                    <a href="#">Gaming Consoles</a>#}
+                                        {#                                                </li>#}
+                                        {#                                                <li>#}
+                                        {#                                                    <a href="#">All Electronics</a>#}
+                                        {#                                                </li>#}
+                                        {#                                                <li>#}
+                                        {#                                                    <a href="#">Air Conditioners</a>#}
+                                        {#                                                </li>#}
+                                        {#                                                <li>#}
+                                        {#                                                    <a href="#">Refrigerators</a>#}
+                                        {#                                                </li>#}
+                                        {#                                                <li>#}
+                                        {#                                                    <a href="#">Washing Machines</a>#}
+                                        {#                                                </li>#}
+                                        {#                                                <li>#}
+                                        {#                                                    <a href="#">Kitchen & Home Appliances</a>#}
+                                        {#                                                </li>#}
+                                        {#                                                <li>#}
+                                        {#                                                    <a href="#">Heating & Cooling Appliances</a>#}
+                                        {#                                                </li>#}
+                                        {#                                                <li>#}
+                                        {#                                                    <a href="#">All Appliances</a>#}
+                                        {#                                                </li>#}
+                                        {#                                            </ul>#}
+                                        {#                                        </div>#}
                                     </div>
                                 </div>
                             </div>
@@ -504,11 +487,56 @@
                                 Agent
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="product.html">Agent Login</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#agaentLogin" href="">Agent
+                                    Login</a>
                                 <a class="dropdown-item" href="#">Agent Registration</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="single.html">View Agents</a>
                             </div>
+                        </li>
+                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Other Activities
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="agile_inner_drop_nav_info p-4">
+                                    <h5 class="mb-3"><a href="{% url 'all_events' %}">Events Directory</a></h5>
+                                    <h5 class="mb-3"><a href="">News Directory</a></h5>
+
+                                    {% for et in event_types|slice:":6" reversed %}
+                                        <div class="range border-bottom py-2">
+                                            <h3 class="agileits-sear-head mb-3">{{ et.event_type_name }}</h3>
+                                            <div class="w3l-range">
+                                                <ul>
+                                                    {% for event in et.event_set.all %}
+                                                        <li>
+                                                            <a href="{% url 'event_detail' event.slug %}">
+                                                                <span class="fa fa-angle-right"></span> {{ event }}
+                                                            </a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+                                    <div class="row">
+                                        <div class="col-sm-6 multi-gd-img">
+                                            <ul class="multi-column-dropdown">
+                                                <li>
+                                                    <a href="#">Televisions</a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#">Camera Accessories</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </li>
                         <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
@@ -536,61 +564,10 @@
         </div>
     </div>
     <!-- //navigation -->
+    <br><br>
 {% endblock %}
 {% block bottomheader %}
-    <div class="header-bot">
-        <div class="container">
-            <div class="row header-bot_inner_wthreeinfo_header_mid">
-                <!-- logo -->
-                <div class="col-md-3 logo_agile">
-                    <h1 class="pull-left">
-                        <a href="{% url 'index' %}" class="font-weight-bold font-italic">
-                            <img height="100px" width="150px" src="{% static 'store/images/logoWeb2.jpg' %}" alt=" "
-                                 class="img-wrap">
-                        </a>
-                    </h1>
-                </div>
 
-                <!-- //logo -->
-                <!-- header-bot -->
-                <div class="col-md-9 header mt-4 mb-md-0 mb-4">
-                    <div class="row">
-                        <!-- search -->
-                        <div class="col-10 agileits_search">
-                            <form class="form-inline" action="{% url 'product_search' %}" method="GET">
-                                {% if keywords %}
-                                    <input class="form-control mr-sm-2" name="q" value="{{ keywords }}" type="search"
-                                           placeholder="Search by keywords, car type, brand, agent, etc"
-                                           aria-label="Search" required>
-
-                                {% else %}
-                                    <input class="form-control mr-sm-2" name="q" type="search"
-                                           placeholder="Search by keywords, car type, brand, agent, etc"
-                                           aria-label="Search" required>
-                                {% endif %}
-                                <button class="btn my-2 my-sm-0" type="submit">Search</button>
-                            </form>
-                        </div>
-
-                        <!-- //search -->
-                        <!-- cart details -->
-                        {#                        						<div class="col-2 top_nav_right text-center mt-sm-0 mt-2">#}
-                        {#                        							<div class="wthreecartaits wthreecartaits2 cart cart box_1">#}
-                        {#                        								<form action="#" method="post" class="last">#}
-                        {#                        									<input type="hidden" name="cmd" value="_cart">#}
-                        {#                        									<input type="hidden" name="display" value="1">#}
-                        {#                        									<button class="btn w3view-cart" type="submit" name="submit" value="">#}
-                        {#                        										<i class="fas fa-cart-arrow-down"></i>#}
-                        {#                        									</button>#}
-                        {#                        								</form>#}
-                        {#                        							</div>#}
-                        {#                        						</div>#}
-                        <!-- //cart details -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 {% endblock %}
 
 {% block content %}
@@ -611,41 +588,41 @@
                 {#                    and iPads, video games, desktop computers, cameras and camcorders, audio, video and more.</p>#}
                 {#                <!-- //footer first section -->#}
                 <!-- footer second section -->
-                <div class="row w3l-grids-footer border-top border-bottom py-sm-4 py-3">
-                    <div class="col-md-4 offer-footer">
-                        <div class="row">
-                            <div class="col-4 icon-fot">
-                                <i class="fas fa-dolly"></i>
-                            </div>
-                            <div class="col-8 text-form-footer">
-                                <h3>Free Shipping</h3>
-                                <p>on orders over $100</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 offer-footer my-md-0 my-4">
-                        <div class="row">
-                            <div class="col-4 icon-fot">
-                                <i class="fas fa-shipping-fast"></i>
-                            </div>
-                            <div class="col-8 text-form-footer">
-                                <h3>Fast Delivery</h3>
-                                <p>World Wide</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 offer-footer">
-                        <div class="row">
-                            <div class="col-4 icon-fot">
-                                <i class="far fa-thumbs-up"></i>
-                            </div>
-                            <div class="col-8 text-form-footer">
-                                <h3>Big Choice</h3>
-                                <p>of Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {#                <div class="row w3l-grids-footer border-top border-bottom py-sm-4 py-3">#}
+                {#                    <div class="col-md-4 offer-footer">#}
+                {#                        <div class="row">#}
+                {#                            <div class="col-4 icon-fot">#}
+                {#                                <i class="fas fa-dolly"></i>#}
+                {#                            </div>#}
+                {#                            <div class="col-8 text-form-footer">#}
+                {#                                <h3>Free Shipping</h3>#}
+                {#                                <p>on orders over $100</p>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                    <div class="col-md-4 offer-footer my-md-0 my-4">#}
+                {#                        <div class="row">#}
+                {#                            <div class="col-4 icon-fot">#}
+                {#                                <i class="fas fa-shipping-fast"></i>#}
+                {#                            </div>#}
+                {#                            <div class="col-8 text-form-footer">#}
+                {#                                <h3>Fast Delivery</h3>#}
+                {#                                <p>World Wide</p>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                    <div class="col-md-4 offer-footer">#}
+                {#                        <div class="row">#}
+                {#                            <div class="col-4 icon-fot">#}
+                {#                                <i class="far fa-thumbs-up"></i>#}
+                {#                            </div>#}
+                {#                            <div class="col-8 text-form-footer">#}
+                {#                                <h3>Big Choice</h3>#}
+                {#                                <p>of Products</p>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                </div>#}
                 <!-- //footer second section -->
             </div>
         </div>
@@ -812,7 +789,7 @@
     <!-- copyright -->
     <div class="copy-right py-3">
         <div class="container">
-            <p class="text-center text-white">© 2020 Buy Sell Auto. All rights reserved | Design by
+            <p class="text-center text-white">© {% now 'Y' %} Buy Sell Auto. All rights reserved | Design by
                 <a href="http://w3layouts.com"> W3layouts.</a>
             </p>
         </div>

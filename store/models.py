@@ -1,16 +1,52 @@
-from django.contrib.auth.models import User
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
+# from froala_editor.fields import FroalaField
+from tinymce.models import HTMLField
 
 # Create your models here.
-from django.urls import reverse
-#from froala_editor.fields import FroalaField
-from tinymce.models import HTMLField
+from store.validators import ASCIIUsernameValidator
 
 CAR_LISTING_TYPE = (
     ('For Sale', 'For Sale'),
     ('For Hire', 'For Hire'),
     ('Classified', 'Classified'),
 )
+
+
+class User(AbstractUser):
+    is_agent = models.BooleanField(default=False)
+    is_employee = models.BooleanField(default=False)
+    phone = models.CharField(max_length=60, blank=True, null=True)
+    address = models.CharField(max_length=60, blank=True, null=True)
+    picture = models.ImageField(upload_to="users/pictures/%Y/%m/%d'", blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    # password settings
+    # password_type = models.CharField('Password Type', default='Expirable', max_length=200, choices=PASSWORD_TYPES)
+    # days_for_password_expiry = models.ForeignKey(PasswordConfigurations, on_delete=models.CASCADE, null=True, blank=True)
+    # last_password_reset_date = models.DateField('Reset On', auto_now=True)
+    # password_expiry_date = models.DateField(editable=False, null=True, blank=True)
+    # is_password_expired = models.BooleanField(default=False,)
+
+    username_validator = ASCIIUsernameValidator()
+
+    def get_picture(self):
+        no_picture = settings.STATIC_URL + 'img/img_avatar.png'
+        try:
+            return self.picture.url
+        except:
+            return no_picture
+
+    def get_full_name(self):
+        full_name = self.username
+        if self.first_name and self.last_name:
+            full_name = self.first_name + " " + self.last_name
+        return full_name
+
+    def __str__(self):
+        return self.get_full_name()
+
 
 class Category(models.Model):
     category_name = models.CharField('Category Name', max_length=200)
@@ -133,3 +169,5 @@ class Event(models.Model):
 
     def __str__(self):
         return self.event_name
+
+

@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
-from store.models import Category, Product, Location, EventType
+from store.models import Category, Product, Location, EventType, Event
 
 
 def index(request, category_slug=None):
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(active=True)
+    hire_products = Product.objects.filter(active=True, listing_type='For Hire')
     location = Location.objects.all()
     event_types = EventType.objects.all()
 
@@ -37,11 +38,9 @@ def index(request, category_slug=None):
         'keywords': keywords,
         'location': location,
         'event_types': event_types,
+        'hire_cars': hire_products,
     }
     return render(request, 'store/index.html', context)
-
-
-
 
 
 def product_detail(request, i_d, slug):
@@ -227,3 +226,27 @@ def classified_vehicles(request, category_slug=None):
         'event_types': event_types,
     }
     return render(request, 'store/index.html', context)
+
+
+def all_events(request):
+    events = Event.objects.all()
+    return render(request, 'events/all_events.html',
+                  {
+                      'events': events,
+                  })
+
+
+def event_detail(request, slug):
+    event = Event.objects.get(slug=slug)
+    return render(request, 'events/event_details.html',
+                  {
+                      'event': event,
+                  })
+
+
+def all_news(request):
+    events = Event.objects.all()
+    return render(request, 'events/all_events.html',
+                  {
+                      'events': events,
+                  })

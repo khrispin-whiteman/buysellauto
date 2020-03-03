@@ -1,0 +1,34 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ event.event_name }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <nav class="navbar navbar-expand-sm bg-light navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" href="#">All Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" href="#">{{ event.event_type | capfirst }}</a>
+                </li>
+            </ul>
+        </nav>
+
+        <br>
+        <div class="container-fluid">
+            <div>
+                <h3 class="pull-left" style="color: #005cbf">{{ event.event_name }}</h3>
+                <p class="pull-right">To be held on: {{ event.event_date }}</p>
+            </div>
+            <hr>
+
+            {{ event.event_description | safe }}
+        </div>
+
+    </div>
+{% endblock %}

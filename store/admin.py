@@ -60,6 +60,7 @@ class EventAdmin(ImportExportModelAdmin):
     search_fields = ('event_type', 'event_name', 'slug')
     list_per_page = 10
     prepopulated_fields = {'slug': ('event_name',)}
+    autocomplete_fields = ('event_type', )
     date_hierarchy = 'event_date'
 
 

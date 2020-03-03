@@ -17,12 +17,16 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth import views
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/login/', views.LoginView.as_view(), name='login'),
+    path('accounts/logout/', views.LogoutView.as_view(), name='logout', kwargs={'next_page': '/'}),
     #path('froala_editor/', include('froala_editor.urls')),
 ]
 
