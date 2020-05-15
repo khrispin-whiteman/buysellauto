@@ -1,0 +1,140 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+    <style>
+        body {
+            color: #888888;
+            margin-top: 20px;
+        }
+
+        .progress {
+            position: relative;
+            overflow: inherit;
+            height: 6px;
+            margin: 30px 0px 15px;
+            width: 100%;
+            display: inline-block;
+            border-radius: 10px;
+        }
+
+        .progress .progress-bar {
+            height: 6px;
+            background: #009b72;
+            border-radius: 10px;
+        }
+
+        .progress .progress-bar-title {
+            position: absolute;
+            left: 0;
+            top: -30px;
+            color: #818181;
+            font-size: 16px;
+        }
+
+        .progress .progress-bar-number {
+            position: absolute;
+            right: 0;
+            color: #888888;
+            top: -30px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .media {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: start;
+            -ms-flex-align: start;
+            align-items: flex-start;
+        }
+
+        .media-body {
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+        }
+
+        .text-black {
+            color: #000000;
+        }
+
+        .font-weight-normal {
+            font-weight: 500 !important;
+        }
+
+        .w-25 {
+            width: 25% !important;
+        }
+
+        .text-muted {
+            color: #b2b2b2 !important;
+        }
+
+        .mr-1, .mx-1 {
+            margin-right: 0.625rem !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+          integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"/>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-md-6">
+                <div class="mb-2">
+                    <img class="w-100" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
+                </div>
+                <h4 class="font-weight-normal">{{ agent_details.user.get_full_name | capfirst }}</h4>
+                <div class="mb-2 d-flex">
+                    <br>
+                    <div class="social d-flex ml-auto">
+                        <p class="font-weight-normal">Follow on:</p>
+                        <a href="#" class="text-muted mr-1">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-muted mr-1">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-muted mr-1">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-muted">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <ul class="list-unstyled">
+                        <li class="media">
+                            <span class="w-25 text-black font-weight-normal">Type:</span>
+                            <label class="media-body">{{ agent_details.agent_type }}</label>
+                        </li>
+                        <li class="media">
+                            <span class="w-25 text-black font-weight-normal">Experience: </span>
+                            <label class="media-body">{{ agent_details.experience }}</label>
+                        </li>
+                        <li class="media">
+                            <span class="w-25 text-black font-weight-normal">Phone: </span>
+                            <label class="media-body">{{ agent_details.user.phone }}</label>
+                        </li>
+                        <li class="media">
+                            <span class="w-25 text-black font-weight-normal">Email: </span>
+                            <label class="media-body">
+                                <a href="mail_to://{{ agent_details.user.email }}"
+                                   style="color: #5a6268">{{ agent_details.user.email }}
+                                </a></label>
+                        </li>
+                        <li class="media">
+                            <span class="w-25 text-black font-weight-normal">Location: </span>
+                            <label class="media-body">{{ agent_details.user.address }}</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-6 pl-xl-3">
+                <h5 class="font-weight-normal">More Details</h5>
+                <p>{{ agent_details.description | safe }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}{% endblock %}</title>
     <!-- Custom-Files -->
     <link href="{% static 'store/css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all"/>
@@ -17,6 +18,123 @@
           rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese"
           rel="stylesheet">
+
+
+<style type="text/css">
+
+    .form-control {
+		font-size: 16px;
+		transition: all 0.4s;
+		box-shadow: none;
+	}
+	.form-control:focus {
+        border-color: #5cb85c;
+    }
+    .form-control, .btn {
+        border-radius: 50px;
+		outline: none !important;
+    }
+	.signin-form {
+		width: 400px;
+    	margin: 0 auto;
+		padding: 30px 0;
+	}
+    .signin-form form {
+		border-radius: 5px;
+    	margin-bottom: 20px;
+        background: #fff;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 40px;
+    }
+	.signin-form a {
+		color: #5cb85c;
+	}
+	.signin-form h2 {
+		text-align: center;
+		font-size: 34px;
+		margin: 10px 0 15px;
+	}
+	.signin-form .hint-text {
+		color: #999;
+		text-align: center;
+		margin-bottom: 20px;
+	}
+	.signin-form .form-group {
+		margin-bottom: 20px;
+	}
+    .signin-form .btn {
+        font-size: 18px;
+		line-height: 26px;
+        font-weight: bold;
+		text-align: center;
+    }
+    .signin-form .small {
+        font-size: 13px;
+    }
+	.signup-btn {
+		text-align: center;
+		border-color: #5cb85c;
+		transition: all 0.4s;
+	}
+	.signup-btn:hover {
+		background: #5cb85c;
+		opacity: 0.8;
+	}
+    .or-seperator {
+        margin: 50px 0 15px;
+        text-align: center;
+        border-top: 1px solid #e0e0e0;
+    }
+    .or-seperator b {
+        padding: 0 10px;
+		width: 40px;
+		height: 40px;
+		font-size: 16px;
+		text-align: center;
+		line-height: 40px;
+		background: #fff;
+		display: inline-block;
+        border: 1px solid #e0e0e0;
+		border-radius: 50%;
+        position: relative;
+        top: -22px;
+        z-index: 1;
+    }
+    .social-btn .btn {
+		color: #fff;
+        margin: 10px 0 0 30px;
+		font-size: 15px;
+        width: 55px;
+        height: 55px;
+        line-height: 38px;
+        border-radius: 50%;
+		font-weight: normal;
+        text-align: center;
+		border: none;
+		transition: all 0.4s;
+    }
+	.social-btn .btn:first-child {
+		margin-left: 0;
+	}
+	.social-btn .btn:hover {
+		opacity: 0.8;
+	}
+	.social-btn .btn-primary {
+		background: #507cc0;
+	}
+	.social-btn .btn-info {
+		background: #64ccf1;
+	}
+	.social-btn .btn-danger {
+		background: #df4930;
+	}
+	.social-btn .btn i {
+		font-size: 20px;
+	}
+</style>
+
+
+
 </head>
 <body>
 {% block topheader %}
@@ -76,7 +194,7 @@
                             </a>
                         </li>
                         <li class="text-center border-right text-white">
-                            <a href="#" data-toggle="modal" data-target="#exampleModal" class="text-white">
+                            <a href="{% url 'contactus' %}" class="text-white">
                                 <i class="fas fa-envelope mr-2"></i>
                                 Contact Us
                             </a>
@@ -90,7 +208,7 @@
                         <li class="text-center border-right text-white pull-right">
                             <a href="#" data-toggle="modal" data-target="#exampleModal" class="text-white">
                                 <i class="fas fa-sign-in-alt mr-2"></i>
-                                Admin Log In
+                                Log In
                             </a>
                         </li>
                         {#                        <li class="text-center text-white">#}
@@ -125,35 +243,74 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-center">Log In</h5>
+                    <h5 class="modal-title text-center">Sign in</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="post">
-                        <div class="form-group">
-                            <label class="col-form-label">Username</label>
-                            <input type="text" class="form-control" placeholder=" " name="Name" required="">
-                        </div>
-                        <div class="form-group">
-                            <label class="col-form-label">Password</label>
-                            <input type="password" class="form-control" placeholder=" " name="Password" required="">
-                        </div>
-                        <div class="right-w3l">
-                            <input type="submit" class="form-control" value="Log in">
-                        </div>
-                        <div class="sub-w3l">
-                            <div class="custom-control custom-checkbox mr-sm-2">
-                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-                                <label class="custom-control-label" for="customControlAutosizing">Remember me?</label>
-                            </div>
-                        </div>
-                        <p class="text-center dont-do mt-3">Don't have an account?
-                            <a href="#" data-toggle="modal" data-target="#exampleModal2">
-                                Register Now</a>
-                        </p>
-                    </form>
+                    <div class="signin-form">
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <p class="hint-text">Sign in with your social media account</p>
+		<div class="social-btn text-center">
+			<a href="#" class="btn btn-primary btn-lg" title="Facebook"><i class="fab fa-facebook"></i></a>
+			<a href="#" class="btn btn-info btn-lg" title="Twitter"><i class="fab fa-twitter"></i></a>
+			<a href="#" class="btn btn-danger btn-lg" title="Google"><i class="fab fa-google"></i></a>
+		</div>
+		<div class="or-seperator"><b>or</b></div>
+        <div class="form-group">
+        	<input type="text" class="form-control input-lg" id="username" name="username" placeholder="Username" required="required">
+        </div>
+		<div class="form-group">
+            <input type="password" class="form-control input-lg" name="password" placeholder="Password" required="required">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success btn-lg btn-block signup-btn">Sign in</button>
+        </div>
+        <div class="text-center small"><a href="#">Forgot Your password?</a></div>
+    </form>
+    <div class="text-center small">Don't have an account? <a href="{% url 'agentregister' %}">Sign up</a></div>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="agentRegistration" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">Sign in</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="signin-form">
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <p class="hint-text">Sign in with your social media account</p>
+		<div class="social-btn text-center">
+			<a href="#" class="btn btn-primary btn-lg" title="Facebook"><i class="fa fa-facebook"></i></a>
+			<a href="#" class="btn btn-info btn-lg" title="Twitter"><i class="fa fa-twitter"></i></a>
+			<a href="#" class="btn btn-danger btn-lg" title="Google"><i class="fa fa-google"></i></a>
+		</div>
+		<div class="or-seperator"><b>or</b></div>
+        <div class="form-group">
+        	<input type="text" class="form-control input-lg" id="username" name="username" placeholder="Username" required="required">
+        </div>
+		<div class="form-group">
+            <input type="password" class="form-control input-lg" name="password" placeholder="Password" required="required">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success btn-lg btn-block signup-btn">Sign in</button>
+        </div>
+        <div class="text-center small"><a href="#">Forgot Your password?</a></div>
+    </form>
+    <div class="text-center small">Don't have an account? <a href="{% url 'agentregister' %}">Sign up</a></div>
+</div>
                 </div>
             </div>
         </div>
@@ -254,9 +411,9 @@
     <div class="navbar-inner">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="agileits-navi_search">
-                    <ul class="navbar-nav ml-auto text-center mr-xl-5">
-                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
+                <div class="agileits-navi_search ">
+                    <ul class="navbar-nav ml-auto text-center mr-xl-5 ">
+                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2 ">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 Categories
@@ -307,75 +464,75 @@
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
-                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false">
-                                Electronics
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="agile_inner_drop_nav_info p-4">
-                                    <h5 class="mb-3">Mobiles, Computers</h5>
-                                    <div class="row">
-                                        <div class="col-sm-6 multi-gd-img">
-                                            <ul class="multi-column-dropdown">
-                                                <li>
-                                                    <a href="product.html">All Mobile Phones</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">All Mobile Accessories</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Cases & Covers</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Screen Protectors</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Power Banks</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">All Certified Refurbished</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Tablets</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Wearable Devices</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Smart Home</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-6 multi-gd-img">
-                                            <ul class="multi-column-dropdown">
-                                                <li>
-                                                    <a href="product.html">Laptops</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Drives & Storage</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Printers & Ink</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Networking Devices</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Computer Accessories</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Game Zone</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product.html">Software</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+{#                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">#}
+{#                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"#}
+{#                               aria-haspopup="true" aria-expanded="false">#}
+{#                                Electronics#}
+{#                            </a>#}
+{#                            <div class="dropdown-menu">#}
+{#                                <div class="agile_inner_drop_nav_info p-4">#}
+{#                                    <h5 class="mb-3">Mobiles, Computers</h5>#}
+{#                                    <div class="row">#}
+{#                                        <div class="col-sm-6 multi-gd-img">#}
+{#                                            <ul class="multi-column-dropdown">#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">All Mobile Phones</a>#}
+{#                                                </li>#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">All Mobile Accessories</a>#}
+{#                                                </li>#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">Cases & Covers</a>#}
+{#                                                </li>#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">Screen Protectors</a>#}
+{#                                                </li>#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">Power Banks</a>#}
+{#                                                </li>#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">All Certified Refurbished</a>#}
+{#                                                </li>#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">Tablets</a>#}
+{#                                                </li>#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">Wearable Devices</a>#}
+{#                                                </li>#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">Smart Home</a>#}
+{#                                                </li>#}
+{#                                            </ul>#}
+{#                                        </div>#}
+{#                                        <div class="col-sm-6 multi-gd-img">#}
+{#                                            <ul class="multi-column-dropdown">#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">Laptops</a>#}
+{#                                                </li>#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">Drives & Storage</a>#}
+{#                                                </li>#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">Printers & Ink</a>#}
+{#                                                </li>#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">Networking Devices</a>#}
+{#                                                </li>#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">Computer Accessories</a>#}
+{#                                                </li>#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">Game Zone</a>#}
+{#                                                </li>#}
+{#                                                <li>#}
+{#                                                    <a href="product.html">Software</a>#}
+{#                                                </li>#}
+{#                                            </ul>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </li>#}
 
 
                         <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
@@ -390,22 +547,23 @@
                                         <div class="col-sm-6 multi-gd-img">
                                             <ul class="multi-column-dropdown">
                                                 <li>
-                                                    <a href="#">Agricultural Equipments (0)</a>
+                                                    <a href="{% url 'equipments' %}">Agricultural Equipments (0)</a>
                                                 </li>
                                                 <li>
                                                     <a href="#">Auto Engineering (0)</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#">Auto Shops (0)</a>
+                                                    <a href="{% url 'auto_shop_view' %}">Auto Shops (0)</a>
                                                 </li>
                                                 <li>
-                                                    <a href="{% url 'for_hire' %}">Car Hire ({{ hire_cars | length }})</a>
+                                                    <a href="{% url 'for_hire' %}">Car Hire
+                                                        ({{ hire_cars | length }})</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#">Car Wash (0)</a>
+                                                    <a href="{% url 'car_wash_view' %}">Car Wash (0)</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#">Clearing Agents (0)</a>
+                                                    <a href="{% url 'clearing_agents' %}">Clearing Agents ({{ all_agents| length }})</a>
                                                 </li>
                                                 <li>
                                                     <a href="#">Earth Moving (0)</a>
@@ -474,7 +632,7 @@
                                 Car Manager
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{% url 'index' %}">All Vehicles</a>
+                                <a class="dropdown-item" href="{% url 'index' %}">Motor Vehicles</a>
                                 <a class="dropdown-item" href="{% url 'for_sale' %}">Vehicles For Sale</a>
                                 <a class="dropdown-item" href="{% url 'for_hire' %}">Vehicles For Hire</a>
                                 <div class="dropdown-divider"></div>
@@ -491,7 +649,7 @@
                                     Login</a>
                                 <a class="dropdown-item" href="#">Agent Registration</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="single.html">View Agents</a>
+                                <a class="dropdown-item" href="{% url 'agents_list' %}">View Agents</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
@@ -663,42 +821,44 @@
                                 <a href="about.html">About Us</a>
                             </li>
                             <li class="mb-3">
-                                <a href="contact.html">Contact Us</a>
+                                <a href="{% url 'contactus' %}">Contact Us</a>
                             </li>
                             <li class="mb-3">
-                                <a href="help.html">Help</a>
+                                <a href="../aboutus/help.html">Help</a>
                             </li>
                             <li class="mb-3">
                                 <a href="faqs.html">Faqs</a>
                             </li>
                             <li class="mb-3">
-                                <a href="terms.html">Terms of use</a>
+                                <a href="../aboutus/terms.html">Terms of use</a>
                             </li>
                             <li>
-                                <a href="privacy.html">Privacy Policy</a>
+                                <a href="../aboutus/privacy.html">Privacy Policy</a>
                             </li>
                         </ul>
                     </div>
                     <div class="col-md-3 col-sm-6 footer-grids mt-md-0 mt-4">
                         <h3 class="text-white font-weight-bold mb-3">Get in Touch</h3>
                         <ul>
-                            <li class="mb-3">
-                                <i class="fas fa-map-marker"></i> 123 Sebastian, USA.
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-mobile"></i> 333 222 3333
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-phone"></i> +222 11 4444
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-envelope-open"></i>
-                                <a href="mailto:example@mail.com"> mail 1@example.com</a>
-                            </li>
-                            <li>
-                                <i class="fas fa-envelope-open"></i>
-                                <a href="mailto:example@mail.com"> mail 2@example.com</a>
-                            </li>
+                            {% for companycontactdetail in companycontactdetails %}
+                                <li class="mb-3">
+                                    <i class="fas fa-map-marker"></i> {{ companycontactdetail.location }}
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-mobile"></i> {{ companycontactdetail.mobile }}
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-phone"></i> {{ companycontactdetail.telephone }}
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-envelope-open"></i>
+                                    <a href="mailto:example@mail.com"> {{ companycontactdetail.emailaddress1 }}</a>
+                                </li>
+                                <li>
+                                    <i class="fas fa-envelope-open"></i>
+                                    <a href="mailto:example@mail.com"> {{ companycontactdetail.emailaddress2 }}</a>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                     <div class="col-md-3 col-sm-6 footer-grids w3l-agileits mt-md-0 mt-4">
@@ -714,24 +874,26 @@
                         <!-- //newsletter -->
                         <!-- social icons -->
                         <div class="footer-grids  w3l-socialmk mt-3">
-                            <h3 class="text-white font-weight-bold mb-3">Follow Us on</h3>
+                            <h3 class="text-white font-weight-bold mb-3">Follow Us On</h3>
                             <div class="social">
                                 <ul>
-                                    <li>
-                                        <a class="icon fb" href="#">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="icon tw" href="#">
-                                            <i class="fab fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="icon gp" href="#">
-                                            <i class="fab fa-google-plus-g"></i>
-                                        </a>
-                                    </li>
+                                    {% for socialmedialink in companysocialmedialinks %}
+                                        <li>
+                                            <a class="icon fb" href="{{ socialmedialink.facebook }}">
+                                                <i class="fab fa-facebook-f"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="icon tw" href="{{ socialmedialink.twitter }}">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="icon gp" href="{{ socialmedialink.instagram }}">
+                                                <i class="fab fa-instagram"></i>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>

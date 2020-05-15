@@ -9,7 +9,7 @@
             {% endif %}
         {% endfor %}
     {% else %}
-        Products
+        Buy Sell Auto
     {% endif %}
 {% endblock %}
 
@@ -178,7 +178,6 @@
             margin: 9px 0 0
         }
 
-
         .product-grid .product-item .compare,
         .product-grid .product-item .wishlist {
             color: #fff;
@@ -260,6 +259,110 @@
             .product-grid .product-item {
                 width: 263px
             }
+        }
+
+
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+        @import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+
+        }
+
+        /* Category Ads */
+
+        #ads {
+            margin: 30px 0 30px 0;
+
+        }
+
+        #ads .card-notify-badge {
+            position: absolute;
+            left: -10px;
+            top: -20px;
+            background: #f2d900;
+            text-align: center;
+            border-radius: 30px 30px 30px 30px;
+            color: #000;
+            padding: 5px 10px;
+            font-size: 14px;
+
+        }
+
+        #ads .card-notify-year {
+            position: absolute;
+            right: -10px;
+            top: -20px;
+            background: #ff4444;
+            border-radius: 50%;
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+            width: 50px;
+            height: 50px;
+            padding: 15px 0 0 0;
+        }
+
+
+        #ads .card-detail-badge {
+            background: #f2d900;
+            text-align: center;
+            border-radius: 30px 30px 30px 30px;
+            color: #000;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+
+        #ads .card:hover {
+            background: #fff;
+            box-shadow: 12px 15px 20px 0px rgba(46, 61, 73, 0.15);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        #ads .card-image-overlay {
+            font-size: 20px;
+
+        }
+
+
+        #ads .card-image-overlay span {
+            display: inline-block;
+        }
+
+
+        #ads .ad-btn {
+            text-transform: uppercase;
+            width: 150px;
+            height: 40px;
+            border-radius: 80px;
+            font-size: 16px;
+            line-height: 35px;
+            text-align: center;
+            border: 3px solid #e6de08;
+            display: block;
+            text-decoration: none;
+            margin: 20px auto 1px auto;
+            color: #000;
+            overflow: hidden;
+            position: relative;
+            background-color: #e6de08;
+        }
+
+        #ads .ad-btn:hover {
+            background-color: #e6de08;
+            color: #1e1717;
+            border: 2px solid #e6de08;
+            background: transparent;
+            transition: all 0.3s ease;
+            box-shadow: 12px 15px 20px 0px rgba(46, 61, 73, 0.15);
+        }
+
+        #ads .ad-title h5 {
+            text-transform: uppercase;
+            font-size: 18px;
         }
     </style>
 
@@ -348,128 +451,155 @@
     <!-- top Products -->
     <div class="ads-grid py-sm-5 py-4">
         <div class="container py-xl-4 py-lg-2">
-            <!-- tittle heading -->
-            {#            <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">#}
-            {#                <span>O</span>ur#}
-            {#                <span>N</span>ew#}
-            {#                <span>P</span>roducts</h3>#}
-            <!-- //tittle heading -->
             <div class="row">
                 <!-- product left -->
                 <div class="agileinfo-ads-display col-lg-9">
                     <div class="wrapper">
                         <!-- first section -->
                         <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
-                            <h3 class="heading-tittle text-center font-weight-bold">All Vehicles</h3>
-                            <div class="row">
+                            <h3 class="heading-tittle text-center font-weight-bold">Motor Vehicles</h3>
+
+                            <div class="row" id="ads">
+                                <!-- Category Card -->
                                 {% for product in products|slice:":6" reversed %}
-                                    <a href="{{ product.get_absolute_url }}">
-                                        <div class="product-grid col-md-4   mt-5">
 
-                                            <div class="product-item blogpost card  ">
-
-                                                <div class="image">
-                                                    {% for p_image in product.productimage_set.all %}
-                                                        <img src="
-                                        {% if p_image.image %}
-                                                {{ p_image.image.url }}
-                                            {% else %}
-                                                {% static 'store/images/blank-car.jpg' %}
-                                        {% endif %}
-                              " alt="{{ product.title }}" style="object-fit: contain; height: 110px;"
-                                                             title="{{ product.title }}"/>
-                                                    {% endfor %}
-
+                                    <div class="col-md-4 ">
+                                        <div class="card rounded h-75">
+                                            <div class="card-image h-25">
+                                                <span class="card-notify-badge">{{ product.listing_type | capfirst }}</span>
+                                                <span class="card-notify-year">{{ product.year }}</span>
+                                                {% for p_image in product.productimage_set.all|slice:":1" %}
+                                                    <img class="img-fluid"
+                                                         src="{% if p_image.image %}
+                                                                    {{ p_image.image.url }}
+                                                                {% else %}
+                                                                    {% static 'store/images/blank-car.jpg' %}
+                                                            {% endif %}"
+                                                         alt="Alternate Text"/>
+                                                {% endfor %}
+                                            </div>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <div class="card-image-overlay">
+                                                <span class="card-detail-badge">{{ product.vehicle_status | capfirst }}</span>
+                                                <span class="card-detail-badge">K{{ product.price | upper }}</span>
+                                            </div>
+                                            <div class="card-body text-center">
+                                                <div class="ad-title m-auto">
+                                                    <p>{{ product.title | capfirst }}</p>
                                                 </div>
-                                                <div class="">
-                                                    <center>
-                                                        <div class="name text-center">
-                                                            <a href="product.html">{{ product.title | upper }}</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span class="price-new">K{{ product.price }}</span>
-                                                        </div>
-                                                    </center>
-                                                    {#                                                    <div class="cart">#}
-                                                    {#                                                        <button type="button" class="btn btn-primary">View</button>#}
-                                                    {#                                                    </div>#}
-
-                                                </div>
-                                                <div style="background-color: lightgrey">
-                                                    <center>
-                                                        <p style="color: black">{{ product.listing_type | upper }}</p>
-                                                    </center>
-                                                </div>
+                                                <a class="btn btn-outline-primary btn-sm btn-block"
+                                                   href="{{ product.get_absolute_url }}">View</a>
 
                                             </div>
-
-
+                                            <br>
                                         </div>
-                                    </a>
-                                {% empty %}
-                                    <p>Nothing Found...</p>
-                                {% endfor %}
+                                    </div>
 
+                                {% endfor %}
                             </div>
 
+                        <a href="{% url 'vehicles' %}" class="btn btn-sm btn-outline-info pull-right btn-block">
+                                View all vehicles <span class="fa fa-arrow-circle-right"></span>
+                            </a>
 
                         </div>
                         <!-- //first section -->
 
-
                         <div class="row">
+                            <div class="container">
+                                <br>
+                                <h4>Another View</h4>
+                                <br>
+                                <div class="row" id="ads">
+                                    <!-- Category Card -->
+                                    {% for product in products|slice:":6" reversed %}
 
+                                        <div class="col-md-4 ">
+                                            <div class="card rounded h-75">
+                                                <div class="card-image h-25">
+                                                    <span class="card-notify-badge">{{ product.listing_type | capfirst }}</span>
+                                                    <span class="card-notify-year">{{ product.year }}</span>
+                                                    {% for p_image in product.productimage_set.all|slice:":1" %}
+                                                        <img class="img-fluid"
+                                                             src="{% if p_image.image %}
+                                                                    {{ p_image.image.url }}
+                                                                {% else %}
+                                                                    {% static 'store/images/blank-car.jpg' %}
+                                                            {% endif %}"
+                                                             alt="Alternate Text"/>
+                                                    {% endfor %}
+                                                </div>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <div class="card-image-overlay">
+                                                    <span class="card-detail-badge">{{ product.vehicle_status | capfirst }}</span>
+                                                    <span class="card-detail-badge">K{{ product.price | upper }}</span>
+                                                </div>
+                                                <div class="card-body text-center">
+                                                    <div class="ad-title m-auto">
+                                                        <p>{{ product.title | upper }}</p>
+                                                    </div>
+                                                    <a class="btn btn-outline-primary btn-sm btn-block"
+                                                       href="{{ product.get_absolute_url }}">View</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </div>
 
 
                         <!-- second section -->
-                        <div class="col-lg-12">
-                            <h3 class="heading-tittle text-center font-weight-bold">Other</h3>
+                        <div class="card col-lg-12">
+                            <h3 class="card-tittle text-center font-weight-bold">Equipments</h3>
+                            <br>
                             <div class="row">
-                                {% for product in products reversed %}
-                                    <div class="col-sm-5 col-md-4">
-                                        <div class="card h-100 blogpost">
-                                            <a href="{{ product.get_absolute_url }}">
-                                                <div class="img-wrap">
+                                {% for product in equipments|slice:":6" reversed %}
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            {% for p_image in product.equipmentimage_set.all|slice:":1" %}
+                                                <div class="card-header">{{ product.equipment_listing_type }}</div>
+                                                <img class="card-img-top" src="
+                                                {% if p_image.image %}
 
-                                                    {% for p_image in product.productimage_set.all %}
-                                                        <img src="
-                                        {% if p_image.image %}
-                                                {{ p_image.image.url }}
-                                            {% else %}
-                                                {% static 'store/images/blank-car.jpg' %}
-                                        {% endif %}
-                                        " alt="" style="object-fit: contain;" title="{{ product.title }}"/>
-                                                    {% endfor %}
+                                                        {{ p_image.image.url }}
 
-                                                </div>
-                                                <center>
-                                                    <h3 style="color:#000;" class="card-title">
-                                                        <a href="{{ product.get_absolute_url }}"
-                                                           title="{{ product.title }}">{{ product.title | truncatewords:5 }}</a>
-                                                    </h3>
-
-
-                                                    <span class="item-info-product fa fa-money mr-3">
-                                                    <h5 style="color: red">k{{ product.price }}</h5>
-                                                </span>
-                                                    <span class="item-info-product fa fa-map-marker text-left">
-                                                    <a href=""> {{ product.location }}</a>
-                                                </span>
-                                                </center>
-                                                {#                                                <span class="item-info-product fa fa-tag text-left"> <a#}
-                                                {#                                                        href="{{ product.category.get_absolute_url }}">{{ product.category.category_name }}</a></span>#}
-                                                {#                                                <span class="item-info-product fa fa-tachometer">Mileage: {{ product.mileage }}</span>#}
-
-
-                                            </a>
+                                                 {% else %}
+                                                       {% static 'store/images/blank-car.jpg' %}
+                                                  {% endif %}" alt="Card image cap">
+                                            {% endfor %}
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ product.equipment_name }} </h5>
+                                                <center><h5 class="card-title">ZMW{{ product.equipment_price }}</h5></center>
+                                                <a href="{% url 'equipment_detail' product.id %}" class="btn btn-outline-primary btn-block">View</a>
+                                            </div>
                                         </div>
                                     </div>
-                                {% empty %}
-                                    <p>Nothing Found...</p>
-
                                 {% endfor %}
+
+
+                                <div class="col-sm-4">
+                                    <div class="card">
+
+                                        <img class="card-img-top" src="..." alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Special title treatment</h5>
+                                            <p class="card-text">With supporting text below as a natural lead-in to
+                                                additional content.</p>
+                                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <br>
+                            <a href="{% url 'equipments' %}" class="btn btn-sm btn-outline-info pull-right">
+                                View all equipments <span class="fa fa-arrow-circle-right"></span>
+                            </a>
+                            <br>
                         </div>
                         <!-- //second section -->
 
@@ -717,7 +847,7 @@
 {% endblock %}
 
 {% block footer %}
-        <footer>
+    <footer>
         <div class="footer-top-first">
             <div class="container py-md-5 py-sm-4 py-3">
                 <!-- footer first section -->
@@ -799,48 +929,47 @@
                     <!-- //footer categories -->
                     <!-- quick links -->
                     <div class="col-md-3 col-sm-6 footer-grids mt-sm-0 mt-4">
-                        <h3 class="text-white font-weight-bold mb-3">Quick Links</h3>
+                        <h3 class="text-white font-weight-bold mb-3">About Us</h3>
                         <ul>
                             <li class="mb-3">
-                                <a href="about.html">About Us</a>
+                                <a href="{% url 'contactus' %}">Contact Us</a>
                             </li>
                             <li class="mb-3">
-                                <a href="contact.html">Contact Us</a>
-                            </li>
-                            <li class="mb-3">
-                                <a href="help.html">Help</a>
+                                <a href="../aboutus/help.html">Help</a>
                             </li>
                             <li class="mb-3">
                                 <a href="faqs.html">Faqs</a>
                             </li>
                             <li class="mb-3">
-                                <a href="terms.html">Terms of use</a>
+                                <a href="../aboutus/terms.html">Terms of use</a>
                             </li>
                             <li>
-                                <a href="privacy.html">Privacy Policy</a>
+                                <a href="../aboutus/privacy.html">Privacy Policy</a>
                             </li>
                         </ul>
                     </div>
                     <div class="col-md-3 col-sm-6 footer-grids mt-md-0 mt-4">
                         <h3 class="text-white font-weight-bold mb-3">Get in Touch</h3>
                         <ul>
-                            <li class="mb-3">
-                                <i class="fas fa-map-marker"></i> 123 Sebastian, USA.
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-mobile"></i> 333 222 3333
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-phone"></i> +222 11 4444
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-envelope-open"></i>
-                                <a href="mailto:example@mail.com"> mail 1@example.com</a>
-                            </li>
-                            <li>
-                                <i class="fas fa-envelope-open"></i>
-                                <a href="mailto:example@mail.com"> mail 2@example.com</a>
-                            </li>
+                            {% for companycontactdetail in companycontactdetails %}
+                                <li class="mb-3">
+                                    <i class="fas fa-map-marker"></i> {{ companycontactdetail.location }}
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-mobile"></i> {{ companycontactdetail.mobile }}
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-phone"></i> {{ companycontactdetail.telephone }}
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-envelope-open"></i>
+                                    <a href="mailto:example@mail.com"> {{ companycontactdetail.emailaddress1 }}</a>
+                                </li>
+                                <li>
+                                    <i class="fas fa-envelope-open"></i>
+                                    <a href="mailto:example@mail.com"> {{ companycontactdetail.emailaddress2 }}</a>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                     <div class="col-md-3 col-sm-6 footer-grids w3l-agileits mt-md-0 mt-4">
@@ -859,21 +988,23 @@
                             <h3 class="text-white font-weight-bold mb-3">Follow Us on</h3>
                             <div class="social">
                                 <ul>
-                                    <li>
-                                        <a class="icon fb" href="#">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="icon tw" href="#">
-                                            <i class="fab fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="icon gp" href="#">
-                                            <i class="fab fa-google-plus-g"></i>
-                                        </a>
-                                    </li>
+                                    {% for socialmedialink in companysocialmedialinks %}
+                                        <li>
+                                            <a class="icon fb" href="{{ socialmedialink.facebook }}">
+                                                <i class="fab fa-facebook-f"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="icon tw" href="{{ socialmedialink.twitter }}">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="icon gp" href="{{ socialmedialink.instagram }}">
+                                                <i class="fab fa-instagram"></i>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
@@ -937,15 +1068,7 @@
         </div>
     </div>
 {% endblock %}
-<!-- footer -->
 
-<!-- //copyright -->
-
-<!-- js-files -->
-<!-- jquery -->
-
-<!-- //for bootstrap working -->
-<!-- //js-files -->
 </body>
 
 </html>

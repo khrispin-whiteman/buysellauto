@@ -1,0 +1,63 @@
+{% extends 'agents/base.html' %}
+
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+
+        <div class="main-panel">
+
+            <div class="content">
+                <div class="container-fluid">
+
+                    <div class="row p-3">
+                        <div class="col-md-12 p-3">
+                            <div class="card p-3">
+                                <div class="header">
+                                    <a href="{% url 'agent_equipments' %}">All Equipments</a> |
+                                    <a href="">Active</a> |
+                                    <a href="">In Active</a> |
+                                    <a href="">For Hire</a> |
+                                    <a href="">For Sale</a> |
+                                    <a href="">Sold</a> |
+                                </div>
+                            <hr>
+                                <div class="row" style="padding: 10px">
+
+                                    {% for product in all_equipments reversed %}
+                                        <div class="col-sm-4 d-flex">
+                                            <div class="card flex-fill">
+                                                {% for p_image in product.equipmentimage_set.all|slice:":1" %}
+                                                    <img class="card-img-top img-fluid img-responsive" src="
+                                                        {% if p_image.image %}
+
+                                                                {{ p_image.image.url }}
+
+                                                         {% else %}
+                                                               {% static 'store/images/blank-car.jpg' %}
+                                                          {% endif %}" alt="Card image cap">
+                                                {% endfor %}
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ product.equipment_name }} ({{ product.equipment_listing_type }})</h5></center>
+                                                    <br>
+                                                    <h5 class="card-title">ZMW {{ product.equipment_price }}</h5></center>
+                                                </div>
+                                            <a href="{% url 'agent_equipment_detail' product.id %}" class="btn btn-outline-primary btn-block">More Details</a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}

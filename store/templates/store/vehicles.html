@@ -1,0 +1,370 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Equipments{% endblock %}
+
+
+{% block content %}
+
+
+    <style type="text/css">
+        body {
+            margin-top: 20px;
+        {#background: #edf0f5;#}
+        }
+
+        product-item a {
+            display: block;
+            color: #434a54;
+            font-weight: 700
+        }
+
+        .product-item a:hover {
+            color: #37bc9b
+        }
+
+        .product-item .price {
+            color: #aab2bd;
+            font-weight: 700
+        }
+
+        .product-item .price .price-new {
+            color: #37bc9b
+        }
+
+        .product-grid .product-item {
+            position: relative;
+            width: 100%;
+            border: none;
+            padding-bottom: 4pc;
+            margin-bottom: 30px;
+            border-radius: 3px;
+            box-shadow: 0 1px 2px 0 #ccd1d9;
+            overflow: hidden;
+            z-index: 1
+        }
+
+        .product-grid .product-item img {
+            width: 100%
+        }
+
+        .product-grid .product-item .item-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 0 0;
+            border-radius: 3px;
+            -webkit-transition: background .3s ease-in-out;
+            transition: background .3s ease-in-out
+        }
+
+        .product-grid .product-item:hover .item-overlay {
+            background: rgba(170, 178, 189, .42)
+        }
+
+        .product-grid .product-item .clickable a {
+            display: block;
+            padding: 100%;
+            z-index: 9
+        }
+
+        .product-grid .product-item .caption {
+            position: absolute;
+            bottom: -87pt;
+            display: block;
+            min-width: 100%;
+            min-height: 180px;
+            padding: 6px 6px;
+            margin: 0;
+            background: #fff;
+        {#-webkit-transition: all .3s ease-in-out;#}{#transition: all .3s ease-in-out;#}{#z-index: 1#}
+        }
+
+        .product-grid .product-item .caption .cart {
+            display: block;
+            padding: 27px 0 0;
+            clear: both
+        }
+
+        .product-grid .product-item .caption .btn-primary {
+            width: 100%;
+            color: #fff;
+            background: #37bc9b;
+            border: 1px solid #37bc9b;
+            -webkit-transition: all .2s ease-in-out 0s;
+            transition: all .2s ease-in-out 0s
+        }
+
+        .product-grid .product-item .caption .btn-primary:hover {
+            color: #434a54;
+            background: 0 0;
+            border: 1px solid #656d78
+        }
+
+        .product-grid .product-item .caption .name a,
+        .product-grid .product-item .caption .price {
+            text-align: center
+        }
+
+        .product-grid .product-item .caption .name a {
+            line-height: 1pc;
+            margin: 9px 0 0
+        }
+
+        .product-grid .product-item .compare,
+        .product-grid .product-item .wishlist {
+            color: #fff;
+            display: none;
+            margin-bottom: 3px;
+            height: 30px;
+            width: 30px;
+            line-height: 30px;
+            text-align: center;
+            padding: 0;
+            border: none;
+            -webkit-transition: .3s;
+            transition: .3s
+        }
+
+        .product-grid .product-item .compare a,
+        .product-grid .product-item .wishlist a {
+            display: block;
+            color: #fff;
+            font-size: 14px
+        }
+
+        .product-grid .product-item .wishlist {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #37bc9b
+        }
+
+        .product-grid .product-item .wishlist:hover {
+            background: #33b091
+        }
+
+        .product-grid .product-item .compare {
+            position: absolute;
+            top: 3pc;
+            left: 15px;
+            background: #434a54
+        }
+
+        .product-grid .product-item .compare:hover {
+            background: #393f47
+        }
+
+        .product-grid .product-item:hover .compare,
+        .product-grid .product-item:hover .wishlist {
+            display: block
+        }
+
+        .product-grid .product-item .sale-tag {
+            width: 50px;
+            height: 75pt;
+            background: #37bc9b;
+            position: absolute;
+            top: -45px;
+            right: -10px;
+            -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg)
+        }
+
+        .product-grid .product-item .sale-tag span {
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            left: 2px;
+            position: absolute;
+            top: 3pc;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg)
+        }
+
+        @media (min-width: 992px) {
+            .product-grid .product-item {
+                width: 213px
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .product-grid .product-item {
+                width: 263px
+            }
+        }
+
+
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+        @import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+
+        }
+
+        /* Category Ads */
+
+        #ads {
+            margin: 30px 0 30px 0;
+
+        }
+
+        #ads .card-notify-badge {
+            position: absolute;
+            left: -10px;
+            top: -20px;
+            background: #f2d900;
+            text-align: center;
+            border-radius: 30px 30px 30px 30px;
+            color: #000;
+            padding: 5px 10px;
+            font-size: 14px;
+
+        }
+
+        #ads .card-notify-year {
+            position: absolute;
+            right: -10px;
+            top: -20px;
+            background: #ff4444;
+            border-radius: 50%;
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+            width: 50px;
+            height: 50px;
+            padding: 15px 0 0 0;
+        }
+
+
+        #ads .card-detail-badge {
+            background: #f2d900;
+            text-align: center;
+            border-radius: 30px 30px 30px 30px;
+            color: #000;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+
+        #ads .card:hover {
+            background: #fff;
+            box-shadow: 12px 15px 20px 0px rgba(46, 61, 73, 0.15);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        #ads .card-image-overlay {
+            font-size: 20px;
+
+        }
+
+
+        #ads .card-image-overlay span {
+            display: inline-block;
+        }
+
+
+        #ads .ad-btn {
+            text-transform: uppercase;
+            width: 150px;
+            height: 40px;
+            border-radius: 80px;
+            font-size: 16px;
+            line-height: 35px;
+            text-align: center;
+            border: 3px solid #e6de08;
+            display: block;
+            text-decoration: none;
+            margin: 20px auto 1px auto;
+            color: #000;
+            overflow: hidden;
+            position: relative;
+            background-color: #e6de08;
+        }
+
+        #ads .ad-btn:hover {
+            background-color: #e6de08;
+            color: #1e1717;
+            border: 2px solid #e6de08;
+            background: transparent;
+            transition: all 0.3s ease;
+            box-shadow: 12px 15px 20px 0px rgba(46, 61, 73, 0.15);
+        }
+
+        #ads .ad-title h5 {
+            text-transform: uppercase;
+            font-size: 18px;
+        }
+    </style>
+
+    <div class="container">
+        <div class="row">
+            <!-- search -->
+            <div class="col-10 agileits_search">
+                <form class="form-inline" action="{% url 'product_search' %}" method="GET">
+                    {% if keywords %}
+                        <input class="form-control mr-sm-2" name="q" value="{{ keywords }}" type="search"
+                               placeholder="Search by keywords, car type, brand, agent, etc"
+                               aria-label="Search" required>
+
+                    {% else %}
+                        <input class="form-control mr-sm-2" name="q" type="search"
+                               placeholder="Search by, equipment, brand, agent, etc"
+                               aria-label="Search" required>
+                    {% endif %}
+                    <button class="btn my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <br>
+        <div>
+            <a href="{% url 'index' %}">Home</a> | All Vehicles
+        </div>
+        <hr>
+        <div class="row" id="ads">
+            {% for product in products|slice:":6" reversed %}
+
+                <div class="col-md-4 ">
+                    <div class="card rounded h-75">
+                        <div class="card-image h-25">
+                            <span class="card-notify-badge">{{ product.listing_type | capfirst }}</span>
+                            <span class="card-notify-year">{{ product.year }}</span>
+                            {% for p_image in product.productimage_set.all|slice:":1" %}
+                                <img class="img-fluid"
+                                     src="{% if p_image.image %}
+                                                                    {{ p_image.image.url }}
+                                                                {% else %}
+                                                                    {% static 'store/images/blank-car.jpg' %}
+                                                            {% endif %}"
+                                     alt="Alternate Text"/>
+                            {% endfor %}
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="card-image-overlay">
+                            <span class="card-detail-badge">{{ product.vehicle_status | capfirst }}</span>
+                            <span class="card-detail-badge">K{{ product.price | upper }}</span>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="ad-title m-auto">
+                                <p>{{ product.title | capfirst }}</p>
+                            </div>
+                            <a class="btn btn-outline-primary btn-sm btn-block"
+                               href="{{ product.get_absolute_url }}">View</a>
+
+                        </div>
+                        <br>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}

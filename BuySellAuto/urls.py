@@ -23,9 +23,13 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls')),
+    path('', include('aboutus.urls')),
+    path('', include('agents.urls')),
+    path('', include('businessdirectory.urls')),
+    path('', include('orders.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/login/', views.LoginView.as_view(), name='login'),
+    #path('accounts/', include('django.contrib.auth.urls')),
+    #path('accounts/login/', views.LoginView.as_view(), name='login'),
     path('accounts/logout/', views.LogoutView.as_view(), name='logout', kwargs={'next_page': '/'}),
     #path('froala_editor/', include('froala_editor.urls')),
 ]

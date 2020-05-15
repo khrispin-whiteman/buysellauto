@@ -1,0 +1,268 @@
+{% load static %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+
+
+    <link rel="icon" href="Favicon.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <title>Agent Registration</title>
+     {{form.media}}
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
+    <div class="container">
+
+        <a class="navbar-brand" href="#">
+            <span class="fa fa-arrow-left"></span>
+            Buy Sell Auto
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+<main class="my-form">
+    <div class="cotainer">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Registering As Agent</div>
+                    <div class="card-body">
+                        <form action="{% url 'agentregister' %}" method="POST" autocomplete="off">
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <!-- Grid column -->
+                                <div class="col-md-4">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-user prefix"></i>
+                                        <label for="inputEmail4MD">{{ form.username.label }}</label>
+                                        {{ form.username }}
+                                        {{ form.username.errors }}
+                                    </div>
+                                </div>
+                                <!-- Grid column -->
+
+                                <!-- Grid column -->
+                                <div class="col-md-4">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-lock prefix"></i>
+                                        <label for="inputPassword4MD">{{ form.password1.label }}</label>
+                                        {{ form.password1 }}
+                                        {{ form.password1.errors }}
+                                    </div>
+                                </div>
+                                <!-- Grid column -->
+
+                                <!-- Grid column -->
+                                <div class="col-md-4">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-lock prefix"></i>
+                                        <label for="inputPassword4MD">{{ form.password2.label }}</label>
+                                        {{ form.password2 }}
+                                        {{ form.password2.errors }}
+                                    </div>
+                                </div>
+                                <!-- Grid column -->
+                            </div>
+                            <!-- Grid row -->
+
+                            <!-- Grid row -->
+                            <div class="row">
+                                <!-- Grid column -->
+                                <div class="col-md-4">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-dot-circle-o prefix"></i>
+                                        <label for="inputCityMD">{{ form.firstname.label }}</label>
+                                        {{ form.firstname }}
+                                        {{ form.firstname.errors }}
+                                    </div>
+                                </div>
+                                <!-- Grid column -->
+
+                                <!-- Grid column -->
+                                <div class="col-md-4">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-dot-circle-o prefix"></i>
+                                        <label for="inputZipMD">{{ form.lastname.label }}</label>
+                                        {{ form.lastname }}
+                                        {{ form.lastname.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-phone prefix"></i>
+                                        <label for="inputCityMD">{{ form.phone.label }}</label>
+                                        {{ form.phone }}
+                                        {{ form.phone.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Grid row -->
+
+                            <!-- Grid row -->
+                            <div class="form-row">
+                                <!-- Grid column -->
+
+                                <div class="col-md-4">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-home prefix"></i>
+                                        <label for="student_address">{{ form.address.label }}</label>
+                                        {{ form.address }}
+                                        {{ form.address.errors }}
+                                    </div>
+                                </div>
+                                <!-- Grid column -->
+
+                                <!-- Grid column -->
+                                <div class="col-md-4">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-envelope-open prefix"></i>
+                                        <label for="student_email">{{ form.email.label }}</label>
+                                        {{ form.email }}
+                                        {{ form.email.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-envelope-open prefix"></i>
+                                        <label for="student_email">{{ form.portfolio_site.label }}</label>
+                                        {{ form.portfolio_site }}
+                                        {{ form.portfolio_site.errors }}
+                                    </div>
+                                </div>
+                            </div>
+
+                                  <div class="form-row">
+                                <!-- Grid column -->
+
+                                <div class="col-md-4">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-home prefix"></i>
+                                        <label for="student_address">{{ form.country.label }}</label>
+                                        {{ form.country }}
+                                        {{ form.country.errors }}
+                                    </div>
+                                </div>
+                                <!-- Grid column -->
+
+                                <!-- Grid column -->
+                                <div class="col-md-4">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-envelope-open prefix"></i>
+                                        <label for="student_email">{{ form.city.label }}</label>
+                                        {{ form.city }}
+                                        {{ form.city.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-envelope-open prefix"></i>
+                                        <label for="student_email">{{ form.postal_code.label }}</label>
+                                        {{ form.postal_code }}
+                                        {{ form.postal_code.errors }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-md-4">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-home prefix"></i>
+                                        <label for="student_address">
+                                            {{ form.company_name.label }}
+                                        </label>
+                                        {{ form.company_name }}
+                                        {{ form.company_name.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-home prefix"></i>
+                                        <label for="student_address">
+                                            {{ form.agent_type.label }}
+                                        </label>
+                                        {{ form.agent_type }}
+                                        {{ form.agent_type.errors }}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-md-8">
+                                    <!-- Material input -->
+                                    <div class="md-form form-group">
+                                        <i class="fa fa-home prefix"></i>
+                                        <label for="student_address">{{ form.description.label }}</label>
+                                        {{ form.description }}
+                                        <i><small>Services offered...</small></i>
+                                        {{ form.description.errors }}
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-md btn-block">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>
+</body>
+</html>

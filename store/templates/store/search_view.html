@@ -8,110 +8,658 @@
             {% endif %}
         {% endfor %}
     {% else %}
-        Products
+        Results
     {% endif %}
 {% endblock %}
 
+{% block bottomheader %}
+    <div class="header-bot">
+        <div class="container">
+            <div class="row header-bot_inner_wthreeinfo_header_mid">
+                <!-- logo -->
+                <div class="col-md-3 logo_agile">
+                    <h1 class="pull-left">
+                        <a href="{% url 'index' %}" class="font-weight-bold font-italic">
+                            <img height="100px" width="150px" src="{% static 'store/images/logoWeb2.jpg' %}" alt=" "
+                                 class="img-wrap">
+                        </a>
+                    </h1>
+                </div>
+
+                <!-- //logo -->
+                <!-- header-bot -->
+                <div class="col-md-9 header mt-4 mb-md-0 mb-4">
+                    <div class="row">
+                        <!-- search -->
+                        <div class="col-10 agileits_search">
+                            <form class="form-inline" action="{% url 'product_search' %}" method="GET">
+                                {% if keywords %}
+                                    <input class="form-control mr-sm-2" name="q" value="{{ keywords }}" type="search"
+                                           placeholder="Search by keywords, car type, brand, agent, etc"
+                                           aria-label="Search" required>
+
+                                {% else %}
+                                    <input class="form-control mr-sm-2" name="q" type="search"
+                                           placeholder="Search by keywords, car type, brand, agent, etc"
+                                           aria-label="Search" required>
+                                {% endif %}
+                                <button class="btn my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                        </div>
+
+                        <!-- //search -->
+                        <!-- cart details -->
+                        {#                        						<div class="col-2 top_nav_right text-center mt-sm-0 mt-2">#}
+                        {#                        							<div class="wthreecartaits wthreecartaits2 cart cart box_1">#}
+                        {#                        								<form action="#" method="post" class="last">#}
+                        {#                        									<input type="hidden" name="cmd" value="_cart">#}
+                        {#                        									<input type="hidden" name="display" value="1">#}
+                        {#                        									<button class="btn w3view-cart" type="submit" name="submit" value="">#}
+                        {#                        										<i class="fas fa-cart-arrow-down"></i>#}
+                        {#                        									</button>#}
+                        {#                        								</form>#}
+                        {#                        							</div>#}
+                        {#                        						</div>#}
+                        <!-- //cart details -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 {% block content %}
+    <style type="text/css">
+        body {
+            margin-top: 20px;
+        {#background: #edf0f5;#}
+        }
+
+        product-item a {
+            display: block;
+            color: #434a54;
+            font-weight: 700
+        }
+
+        .product-item a:hover {
+            color: #37bc9b
+        }
+
+        .product-item .price {
+            color: #aab2bd;
+            font-weight: 700
+        }
+
+        .product-item .price .price-new {
+            color: #37bc9b
+        }
+
+        .product-grid .product-item {
+            position: relative;
+            width: 100%;
+            border: none;
+            padding-bottom: 4pc;
+            margin-bottom: 30px;
+            border-radius: 3px;
+            box-shadow: 0 1px 2px 0 #ccd1d9;
+            overflow: hidden;
+            z-index: 1
+        }
+
+        .product-grid .product-item img {
+            width: 100%
+        }
+
+        .product-grid .product-item .item-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 0 0;
+            border-radius: 3px;
+            -webkit-transition: background .3s ease-in-out;
+            transition: background .3s ease-in-out
+        }
+
+        .product-grid .product-item:hover .item-overlay {
+            background: rgba(170, 178, 189, .42)
+        }
+
+        .product-grid .product-item .clickable a {
+            display: block;
+            padding: 100%;
+            z-index: 9
+        }
+
+        .product-grid .product-item .caption {
+            position: absolute;
+            bottom: -87pt;
+            display: block;
+            min-width: 100%;
+            min-height: 180px;
+            padding: 6px 6px;
+            margin: 0;
+            background: #fff;
+        {#-webkit-transition: all .3s ease-in-out;#}{#transition: all .3s ease-in-out;#}{#z-index: 1#}
+        }
+
+        .product-grid .product-item .caption .cart {
+            display: block;
+            padding: 27px 0 0;
+            clear: both
+        }
+
+        .product-grid .product-item .caption .btn-primary {
+            width: 100%;
+            color: #fff;
+            background: #37bc9b;
+            border: 1px solid #37bc9b;
+            -webkit-transition: all .2s ease-in-out 0s;
+            transition: all .2s ease-in-out 0s
+        }
+
+        .product-grid .product-item .caption .btn-primary:hover {
+            color: #434a54;
+            background: 0 0;
+            border: 1px solid #656d78
+        }
+
+        .product-grid .product-item .caption .name a,
+        .product-grid .product-item .caption .price {
+            text-align: center
+        }
+
+        .product-grid .product-item .caption .name a {
+            line-height: 1pc;
+            margin: 9px 0 0
+        }
+
+        .product-grid .product-item .compare,
+        .product-grid .product-item .wishlist {
+            color: #fff;
+            display: none;
+            margin-bottom: 3px;
+            height: 30px;
+            width: 30px;
+            line-height: 30px;
+            text-align: center;
+            padding: 0;
+            border: none;
+            -webkit-transition: .3s;
+            transition: .3s
+        }
+
+        .product-grid .product-item .compare a,
+        .product-grid .product-item .wishlist a {
+            display: block;
+            color: #fff;
+            font-size: 14px
+        }
+
+        .product-grid .product-item .wishlist {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #37bc9b
+        }
+
+        .product-grid .product-item .wishlist:hover {
+            background: #33b091
+        }
+
+        .product-grid .product-item .compare {
+            position: absolute;
+            top: 3pc;
+            left: 15px;
+            background: #434a54
+        }
+
+        .product-grid .product-item .compare:hover {
+            background: #393f47
+        }
+
+        .product-grid .product-item:hover .compare,
+        .product-grid .product-item:hover .wishlist {
+            display: block
+        }
+
+        .product-grid .product-item .sale-tag {
+            width: 50px;
+            height: 75pt;
+            background: #37bc9b;
+            position: absolute;
+            top: -45px;
+            right: -10px;
+            -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg)
+        }
+
+        .product-grid .product-item .sale-tag span {
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            left: 2px;
+            position: absolute;
+            top: 3pc;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg)
+        }
+
+        @media (min-width: 992px) {
+            .product-grid .product-item {
+                width: 213px
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .product-grid .product-item {
+                width: 263px
+            }
+        }
 
 
-    <body>
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+        @import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+
+        }
+
+        /* Category Ads */
+
+        #ads {
+            margin: 30px 0 30px 0;
+
+        }
+
+        #ads .card-notify-badge {
+            position: absolute;
+            left: -10px;
+            top: -20px;
+            background: #f2d900;
+            text-align: center;
+            border-radius: 30px 30px 30px 30px;
+            color: #000;
+            padding: 5px 10px;
+            font-size: 14px;
+
+        }
+
+        #ads .card-notify-year {
+            position: absolute;
+            right: -10px;
+            top: -20px;
+            background: #ff4444;
+            border-radius: 50%;
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+            width: 50px;
+            height: 50px;
+            padding: 15px 0 0 0;
+        }
+
+
+        #ads .card-detail-badge {
+            background: #f2d900;
+            text-align: center;
+            border-radius: 30px 30px 30px 30px;
+            color: #000;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+
+        #ads .card:hover {
+            background: #fff;
+            box-shadow: 12px 15px 20px 0px rgba(46, 61, 73, 0.15);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        #ads .card-image-overlay {
+            font-size: 20px;
+
+        }
+
+
+        #ads .card-image-overlay span {
+            display: inline-block;
+        }
+
+
+        #ads .ad-btn {
+            text-transform: uppercase;
+            width: 150px;
+            height: 40px;
+            border-radius: 80px;
+            font-size: 16px;
+            line-height: 35px;
+            text-align: center;
+            border: 3px solid #e6de08;
+            display: block;
+            text-decoration: none;
+            margin: 20px auto 1px auto;
+            color: #000;
+            overflow: hidden;
+            position: relative;
+            background-color: #e6de08;
+        }
+
+        #ads .ad-btn:hover {
+            background-color: #e6de08;
+            color: #1e1717;
+            border: 2px solid #e6de08;
+            background: transparent;
+            transition: all 0.3s ease;
+            box-shadow: 12px 15px 20px 0px rgba(46, 61, 73, 0.15);
+        }
+
+        #ads .ad-title h5 {
+            text-transform: uppercase;
+            font-size: 18px;
+        }
+    </style>
+
     <!-- Page Content -->
     <div class="container">
-      <div class="row">
-
-
-
-        <div class="col-sm-3">
-
-            Filters
-
-        </div>
-        <!-- /.col-lg-3 -->
-        <br><br>
-        <strong>{{ keywords | capfirst }}</strong> (All {{ products | length }} results)<hr>
-        <div class="col-lg-6" style="border-radius: 1px; color: black;">
-          <div class="row">
-
-              {% for product in products reversed %}
-                      <div class="list-group blogpost">
-                        <a href="{{ product.get_absolute_url }}" class="list-group-item">
-                            <div class="img-wrap">
-
-                            {% for p_image in product.productimage_set.all %}
-                              <img src="
-                                        {% if p_image.image %}
-                                                {{ p_image.image.url }}
-                                            {% else %}
-                                                {% static 'assets/img/blank_product.jpg' %}
-                                        {% endif %}
-                              " alt="" title="{{ product.title }}" width="50px"/>
-                            {% endfor %}
-
-                          </div>
-                            <center>
-                                <p class="card-title">
-                                    <a href="{{ product.get_absolute_url }}" title="{{ product.title }}">{{ product.title | truncatewords:5 }}</a>
-                                </p>
-
-                                <h5 style="color: red">k{{ product.price }}</h5>
-                            </center>
-                        </a>
-                      </div>
-
-
-              {% endfor %}
-
-
-
-          </div>
-          <!-- /.row -->
-
-        </div>
-        <!-- /.col-lg-9 -->
-
-        <div class="col-lg-3">
-{#            <div class="row">#}
-{#                <div class="col-lg-1">#}
-{##}
-{#                </div>#}
-{#                #}
-{#                <div class="col-lg-11">#}
-{##}
-{#                </div>#}
-{#            </div>#}
-            <strong style="font-size: 20px">Filters:</strong>
+        <div class="row">
+            <br><br>
+            <strong>{{ keywords | capfirst }}</strong> (All {{ products | length }} results)
             <hr>
-            <strong>Brands:</strong>
-            {% for p in products %}
-                {% if p.brand %}
-                    <a href="{% url 'search_filters_brand' p.brand keywords %}" class="btn btn-default">{{ p.brand }}</a>
-                    {% else %}
-                        No Brands::
-                {% endif %}
-            {% endfor %}
+            <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
+                <div class="row" id="ads">
+                    {% for product in products reversed %}
 
-            <br>
-            <strong>Price:</strong>
-            {% for p in products %}
-                <a href="#" class="btn btn-default">{{ p.price }}</a>
-            {% endfor %}
+                        {% if product.is_vehicle_model %}
+                            <div class="col-md-4 ">
+                                <div class="card rounded h-75">
+                                    <div class="card-image h-25">
+                                        <span class="card-notify-badge">{{ product.listing_type | capfirst }}</span>
+                                        <span class="card-notify-year">{{ product.year }}</span>
+                                        {% for p_image in product.productimage_set.all|slice:":1" %}
+                                            <img class="img-fluid"
+                                                 src="{% if p_image.image %}
+                                                                    {{ p_image.image.url }}
+                                                                {% else %}
+                                                                    {% static 'store/images/blank-car.jpg' %}
+                                                            {% endif %}"
+                                                 alt="Alternate Text"/>
+                                        {% endfor %}
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <div class="card-image-overlay">
+                                        <span class="card-detail-badge">{{ product.vehicle_status | capfirst }}</span>
+                                        <span class="card-detail-badge">K{{ product.price | upper }}</span>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <div class="ad-title m-auto">
+                                            <p>{{ product.title | capfirst }}</p>
+                                        </div>
+                                        <a class="btn btn-outline-primary btn-sm btn-block"
+                                           href="{{ product.get_absolute_url }}">View</a>
+
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        {% endif %}
 
 
+                        {% if product.is_equipment_model %}
+                            <div class="col-sm-4">
+                                <div class="card">
+                                    {% for p_image in product.equipmentimage_set.all|slice:":1" %}
+                                        <img class="card-img-top" src="
+                        {% if p_image.image %}
+
+                                {{ p_image.image.url }}
+
+                         {% else %}
+                               {% static 'store/images/blank-car.jpg' %}
+                          {% endif %}" alt="Card image cap">
+                                    {% endfor %}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ product.equipment_name }}</h5>
+                                        <a href="{% url 'equipment_detail' product.id %}" class="btn btn-outline-primary btn-block">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- /.container -->
 
 
         </div>
-
-      </div>
-      <!-- /.row -->
-
     </div>
-    <!-- /.container -->
 
+{% endblock %}
 
+{% block footer %}
+    <footer>
+        <div class="footer-top-first">
+            <div class="container py-md-5 py-sm-4 py-3">
+                <!-- footer first section -->
+                {#                <h2 class="footer-top-head-w3l font-weight-bold mb-2">Electronics :</h2>#}
+                {#                <p class="footer-main mb-4">#}
+                {#                    If you're considering a new laptop, looking for a powerful new car stereo or shopping for a new#}
+                {#                    HDTV, we make it easy to#}
+                {#                    find exactly what you need at a price you can afford. We offer Every Day Low Prices on TVs, laptops,#}
+                {#                    cell phones, tablets#}
+                {#                    and iPads, video games, desktop computers, cameras and camcorders, audio, video and more.</p>#}
+                {#                <!-- //footer first section -->#}
+                <!-- footer second section -->
+                <div class="row w3l-grids-footer border-top border-bottom py-sm-4 py-3">
+                    <div class="col-md-4 offer-footer">
+                        <div class="row">
+                            <div class="col-4 icon-fot">
+                                <i class="fas fa-dolly"></i>
+                            </div>
+                            <div class="col-8 text-form-footer">
+                                <h3>Free Shipping</h3>
+                                <p>on orders over $100</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 offer-footer my-md-0 my-4">
+                        <div class="row">
+                            <div class="col-4 icon-fot">
+                                <i class="fas fa-shipping-fast"></i>
+                            </div>
+                            <div class="col-8 text-form-footer">
+                                <h3>Fast Delivery</h3>
+                                <p>World Wide</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 offer-footer">
+                        <div class="row">
+                            <div class="col-4 icon-fot">
+                                <i class="far fa-thumbs-up"></i>
+                            </div>
+                            <div class="col-8 text-form-footer">
+                                <h3>Big Choice</h3>
+                                <p>of Products</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //footer second section -->
+            </div>
+        </div>
+        <!-- footer third section -->
+        <div class="w3l-middlefooter-sec">
+            <div class="container py-md-5 py-sm-4 py-3">
+                <div class="row footer-info w3-agileits-info">
+                    <!-- footer categories -->
+                    <div class="col-md-3 col-sm-6 footer-grids">
+                        <h3 class="text-white font-weight-bold mb-3">Quick Links</h3>
+                        <ul>
+                            <li class="mb-3">
+                                <a href="product.html">Mobiles </a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="product.html">Computers</a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="product.html">TV, Audio</a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="#">Smartphones</a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="product.html">Washing Machines</a>
+                            </li>
+                            <li>
+                                <a href="#">Refrigerators</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- //footer categories -->
+                    <!-- quick links -->
+                    <div class="col-md-3 col-sm-6 footer-grids mt-sm-0 mt-4">
+                        <h3 class="text-white font-weight-bold mb-3">About Us</h3>
+                        <ul>
+                            <li class="mb-3">
+                                <a href="{% url 'contactus' %}">Contact Us</a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="../aboutus/help.html">Help</a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="faqs.html">Faqs</a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="../aboutus/terms.html">Terms of use</a>
+                            </li>
+                            <li>
+                                <a href="../aboutus/privacy.html">Privacy Policy</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-6 footer-grids mt-md-0 mt-4">
+                        <h3 class="text-white font-weight-bold mb-3">Get in Touch</h3>
+                        <ul>
+                            {% for companycontactdetail in companycontactdetails %}
+                                <li class="mb-3">
+                                    <i class="fas fa-map-marker"></i> {{ companycontactdetail.location }}
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-mobile"></i> {{ companycontactdetail.mobile }}
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-phone"></i> {{ companycontactdetail.telephone }}
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-envelope-open"></i>
+                                    <a href="mailto:example@mail.com"> {{ companycontactdetail.emailaddress1 }}</a>
+                                </li>
+                                <li>
+                                    <i class="fas fa-envelope-open"></i>
+                                    <a href="mailto:example@mail.com"> {{ companycontactdetail.emailaddress2 }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-6 footer-grids w3l-agileits mt-md-0 mt-4">
+                        <!-- newsletter -->
+                        <h3 class="text-white font-weight-bold mb-3">Newsletter</h3>
+                        <p class="mb-3">Free Delivery on your first order!</p>
+                        <form action="#" method="post">
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Email" name="email" required="">
+                                <input type="submit" value="Go">
+                            </div>
+                        </form>
+                        <!-- //newsletter -->
+                        <!-- social icons -->
+                        <div class="footer-grids  w3l-socialmk mt-3">
+                            <h3 class="text-white font-weight-bold mb-3">Follow Us on</h3>
+                            <div class="social">
+                                <ul>
+                                    {% for socialmedialink in companysocialmedialinks %}
+                                        <li>
+                                            <a class="icon fb" href="{{ socialmedialink.facebook }}">
+                                                <i class="fab fa-facebook-f"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="icon tw" href="{{ socialmedialink.twitter }}">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="icon gp" href="{{ socialmedialink.instagram }}">
+                                                <i class="fab fa-instagram"></i>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- //social icons -->
+                    </div>
+                </div>
+                <!-- //quick links -->
+            </div>
+        </div>
+        <!-- //footer third section -->
 
-
-
-  </body>
-
+        <!-- footer fourth section -->
+        <div class="agile-sometext py-md-5 py-sm-4 py-3">
+            <div class="container">
+                <!-- //brands -->
+                <!-- payment -->
+                <div class="sub-some child-momu mt-4">
+                    <h5 class="font-weight-bold mb-3">Payment Method</h5>
+                    <ul>
+                        <li>
+                            <img src="{% static 'store/images/pay2.png' %}" alt="">
+                        </li>
+                        <li>
+                            <img src="{% static 'store/images/pay5.png' %}" alt="">
+                        </li>
+                        <li>
+                            <img src="{% static 'store/images/pay1.png' %}" alt="">
+                        </li>
+                        <li>
+                            <img src="{% static 'store/images/pay4.png' %}" alt="">
+                        </li>
+                        <li>
+                            <img src="{% static 'store/images/pay6.png' %}" alt="">
+                        </li>
+                        <li>
+                            <img src="{% static 'store/images/pay3.png' %}" alt="">
+                        </li>
+                        <li>
+                            <img src="{% static 'store/images/pay7.png' %}" alt="">
+                        </li>
+                        <li>
+                            <img src="{% static 'store/images/pay8.png' %}" alt="">
+                        </li>
+                        <li>
+                            <img src="{% static 'store/images/pay9.png' %}" alt="">
+                        </li>
+                    </ul>
+                </div>
+                <!-- //payment -->
+            </div>
+        </div>
+        <!-- //footer fourth section (text) -->
+    </footer>
+    <!-- //footer -->
+    <!-- copyright -->
+    <div class="copy-right py-3">
+        <div class="container">
+            <p class="text-center text-white">© {% now 'Y' %} Buy Sell Auto. All rights reserved | Design by
+                <a href="http://w3layouts.com"> W3layouts.</a>
+            </p>
+        </div>
+    </div>
 {% endblock %}

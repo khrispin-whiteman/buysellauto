@@ -1,0 +1,60 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Equipments{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <!-- search -->
+            <div class="col-10 agileits_search">
+                <form class="form-inline" action="{% url 'product_search' %}" method="GET">
+                    {% if keywords %}
+                        <input class="form-control mr-sm-2" name="q" value="{{ keywords }}" type="search"
+                               placeholder="Search by keywords, car type, brand, agent, etc"
+                               aria-label="Search" required>
+
+                    {% else %}
+                        <input class="form-control mr-sm-2" name="q" type="search"
+                               placeholder="Search by, equipment, brand, agent, etc"
+                               aria-label="Search" required>
+                    {% endif %}
+                    <button class="btn my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <br>
+        <div>
+            All Equipments
+        </div>
+        <hr>
+        <div class="row">
+            {% for product in products|slice:":15" reversed %}
+                <div class="col-sm-4">
+                    <div class="card">
+                    <div class="card-header">
+                        {{ product.equipment_listing_type }}
+                    </div>
+                        {% for p_image in product.equipmentimage_set.all|slice:":1" %}
+                            <img class="card-img-top" src="
+                        {% if p_image.image %}
+
+                                {{ p_image.image.url }}
+
+                         {% else %}
+                               {% static 'store/images/blank-car.jpg' %}
+                          {% endif %}" alt="Card image cap">
+                        {% endfor %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.equipment_name }}</h5>
+                            <h5 class="card-title">ZMW {{ product.equipment_price }}</h5>
+                            <a href="{% url 'equipment_detail' product.id %}" class="btn btn-outline-primary btn-block">View</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

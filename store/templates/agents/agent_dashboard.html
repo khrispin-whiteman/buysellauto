@@ -1,0 +1,206 @@
+{% extends 'agents/agent_base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+
+        <div class="main-panel">
+            <nav class="navbar navbar-default navbar-fixed">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                data-target="#navigation-example-2">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Dashboard</a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a class="btn btn-sm" href="{% url 'logout' %}">
+                                    <p>Log out <span class="fa fa-sign-out"></span></p>
+                                </a>
+                            </li>
+                            <li class="separator hidden-lg"></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="content">
+                <div class="container-fluid">
+
+                    <div class="row p-3">
+                        <div class="col-md-12 p-3">
+                            <div class="card p-3">
+                                <div class="header">
+                                    <h4 class="title">Statistics</h4>
+                                </div>
+                                <div class="row" style="padding: 10px">
+                                    <div class="col-sm-4">
+                                        <div class="card" style="padding: 5px; background-color: #5a6268; ">
+                                            <div class="card-body">
+
+                                                <h5 class="card-title justify-content-center">
+                                                    <span class="fa fa-car fa-2x fa-autoprefixer" style="color: white; ">Vehicles</span>
+                                                </h5>
+                                                <br>
+                                                <div class="card col-sm-4"
+                                                     style="background-color: #1DC7EA; color: white; padding: 5px">
+
+                                                    <div class="card-header">
+                                                        <center><b>ALL</b></center>
+                                                    </div>
+                                                    <hr>
+                                                    <center><b>{{ all_vehicles | length }}</b></center>
+                                                </div>
+                                                <div class="card col-sm-4"
+                                                     style="background-color: #6dc030; color: white; padding: 5px;">
+                                                    <div class="card-header">
+                                                        <center><b>ACTIVE</b></center>
+                                                    </div>
+                                                    <hr>
+                                                    <center><b>{{ active_vehicles | length }}</b></center>
+                                                </div>
+                                                <div class="card col-sm-4"
+                                                     style="background-color: orange; color: white; padding: 5px;">
+                                                    <div class="card-header">
+                                                        <center><b>SOLD</b></center>
+                                                    </div>
+                                                    <hr>
+                                                    <center><b>20</b></center>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="card" style="padding: 5px; background-color: rebeccapurple; ">
+
+                                            <div class="card-body">
+
+                                                <h5 class="card-title justify-content-center">
+                                                    <span class="fa fa-gear fa-2x fa-autoprefixer" style="color: white">Equipments</span>
+                                                </h5>
+
+
+                                                <br>
+                                                <div class="card col-sm-4"
+                                                     style="background-color: blue; color: white; padding: 5px">
+
+                                                    <div class="card-header">
+                                                        <center><b>ALL</b></center>
+                                                    </div>
+                                                    <hr>
+                                                    <center><b>{{ all_equipments | length }}</b></center>
+                                                </div>
+                                                <div class="card col-sm-4"
+                                                     style="background-color: green; color: white; padding: 5px;">
+                                                    <div class="card-header">
+                                                        <center><b>ACTIVE</b></center>
+                                                    </div>
+                                                    <hr>
+                                                    <center><b>{{ active_equipments | length }}</b></center>
+                                                </div>
+                                                <div class="card col-sm-4"
+                                                     style="background-color: saddlebrown; color: white; padding: 5px;">
+                                                    <div class="card-header">
+                                                        <center><b>SOLD</b></center>
+                                                    </div>
+                                                    <hr>
+                                                    <center><b>20</b></center>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <nav class="pull-left">
+                <ul>
+                    <li>
+                        <a href="#">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Company
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Portfolio
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Blog
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <p class="copyright pull-right">
+                &copy;
+                <script>document.write(new Date().getFullYear())</script>
+                <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+            </p>
+        </div>
+    </footer>
+
+    </div>
+    </div>
+{% endblock %}
+

@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'import_export',
     'tinymce',
     'businessdirectory',
+    'aboutus',
+    'agents',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -135,4 +138,4 @@ TINYMCE_FILEBROWSER = True
 # User Settings
 AUTH_USER_MODEL = 'store.User'
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL='/'

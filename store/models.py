@@ -14,11 +14,20 @@ CAR_LISTING_TYPE = (
     ('Classified', 'Classified'),
 )
 
+CAR_STATUS = (
+    ('New', 'New'),
+    ('Used', 'Used'),
+)
+
 
 class User(AbstractUser):
     is_agent = models.BooleanField(default=False)
     is_employee = models.BooleanField(default=False)
+    portfolio_site = models.URLField(blank=True)
     phone = models.CharField(max_length=60, blank=True, null=True)
+    country = models.CharField('Country', max_length=60, blank=True, null=True)
+    city = models.CharField('City', max_length=60, blank=True, null=True)
+    postal_code = models.CharField('Postal Code', max_length=60, blank=True, null=True)
     address = models.CharField(max_length=60, blank=True, null=True)
     picture = models.ImageField(upload_to="users/pictures/%Y/%m/%d'", blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
@@ -74,32 +83,35 @@ class Location(models.Model):
 
 
 class Product(models.Model):
-    user = models.ForeignKey(User, verbose_name='Shop Name', null=True, default='', on_delete=models.CASCADE)
+    is_vehicle_model = models.BooleanField(default=True)
+    user = models.ForeignKey(User, verbose_name='Agent Name', null=True, default='', on_delete=models.CASCADE)
     category = models.ForeignKey(Category, null=True, related_name='products', default='', on_delete=models.CASCADE)
     brand = models.CharField(max_length=200, verbose_name='Brand', null=True, blank=True)
     title = models.CharField('Product Title', max_length=200, help_text='Name of product')
     # description = models.TextField(null=True, blank=True)
-    stock = models.IntegerField(null=True, blank=True, default=0)
+    stock = models.IntegerField(null=True, blank=True, default=1)
     sold = models.IntegerField(null=True, blank=True, default=0)
     description = HTMLField()
     price = models.DecimalField(decimal_places=2, max_digits=100, default=0.00)
     sale_price = models.DecimalField(decimal_places=2, null=True, blank=True, max_digits=100, default=0.00)
     slug = models.SlugField(unique=True)
     listing_type = models.CharField(max_length=200, verbose_name='Listing Type', default='', choices=CAR_LISTING_TYPE)
+    vehicle_status = models.CharField(max_length=200, verbose_name='Vehicle Status', default='', choices=CAR_STATUS)
     mileage = models.CharField('Mileage', max_length=200, default=0, )
+    year = models.CharField('Year', max_length=200, default=0, help_text='Year of Manufacture')
     location = models.ForeignKey(Location, null=True, related_name='location', default='', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name_plural = 'Products'
-        verbose_name = 'Product'
+        verbose_name_plural = 'Vehicles'
+        verbose_name = 'Vehicle'
         index_together = ('id', 'slug')
         unique_together = ('title', 'slug')
 
     def __str__(self):
-        return self.title
+        return self.title + ', Seller Name: ' + self.user.username + ', Seller No.: ' + self.user.phone
 
     def get_price(self):
         return self.price
@@ -118,6 +130,10 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return self.product.title
+
+    class Meta:
+        verbose_name_plural = 'Vehicle Images'
+        verbose_name = 'Vehicle Images'
 
 
 class ProductVariationManager(models.Manager):
@@ -161,13 +177,30 @@ class EventType(models.Model):
 
 
 class Event(models.Model):
+    is_event_model = models.BooleanField(default=True)
     event_type = models.ForeignKey(EventType, on_delete=models.CASCADE)
     event_name = models.CharField('Event Name', max_length=200)
     slug = models.SlugField(max_length=150, unique=True, db_index=True)
     event_description = HTMLField()
     event_date = models.DateTimeField('Date Of Event')
+    posted_on = models.DateTimeField(auto_now=True)
+    venue = models.CharField('Venue', max_length=200, default='')
 
     def __str__(self):
         return self.event_name
+
+
+class QuickLinks(models.Model):
+    is_quicklinks_model = models.BooleanField(default=True)
+    link_name = models.CharField('Link Name', max_length=200)
+    link = models.URLField('Url', default='', help_text='(e.g) www.necor.co.zm')
+
+    def __str__(self):
+        return self.link_name
+
+
+
+
+
 
 

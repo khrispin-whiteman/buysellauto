@@ -1,11 +1,21 @@
 from django.contrib import admin
+from django.contrib.auth import get_user_model
+from django.contrib.auth.admin import UserAdmin
 from django.utils.safestring import mark_safe
 from import_export.admin import ImportExportModelAdmin
+from django import forms
 
-from store.models import Product, Category, ProductImage, ProductVariation, Location, EventType, Event
+from store.models import Product, Category, ProductImage, ProductVariation, Location, EventType, Event, User
 
 
 # Register your models here.
+class TheUserAdmin(UserAdmin):
+    list_display = ('id', 'username', 'first_name', 'last_name', 'phone', 'address', 'email', 'is_agent', 'is_employee', )
+    list_display_links = ('id', 'first_name', 'last_name', 'phone', 'address', 'email', 'is_agent', 'is_employee', )
+    list_per_page = 10
+    search_fields = ('id', 'username', 'first_name', 'last_name', 'phone', 'address', 'email', 'is_agent', 'is_employee', )
+
+
 class CategoryAdmin(ImportExportModelAdmin):
     list_display = ('category_name', 'slug', 'created_at', 'updated_at')
     prepopulated_fields = {'slug': ('category_name',)}
@@ -13,14 +23,23 @@ class CategoryAdmin(ImportExportModelAdmin):
     list_per_page = 10
 
 
+class ProductUserAgentDropDownFields(forms.ModelForm):
+    user = forms.ModelChoiceField(User.objects.filter(is_agent=True))
+
+    class Meta:
+        model = Product
+        exclude = ('created', )
+
+
 class ProductAdmin(ImportExportModelAdmin):
-    list_display = ('title', 'active', 'price', 'sale_price', 'slug', 'location', 'mileage', 'listing_type', 'category', 'created_at', 'updated_at')
+    #form = ProductUserAgentDropDownFields
+    list_display = ('user', 'title', 'active', 'price', 'sale_price', 'slug', 'location', 'mileage', 'listing_type', 'category', 'created_at', 'updated_at')
     list_editable = ('price', 'sale_price',)
     search_fields = ('title', 'price', 'category__name')
     list_filter = ('active', 'created_at', 'updated_at')
     prepopulated_fields = {'slug': ('title',)}
     list_per_page = 10
-    autocomplete_fields = ('category', )
+    autocomplete_fields = ('category', 'user')
     date_hierarchy = 'updated_at'
 
 
@@ -55,15 +74,16 @@ class EventTypeAdmin(ImportExportModelAdmin):
 
 
 class EventAdmin(ImportExportModelAdmin):
-    list_display = ('event_type', 'event_name', 'slug', 'event_date',)
+    list_display = ('event_type', 'event_name', 'slug', 'event_date', 'venue', 'posted_on')
     list_filter = ('event_type', 'event_date',)
     search_fields = ('event_type', 'event_name', 'slug')
     list_per_page = 10
     prepopulated_fields = {'slug': ('event_name',)}
     autocomplete_fields = ('event_type', )
-    date_hierarchy = 'event_date'
+    date_hierarchy = 'posted_on'
 
 
+admin.site.register(User, TheUserAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
 admin.site.register(Category, CategoryAdmin)
