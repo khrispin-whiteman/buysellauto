@@ -32,7 +32,6 @@ class EquipmentType(models.Model):
         return self.equipment_type
 
 
-
 class Equipment(models.Model):
     is_equipment_model = models.BooleanField(default=True, editable=False)
     user = models.ForeignKey(User, verbose_name='Agent Name', null=True, default='', on_delete=models.CASCADE)
@@ -68,7 +67,7 @@ class EquipmentImage(models.Model):
 
 # Auto shops/Car was/etc
 class AutoShopAndCarWash(models.Model):
-    is_autoshopandcarwash_model = models.BooleanField(default=True)
+    is_autoshopandcarwash_model = models.BooleanField(default=True, editable=False)
     category = models.CharField('Category', choices=AUTOSHOPANDCARWASH, max_length=200)
     name = models.CharField('Name', max_length=200, help_text='name of car wash')
     location = models.CharField('Location', max_length=200, help_text='location of car wash')
@@ -76,9 +75,10 @@ class AutoShopAndCarWash(models.Model):
     description = HTMLField(help_text='Services offered...')
     coverpic = models.ImageField(upload_to='carwash/coverpic/%Y/%m/%d', null=True, blank=True)
     profilepic = models.ImageField(upload_to='carwash/profilepic/%Y/%m/%d', null=True, blank=True)
-    facebook_link = models.URLField(default='')
-    twitter_link = models.URLField(default='')
-    instagram_link = models.URLField(default='')
+    facebook_link = models.URLField(default='www.facebook.com')
+    twitter_link = models.URLField(default='www.twitter.com')
+    instagram_link = models.URLField(default='www.instagram.com')
+    coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='', help_text='Check name of the place on google maps or can use latitude and longitude (lati,longi)')
 
 
     def __str__(self):

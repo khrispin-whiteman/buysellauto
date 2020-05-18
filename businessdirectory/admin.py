@@ -30,10 +30,10 @@ class EquipmentImageAdmin(ImportExportModelAdmin):
 
 
 class AutoShopAndCarWashAdmin(ImportExportModelAdmin):
-    list_display = ('name', 'category', 'location', 'contact', 'coverpic', 'profilepic')
-    list_display_links = ('name', 'category', 'location', 'contact', 'coverpic', 'profilepic')
+    list_display = ('name', 'category', 'location', 'coordinates', 'contact', 'coverpic', 'profilepic')
+    list_display_links = ('name', 'category', 'location', 'coordinates', 'contact', 'coverpic', 'profilepic')
     list_per_page = 10
-    search_fields = ('name', 'category', 'location', 'contact',)
+    search_fields = ('name', 'category', 'location', 'coordinates', 'contact',)
 
 
 
