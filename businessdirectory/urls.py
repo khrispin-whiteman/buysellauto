@@ -9,4 +9,5 @@ urlpatterns = [
     path('car_wash/<int:id>/', views.car_wash_detail, name='car_wash_detail'),
     path('auto_shop/', views.auto_shop_view, name='auto_shop_view'),
     path('auto_shop/<int:id>/', views.auto_shop_detail, name='auto_shop_detail'),
+    path('sendmail/', views.send_mail, name='sendmail'),
 ]

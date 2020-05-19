@@ -154,7 +154,7 @@ def submit_order(request, id, slug):
             # order.province = request.cleaned_data.get('province')
             order.save()
             messages.success(request, 'Order was successfully submitted.')
-            return redirect('index')
+            return redirect('order_request_done')
 
         else:
             messages.success(request, 'Invalid form submitted.')

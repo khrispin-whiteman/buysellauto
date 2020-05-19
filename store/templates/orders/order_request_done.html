@@ -1,11 +1,23 @@
+{% extends 'store/base.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Order Success</title>
 </head>
 <body>
-Order request successfully submited.
-You will be notified as soon as its processed.
+<br><br>
+
+{% block content %}
+    <div class="jumbotron">
+    <center>
+        Order request successfully submitted.<br>
+        Check your mail box.<br>
+        <a class="btn btn-outline-success" href="{% url 'index' %}">Continue Shopping</a>
+    </center>
+    </div>
+
+{% endblock %}
+
 </body>
 </html>

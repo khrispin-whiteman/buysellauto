@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 
 # Create your views here.
 from aboutus.models import CompanyContactDetails, CompanySocialMediaLinks
@@ -7,6 +7,19 @@ from agents.models import Agent
 from businessdirectory.models import Equipment, EquipmentType, AutoShopAndCarWash
 from orders.forms import OrderForm
 from store.models import EventType, Location, Product
+from django.core.mail import send_mail as sm
+
+
+def send_mail(request):
+    res = sm(
+        subject = 'Subject Test',
+        message = 'Hello whiteman, just testing sending of emails via gmail smtp with django.',
+        from_email = 'chrispinkay@gmail.com',
+        recipient_list = ['khrispinwhiteman@gmail.com'],
+        fail_silently=False,
+    )
+
+    return HttpResponse(f"Email sent to {res} members")
 
 
 def equipments(request, category_slug=None):
