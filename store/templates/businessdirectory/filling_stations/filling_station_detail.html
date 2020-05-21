@@ -1,0 +1,82 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Filling Stations{% endblock %}
+
+{% block content %}
+    <!-- Page Content -->
+    <div class="container">
+        <a href="{% url 'filling_stations_list' %}">Filling Stations</a> | {{ filling_station.name | capfirst }}
+        <hr>
+        <!-- Portfolio Item Heading -->
+        <h2 class="my-4">{{ filling_station.name | capfirst }}
+            <small>({{ filling_station.location | capfirst }})</small>
+        </h2>
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+
+            <div class="col-md-8">
+                {% if filling_station.picture %}
+                    <img class="card-img-top img-fluid" alt="Product" src="{{ filling_station.picture.url }}"/>
+                {% else %}
+                    <img class="card-img-top img-fluid" alt="Product"
+                         src="{% static 'img/filling_station_thumbnail.jpeg' %}"/>
+                {% endif %}
+
+                <br>
+
+                Map View
+            <hr>
+                <iframe src="https://www.google.com/maps/embed/v1/directions?origin=current+location&destination=
+                        {% if filling_station.coordinates %}{{ filling_station.coordinates }}{% else %}{% for cd in companycontactdetails %}{{ cd.location }}{% endfor %}{% endif %}&key=AIzaSyC-5CY9mOCeg5Y3IhPqi_Yd0-DZtWrJl-E"
+                        width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""
+                        aria-hidden="false"
+                        tabindex="0">
+                </iframe>
+            </div>
+
+            <div class="col-md-4">
+                <h3 class="my-3">Station Details</h3>
+                <ul>
+                    <li><b>Location:</b></li>
+                    {{ filling_station.location }}
+                    {% if filling_station.contact %}
+                        <li><b>Contact:</b></li>
+                        <a href="tel://{{ filling_station.contact }}">{{ filling_station.contact }}</a>
+                    {% endif %}
+                    {% if filling_station.website_link %}
+                        <li><b>Website:</b></li>
+                        <a href="{{ filling_station.website_link }}">{{ filling_station.website_link }}</a>
+                    {% endif %}
+                </ul>
+            </div>
+
+        </div>
+        <!-- /.row -->
+<br><br>
+        <!-- Related Projects Row -->
+        <h3 class="my-4">Other {{ filling_station.name | capfirst }} Locations</h3>
+
+        <div class="row">
+            {% for other_filling_station in other_filling_stations|slice:":4" reversed %}
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <a href="{% url 'filling_stations_detail' other_filling_station.id %}">
+                        {% if filling_station.picture %}
+                            <img class="card-img-top img-fluid" alt="Product" src="{{ filling_station.picture.url }}"/>
+                        {% else %}
+                            <img class="card-img-top img-fluid" alt="Product"
+                                 src="{% static 'img/filling_station_thumbnail.jpeg' %}"/>
+                        {% endif %}
+
+                    <h5>{{ other_filling_station.location | capfirst }}</h5>
+                    </a>
+                </div>
+            {% endfor %}
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+{% endblock %}

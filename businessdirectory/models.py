@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 from tinymce.models import HTMLField
 from store.models import User, Category
 
@@ -53,13 +54,18 @@ class Equipment(models.Model):
 class EquipmentImage(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='equipments/images/%Y/%m/%d', null=True)
-    featured = models.BooleanField(default=False)
-    thumbnail = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.equipment.equipment_name
+
+    def image_tag(self):
+        if self.image:
+            return mark_safe('<img src="%s" style="width: 50px; height: 50px;"/>' % self.image.url)
+        else:
+            return 'No image found!'
+    image_tag.short_description = 'Image'
 
 
 # class AutoEngineering(models.Model):
@@ -79,7 +85,7 @@ class AutoShopAndCarWash(models.Model):
     twitter_link = models.URLField(default='www.twitter.com')
     instagram_link = models.URLField(default='www.instagram.com')
     coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='', help_text='Check name of the place on google maps or can use latitude and longitude (lati,longi)')
-
+    website_link = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -88,17 +94,121 @@ class AutoShopAndCarWash(models.Model):
         verbose_name_plural = 'Auto shops/Car wash/etc'
         verbose_name = 'Auto shops/Car wash/etc'
 
+    def coverpic_tag(self):
+        if self.coverpic:
+            return mark_safe('<img src="%s" style="width: 50px; height: 50px;"/>' % self.coverpic.url)
+        else:
+            return 'No image found!'
+    coverpic_tag.short_description = 'Cover Pic'
+
+    def profilepic_tag(self):
+        if self.profilepic:
+            return mark_safe('<img src="%s" style="width: 50px; height: 50px;"/>' % self.profilepic.url)
+        else:
+            return 'No image found!'
+    profilepic_tag.short_description = 'Profile Pic'
+
+# done
+class FillingStationDirectory(models.Model):
+    filling_station_name = models.CharField('Filling Station Name', max_length=200)
+
+    def __str__(self):
+        return self.filling_station_name
+
 
 class FillingStation(models.Model):
-    name = models.CharField("name", max_length=200)
+    name = models.ForeignKey(FillingStationDirectory, verbose_name="Filling Station Name", on_delete=models.CASCADE)
     location = models.CharField('Location', max_length=200, )
     picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
+    coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
+                                   help_text='Check name of the place on google maps or can use latitude and longitude (lati,longi)')
+    website_link = models.URLField(null=True, blank=True, help_text='Optional')
+    contact = models.CharField('Contact', max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.name)
+
+    def picture_tag(self):
+        if self.picture:
+            return mark_safe('<img src="%s" style="width: 50px; height: 50px;"/>' % self.picture.url)
+        else:
+            return 'No image found!'
+    picture_tag.short_description = 'Image'
 
 
 class FinancialInstitutions(models.Model):
-    name = models.CharField('name', max_length=200)
+    name = models.CharField('Name', max_length=200)
     location = models.CharField('Location', max_length=200, )
     picture = models.ImageField(upload_to='financialinstitution/%Y/%m/%d', null=True, blank=True)
+    coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
+                                   help_text='Check name of the place on google maps or can use latitude and longitude (lati,longi)')
+    website_link = models.URLField(null=True, blank=True, help_text='Optional')
+    contact = models.CharField('Contact', max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
 
 
+class MotorisedServices(models.Model):
+    name = models.CharField("name", max_length=200)
+    location = models.CharField('Location', max_length=200, )
+    picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
+    coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
+                                   help_text='Check name of the place on google maps or can use latitude and longitude (lati,longi)')
+    contact = models.CharField('Contact', max_length=200, null=True, blank=True)
+    website_link = models.URLField(null=True, blank=True, help_text='Optional')
 
+    def __str__(self):
+        return self.name
+
+
+class EarthMoving(models.Model):
+    name = models.CharField("name", max_length=200)
+    location = models.CharField('Location', max_length=200, )
+    picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
+    coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
+                                   help_text='Check name of the place on google maps or can use latitude and longitude (lati,longi)')
+    contact = models.CharField('Contact', max_length=200, null=True, blank=True)
+    website_link = models.URLField(null=True, blank=True, help_text='Optional')
+
+    def __str__(self):
+        return self.name
+
+
+class Training(models.Model):
+    name = models.CharField("name", max_length=200)
+    location = models.CharField('Location', max_length=200, )
+    picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
+    coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
+                                   help_text='Check name of the place on google maps or can use latitude and longitude (lati,longi)')
+    contact = models.CharField('Contact', max_length=200, null=True, blank=True)
+    website_link = models.URLField(null=True, blank=True, help_text='Optional')
+
+    def __str__(self):
+        return self.name
+
+
+class AutoEngineering(models.Model):
+    name = models.CharField("name", max_length=200)
+    location = models.CharField('Location', max_length=200, )
+    picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
+    coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
+                                   help_text='Check name of the place on google maps or can use latitude and longitude (lati,longi)')
+    contact = models.CharField('Contact', max_length=200, null=True, blank=True)
+    website_link = models.URLField(null=True, blank=True, help_text='Optional')
+
+    def __str__(self):
+        return self.name
+
+
+class Transportation(models.Model):
+    name = models.CharField("name", max_length=200)
+    location = models.CharField('Location', max_length=200, )
+    picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
+    coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
+                                   help_text='Check name of the place on google maps or can use latitude and longitude (lati,longi)')
+    contact = models.CharField('Contact', max_length=200, null=True, blank=True)
+    website_link = models.URLField(null=True, blank=True, help_text='Optional')
+
+    def __str__(self):
+        return self.name

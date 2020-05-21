@@ -21,6 +21,8 @@ from django.contrib.auth import views
 from django.urls import path, include
 
 urlpatterns = [
+    # path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    # path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     path('admin/', admin.site.urls),
     path('', include('store.urls')),
     path('', include('aboutus.urls')),
@@ -28,10 +30,10 @@ urlpatterns = [
     path('', include('businessdirectory.urls')),
     path('', include('orders.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
-    #path('accounts/', include('django.contrib.auth.urls')),
-    #path('accounts/login/', views.LoginView.as_view(), name='login'),
+    # path('accounts/', include('django.contrib.auth.urls')),
+    # path('accounts/login/', views.LoginView.as_view(), name='login'),
     path('accounts/logout/', views.LogoutView.as_view(), name='logout', kwargs={'next_page': '/'}),
-    #path('froala_editor/', include('froala_editor.urls')),
+    # path('froala_editor/', include('froala_editor.urls')),
 ]
 
 admin.site.site_header = 'Buy Sell Auto Administration'

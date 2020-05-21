@@ -348,39 +348,43 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <div class="container">
-    <div class="header">
-        Auto Shops
-    </div>
-    <hr>
+        <div class="header row inline-group">
+            <h2 class="col-sm-5 font-weight-bold pull-left">Auto Shops</h2>
+            <input class="col-sm-6 pull-right form-control" type="text" placeholder="Search Auto Shop">
+        </div>
+        <hr>
         <div class="row clearfix">
             {% for autoshop in auto_shop %}
                 <div class="col-lg-3 col-md-4 col-sm-12">
                     <div class="card product_item">
                         <div class="body">
-                        <a href="{% url 'auto_shop_detail' autoshop.id %}">
-                            <div class="cp_img">
-                                {% if autoshop.profilepic %}
-                                    <img class="img-fluid" alt="Product" src="{{ autoshop.profilepic.url }}"/>
-                                {% else %}
-                                    <img class="img-fluid" alt="Product"
-                                         src="{% static 'img/auto_shop_avatar.jpg' %}"/>
-                                {% endif %}
+                            <a href="{% url 'auto_shop_detail' autoshop.id %}">
+                                <div class="cp_img">
+                                    {% if autoshop.profilepic %}
+                                        <img class="img-fluid" alt="Product" src="{{ autoshop.profilepic.url }}"/>
+                                    {% else %}
+                                        <img class="img-fluid" alt="Product"
+                                             src="{% static 'img/auto_shop_avatar.jpg' %}"/>
+                                    {% endif %}
 
-                                <div class="hover">
-                                    <a href="{{ autoshop.facebook_link }}" class="btn btn-primary btn-sm waves-effect"><i
-                                            class="fab fa-facebook-f"></i></a>
-                                    <a href="{{ autoshop.twitter_link }}" class="btn btn-primary btn-sm waves-effect"><i
-                                            class="fab fa-twitter"></i></a>
-                                    <a href="{{ autoshop.instagram_link }}" class="btn btn-primary btn-sm waves-effect"><i
-                                            class="fab fa-instagram"></i></a>
+                                    <div class="hover">
+                                        <a href="{{ autoshop.facebook_link }}"
+                                           class="btn btn-primary btn-sm waves-effect"><i
+                                                class="fab fa-facebook-f"></i></a>
+                                        <a href="{{ autoshop.twitter_link }}"
+                                           class="btn btn-primary btn-sm waves-effect"><i
+                                                class="fab fa-twitter"></i></a>
+                                        <a href="{{ autoshop.instagram_link }}"
+                                           class="btn btn-primary btn-sm waves-effect"><i
+                                                class="fab fa-instagram"></i></a>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
                             <div class="product_details">
                                 <h5><a href="ec-product-detail.html">{{ autoshop.name }}</a></h5>
                                 <ul class="product_price list-unstyled">
                                     <li class="old_price">
-                                            *{{ autoshop.location | capfirst }}*
+                                        *{{ autoshop.location | capfirst }}*
                                     </li>
                                     <li class="new_price">{{ autoshop.contact }}</li>
                                 </ul>
@@ -388,7 +392,7 @@
                         </div>
                     </div>
                 </div>
-                {% empty %}
+            {% empty %}
                 No Auto Shop Found
             {% endfor %}
 

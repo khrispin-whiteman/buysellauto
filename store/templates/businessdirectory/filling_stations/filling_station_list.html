@@ -1,0 +1,61 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Filling Stations{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="header row inline-group">
+            <h2 class="col-sm-5 font-weight-bold pull-left">Filling Stations</h2>
+            <input class="col-sm-6 pull-right form-control" type="text" placeholder="Search Station">
+        </div>
+
+        <hr>
+        <div class="row">
+            {% for filling_station in filling_stations %}
+                <div class="col-sm-4 py-2">
+                    <div class="card h-100 text-black-50">
+                        {% if filling_station.picture %}
+                            <img class="card-img-top img-fluid" alt="Product" src="{{ filling_station.picture.url }}"/>
+                        {% else %}
+                            <img class="card-img-top img-fluid" alt="Product"
+                                 src="{% static 'img/filling_station_thumbnail.jpeg' %}"/>
+                        {% endif %}
+
+                        <div class="card-body justify-content-center">
+                            <h3 class="card-title">{{ filling_station.name | capfirst }}</h3>
+                            <p class="card-text">{{ filling_station.location }}</p>
+                            {% if filling_station.website_link %}
+                                <p class="card-text">
+                                    <a href="{{ filling_station.website_link }}">{{ filling_station.website_link }}</a>
+                                </p>
+                            {% endif %}
+                            <div class="card-footer">
+                                <a title="Click to view Map"
+                                   href="{% url 'filling_stations_detail' filling_station.id %}"
+                                   class="btn btn-block btn-outline-primary">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="col-sm-4 py-2">
+                <div class="card h-100 border-primary">
+                    <div class="card-body">
+                        <h3 class="card-title">Primary</h3>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-outline-secondary">Outline</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 py-2">
+
+                <div class="card h-100 card-body">
+                    Card. I'm just a simple card-block.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

@@ -1,15 +1,14 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect, HttpResponse
-
-# Create your views here.
 from aboutus.models import CompanyContactDetails, CompanySocialMediaLinks
 from agents.models import Agent
-from businessdirectory.models import Equipment, EquipmentType, AutoShopAndCarWash
+from businessdirectory.models import Equipment, EquipmentType, AutoShopAndCarWash, FillingStation
 from orders.forms import OrderForm
 from store.models import EventType, Location, Product
 from django.core.mail import send_mail as sm
 
 
+# Create your views here.
 def send_mail(request):
     res = sm(
         subject = 'Subject Test',
@@ -356,3 +355,23 @@ def auto_shop_detail(request, id):
         #'hire_cars': hire_products,
     }
     return render(request, 'businessdirectory/auto_shop_detail.html', context)
+
+
+# filling station list
+def filling_stations_list(request):
+    filling_stations = FillingStation.objects.all()
+    return render(request, 'businessdirectory/filling_stations/filling_station_list.html',
+                  {
+                      'filling_stations': filling_stations,
+                  })
+
+
+# filling station list
+def filling_stations_detail(request, id):
+    filling_station = FillingStation.objects.get(id=id)
+    other_filling_stations = FillingStation.objects.filter(name=filling_station.name)
+    return render(request, 'businessdirectory/filling_stations/filling_station_detail.html',
+                  {
+                      'filling_station': filling_station,
+                      'other_filling_stations': other_filling_stations,
+                  })

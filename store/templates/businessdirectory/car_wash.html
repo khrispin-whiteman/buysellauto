@@ -348,39 +348,40 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <div class="container">
-    <div class="header">
-        Car Wash
-    </div>
-    <hr>
+        <div class="header row inline-group">
+            <h2 class="col-sm-5 font-weight-bold pull-left">Car Washes</h2>
+            <input class="col-sm-6 pull-right form-control" type="text" placeholder="Search Car Wash">
+        </div>
+        <hr>
         <div class="row clearfix">
             {% for carwash in car_wash %}
                 <div class="col-lg-3 col-md-4 col-sm-12">
                     <div class="card product_item">
                         <div class="body">
-                        <a href="{% url 'car_wash_detail' carwash.id %}">
-                            <div class="cp_img">
-                                {% if carwash.profilepic %}
-                                    <img class="img-fluid" alt="Product" src="{{ carwash.profilepic.url }}"/>
-                                {% else %}
-                                    <img class="img-fluid" alt="Product"
-                                         src="{% static 'img/car_wash_avatar.jpg' %}"/>
-                                {% endif %}
+                            <a href="{% url 'car_wash_detail' carwash.id %}">
+                                <div class="cp_img">
+                                    {% if carwash.profilepic %}
+                                        <img class="img-fluid" alt="Product" src="{{ carwash.profilepic.url }}"/>
+                                    {% else %}
+                                        <img class="img-fluid" alt="Product"
+                                             src="{% static 'img/car_wash_avatar.jpg' %}"/>
+                                    {% endif %}
 
-                                <div class="hover">
-                                    <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect"><i
-                                            class="fab fa-facebook-f"></i></a>
-                                    <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect"><i
-                                            class="fab fa-twitter"></i></a>
-                                    <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect"><i
-                                            class="fab fa-instagram"></i></a>
+                                    <div class="hover">
+                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect"><i
+                                                class="fab fa-facebook-f"></i></a>
+                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect"><i
+                                                class="fab fa-twitter"></i></a>
+                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect"><i
+                                                class="fab fa-instagram"></i></a>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
                             <div class="product_details">
                                 <h5><a href="ec-product-detail.html">{{ carwash.name }}</a></h5>
                                 <ul class="product_price list-unstyled">
                                     <li class="old_price">
-                                            *{{ carwash.location | capfirst }}*
+                                        *{{ carwash.location | capfirst }}*
                                     </li>
                                     <li class="new_price">{{ carwash.contact }}</li>
                                 </ul>
@@ -388,7 +389,7 @@
                         </div>
                     </div>
                 </div>
-                {% empty %}
+            {% empty %}
                 No Car Wash Found
             {% endfor %}
 

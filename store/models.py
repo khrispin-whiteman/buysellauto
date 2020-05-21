@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
 # from froala_editor.fields import FroalaField
+from django.utils.safestring import mark_safe
 from tinymce.models import HTMLField
 
 # Create your models here.
@@ -123,13 +124,20 @@ class Product(models.Model):
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='products/images/%Y/%m/%d', null=True)
-    featured = models.BooleanField(default=False)
-    thumbnail = models.BooleanField(default=False)
+    # featured = models.BooleanField(default=False)
+    # thumbnail = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.product.title
+
+    def image_tag(self):
+        if self.image:
+            return mark_safe('<img src="%s" style="width: 50px; height: 50px;"/>' % self.image.url)
+        else:
+            return 'No image found!'
+    image_tag.short_description = 'Image'
 
     class Meta:
         verbose_name_plural = 'Vehicle Images'

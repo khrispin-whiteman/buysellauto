@@ -44,10 +44,11 @@ class ProductAdmin(ImportExportModelAdmin):
 
 
 class ProductImageAdmin(ImportExportModelAdmin):
-    list_display = ('product', 'image', 'featured', 'thumbnail', 'active', 'updated_at')
-    list_filter = ('updated_at', 'featured', 'thumbnail', 'active',)
+    list_display = ('product', 'image_tag', 'active', 'image', 'updated_at')
+    list_filter = ('updated_at', 'active',)
     list_per_page = 10
     autocomplete_fields = ('product',)
+    search_fields = ('product__title', )
     date_hierarchy = 'updated_at'
 
 
