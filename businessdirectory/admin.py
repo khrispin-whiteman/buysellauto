@@ -4,7 +4,8 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 
 from businessdirectory.models import AutoShopAndCarWash, EquipmentType, Equipment, EquipmentImage, FillingStation, \
-    FillingStationDirectory
+    FillingStationDirectory, FinancialInstitutionDirectory, FinancialInstitution, MotorisedService, AutoEngineering, \
+    EarthMoving, Training, Transportation
 
 
 class EquipmentTypeAdmin(ImportExportModelAdmin):
@@ -58,9 +59,66 @@ class FillingStationAdmin(ImportExportModelAdmin):
     search_fields = ('name__filling_station_name', 'location', 'coordinates', 'contact', 'website_link',)
 
 
+class FinancialInstitutionDirectoryAdmin(ImportExportModelAdmin):
+    list_display = ('financial_institution_name',)
+    list_display_links = ('financial_institution_name',)
+    search_fields = ('financial_institution_name',)
+    list_per_page = 10
+
+
+class FinancialInstitutionAdmin(ImportExportModelAdmin):
+    list_display = ('name', 'location', 'coordinates', 'contact', 'website_link', 'picture_tag', 'picture',)
+    list_display_links = ('name', 'location', 'coordinates', 'contact', 'website_link', 'picture_tag', 'picture',)
+    list_per_page = 10
+    autocomplete_fields = ('name', )
+    search_fields = ('name__financial_institution_name', 'location', 'coordinates', 'contact', 'website_link',)
+
+
+class MotorizedServiceAdmin(ImportExportModelAdmin):
+    list_display = ('name', 'city', 'location', 'coordinates', 'contact', 'website_link', 'picture_tag', 'picture',)
+    list_display_links = ('name', 'city', 'location', 'coordinates', 'contact', 'website_link', 'picture_tag', 'picture',)
+    list_per_page = 10
+    search_fields = ('name', 'city__location_name', 'location', 'coordinates', 'contact', 'website_link',)
+
+
+class AutoEngineeringServiceAdmin(ImportExportModelAdmin):
+    list_display = ('name', 'city', 'location', 'coordinates', 'contact', 'website_link', 'picture_tag', 'picture',)
+    list_display_links = ('name', 'city', 'location', 'coordinates', 'contact', 'website_link', 'picture_tag', 'picture',)
+    list_per_page = 10
+    search_fields = ('name', 'city__location_name', 'location', 'coordinates', 'contact', 'website_link',)
+
+
+class EarthMovingServiceAdmin(ImportExportModelAdmin):
+    list_display = ('name', 'city', 'location', 'coordinates', 'contact', 'website_link', 'picture_tag', 'picture',)
+    list_display_links = ('name', 'city', 'location', 'coordinates', 'contact', 'website_link', 'picture_tag', 'picture',)
+    list_per_page = 10
+    search_fields = ('name', 'city__location_name', 'location', 'coordinates', 'contact', 'website_link',)
+
+
+class TrainingServiceAdmin(ImportExportModelAdmin):
+    list_display = ('name', 'city', 'location', 'coordinates', 'contact', 'website_link', 'picture_tag', 'picture',)
+    list_display_links = ('name', 'city', 'location', 'coordinates', 'contact', 'website_link', 'picture_tag', 'picture',)
+    list_per_page = 10
+    search_fields = ('name', 'city__location_name', 'location', 'coordinates', 'contact', 'website_link',)
+
+
+class TransportationServiceAdmin(ImportExportModelAdmin):
+    list_display = ('name', 'city', 'location', 'coordinates', 'contact', 'website_link', 'picture_tag', 'picture',)
+    list_display_links = ('name', 'city', 'location', 'coordinates', 'contact', 'website_link', 'picture_tag', 'picture',)
+    list_per_page = 10
+    search_fields = ('name', 'city__location_name', 'location', 'coordinates', 'contact', 'website_link',)
+
+
 admin.site.register(AutoShopAndCarWash, AutoShopAndCarWashAdmin)
 admin.site.register(EquipmentImage, EquipmentImageAdmin)
 admin.site.register(EquipmentType, EquipmentTypeAdmin)
 admin.site.register(Equipment, EquipmentAdmin)
 admin.site.register(FillingStationDirectory, FillingStationDirectoryAdmin)
 admin.site.register(FillingStation, FillingStationAdmin)
+admin.site.register(FinancialInstitutionDirectory, FinancialInstitutionDirectoryAdmin)
+admin.site.register(FinancialInstitution, FinancialInstitutionAdmin)
+admin.site.register(MotorisedService, MotorizedServiceAdmin)
+admin.site.register(AutoEngineering, AutoEngineeringServiceAdmin)
+admin.site.register(EarthMoving, EarthMovingServiceAdmin)
+admin.site.register(Training, TrainingServiceAdmin)
+admin.site.register(Transportation, TransportationServiceAdmin)

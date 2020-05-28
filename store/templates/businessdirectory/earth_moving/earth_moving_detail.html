@@ -1,0 +1,83 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Earth Moving Services{% endblock %}
+
+{% block content %}
+    <!-- Page Content -->
+    <div class="container">
+        <a href="{% url 'earth_movings_list' %}">Earth Moving Services</a> | {{ earth_moving.name | capfirst }}
+        <hr>
+        <!-- Portfolio Item Heading -->
+        <h2 class="my-4">{{ earth_moving.name | capfirst }}
+            <small>({{ earth_moving.location | capfirst }})</small>
+        </h2>
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+
+            <div class="col-md-8">
+                {% if earth_moving.picture %}
+                    <img class="card-img-top img-fluid" alt="Product" src="{{ earth_moving.picture.url }}"/>
+                {% else %}
+                    <img class="card-img-top img-fluid" alt="Product"
+                         src="{% static 'img/earth_moving_thumbnail.webp' %}"/>
+                {% endif %}
+
+                <br>
+
+                Map View
+            <hr>
+                <iframe src="https://www.google.com/maps/embed/v1/directions?origin=current+location&destination=
+                        {% if earth_moving.coordinates %}{{ earth_moving.coordinates }}{% else %}{% for cd in companycontactdetails %}{{ cd.location }}{% endfor %}{% endif %}&key=AIzaSyC-5CY9mOCeg5Y3IhPqi_Yd0-DZtWrJl-E"
+                        width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""
+                        aria-hidden="false"
+                        tabindex="0">
+                </iframe>
+            </div>
+
+            <div class="col-md-4">
+                <h3 class="my-3">Details</h3>
+                <ul>
+                    <li><b>Location:</b></li>
+                    {{ earth_moving.location }}
+                    {% if earth_moving.contact %}
+                        <li><b>Contact:</b></li>
+                        <a href="tel://{{ earth_moving.contact }}">{{ earth_moving.contact }}</a>
+                    {% endif %}
+                    {% if earth_moving.website_link %}
+                        <li><b>Website:</b></li>
+                        <a href="{{ earth_moving.website_link }}">{{ earth_moving.website_link }}</a>
+                    {% endif %}
+                </ul>
+            </div>
+
+        </div>
+        <!-- /.row -->
+<br><br>
+        <!-- Related Projects Row -->
+        <h3 class="my-4">Other Auto Engineering Services in {{ earth_moving.city | capfirst }}</h3>
+
+        <div class="row">
+            {% for other_earth_moving in other_earth_movings|slice:":4" reversed %}
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <a href="{% url 'earth_moving_detail' other_earth_moving.id %}">
+                        {% if other_earth_moving.picture %}
+                            <img class="card-img-top img-fluid" alt="Product" src="{{ other_earth_moving.picture.url }}"/>
+                        {% else %}
+                            <img class="card-img-top img-fluid" alt="Product"
+                                 src="{% static 'img/earth_moving_thumbnail.webp' %}"/>
+                        {% endif %}
+
+                    <h5>{{ other_earth_moving.name | capfirst }}</h5>
+                    <p>({{ other_earth_moving.location }})</p>
+                    </a>
+                </div>
+            {% endfor %}
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+{% endblock %}

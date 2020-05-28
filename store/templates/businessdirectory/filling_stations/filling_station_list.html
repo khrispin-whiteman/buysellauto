@@ -7,7 +7,21 @@
     <div class="container">
         <div class="header row inline-group">
             <h2 class="col-sm-5 font-weight-bold pull-left">Filling Stations</h2>
-            <input class="col-sm-6 pull-right form-control" type="text" placeholder="Search Station">
+            <form class="form-inline" action="{% url 'filling_stations_list' %}" method="GET">
+                {% if keywords %}
+                    <input class="form-control mr-sm-2" name="q" value="{{ keywords }}" type="search"
+                           placeholder="Search by keywords, car type, brand, agent, etc"
+                           aria-label="Search" required>
+
+                {% else %}
+                    <input class="form-control mr-sm-2" name="q" type="search"
+                           placeholder="Search by keywords, car type, brand, agent, etc"
+                           aria-label="Search" required>
+                {% endif %}
+                <button class="btn my-2 my-sm-0" type="submit">Search</button>
+            </form>
+{#            <input class="col-sm-6 pull-right form-control" type="text"#}
+{#                   placeholder="Search Station by name or location">#}
         </div>
 
         <hr>
@@ -39,21 +53,6 @@
                     </div>
                 </div>
             {% endfor %}
-            <div class="col-sm-4 py-2">
-                <div class="card h-100 border-primary">
-                    <div class="card-body">
-                        <h3 class="card-title">Primary</h3>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-outline-secondary">Outline</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 py-2">
-
-                <div class="card h-100 card-body">
-                    Card. I'm just a simple card-block.
-                </div>
-            </div>
         </div>
 
     </div>

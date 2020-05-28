@@ -1,0 +1,67 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Financial Institutions{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="header row inline-group">
+            <h2 class="col-sm-5 font-weight-bold pull-left">Financial Institutions</h2>
+            <form class="form-inline" action="{% url 'financial_institutions_list' %}" method="GET">
+                {% if keywords %}
+                    <input class="form-control mr-sm-2" name="q" value="{{ keywords }}" type="search"
+                           placeholder="Search by name or location"
+                           aria-label="Search" required>
+
+                {% else %}
+                    <input class="form-control mr-sm-2" name="q" type="search"
+                           placeholder="Search by name or location"
+                           aria-label="Search" required>
+                {% endif %}
+                <button class="btn my-2 my-sm-0 fa fa-search" type="submit"></button>
+            </form>
+            {#            <input class="col-sm-6 pull-right form-control" type="text"#}
+            {#                   placeholder="Search Station by name or location">#}
+        </div>
+
+        <hr>
+        <div class="row">
+            {% for financial_institution in financial_institutions %}
+                <div class="col-sm-4 py-2">
+                    <div class="card h-100 text-black-50">
+                        {% if financial_institution.picture %}
+                            <img class="card-img-top img-fluid" alt="Product"
+                                 src="{{ financial_institution.picture.url }}"/>
+                        {% else %}
+                            <img class="card-img-top img-fluid img-responsive" alt="Product"
+                                 src="{% static 'img/financial_institution_thumbnail.jpg' %}"/>
+                        {% endif %}
+
+                        <div class="card-body justify-content-center">
+                            <h4 class="card-title">
+                                {{ financial_institution.name | capfirst }}
+                                <p class="card-text"> ({{ financial_institution.location }})</p>
+                            </h4>
+                            {#                            {% if financial_institution.website_link %}#}
+                            {#                                <p class="card-text">#}
+                            {#                                    <a href="{{ financial_institution.website_link }}">{{ financial_institution.website_link }}</a>#}
+                            {#                                </p>#}
+                            {#                            {% endif %}#}
+                            <div class="card-footer">
+                                <a title="Click to view Map"
+                                   href="{% url 'financial_institutions_detail' financial_institution.id %}"
+                                   class="btn btn-block btn-outline-primary">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <center>
+                    <div class="alert alert-info justify-content-center">No Financial Institions Found!</div>
+                </center>
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}

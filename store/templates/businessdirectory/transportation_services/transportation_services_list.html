@@ -1,0 +1,68 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Transportation Services{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="header row inline-group">
+            <h3 class="col-sm-5 font-weight-bold pull-left">Transportation Services</h3>
+            <form class="form-inline" action="{% url 'transportation_services_list' %}" method="GET">
+                {% if keywords %}
+                    <input class="form-control mr-sm-2" name="q" value="{{ keywords }}" type="search"
+                           placeholder="Search by name or location"
+                           aria-label="Search" required>
+
+                {% else %}
+                    <input class="form-control mr-sm-2" name="q" type="search"
+                           placeholder="Search by name or location"
+                           aria-label="Search" required>
+                {% endif %}
+                <button class="btn my-2 my-sm-0 fa fa-search" type="submit"></button>
+            </form>
+            {#            <input class="col-sm-6 pull-right form-control" type="text"#}
+            {#                   placeholder="Search Station by name or location">#}
+        </div>
+
+        <hr>
+        <div class="row">
+            {% for transportation_service in transportation_services %}
+                <div class="col-sm-4 py-2">
+                    <div class="card h-100 text-black-50">
+                        {% if transportation_service.picture %}
+                            <img class="card-img-top img-fluid img-responsive" alt="Product"
+                                 src="{{ transportation_service.picture.url }}"/>
+                        {% else %}
+                            <img class="card-img-top img-fluid img-responsive" alt="Product"
+                                 src="{% static 'img/transportation_service_thumbnail.png' %}"
+                            style="height: 85px; width: 85px;"/>
+                        {% endif %}
+
+                        <div class="card-body justify-content-center">
+                            <h4 class="card-title">
+                                {{ transportation_service.name | capfirst }} <small class="card-text"> ({{ transportation_service.location }})</small>
+
+                            </h4>
+                            {#                            {% if financial_institution.website_link %}#}
+                            {#                                <p class="card-text">#}
+                            {#                                    <a href="{{ financial_institution.website_link }}">{{ financial_institution.website_link }}</a>#}
+                            {#                                </p>#}
+                            {#                            {% endif %}#}
+                            <div class="card-footer">
+                                <a title="Click to view Map"
+                                   href="{% url 'transportation_service_detail' transportation_service.id %}"
+                                   class="btn btn-block btn-outline-primary">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <center>
+                    <div class="alert alert-info justify-content-center">No Transportation Services Found!</div>
+                </center>
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}

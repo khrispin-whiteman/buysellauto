@@ -2,8 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from tinymce.models import HTMLField
-from store.models import User, Category
-
+from store.models import User, Category, Location
 
 # Create your models here.
 AUTOSHOPANDCARWASH = (
@@ -22,7 +21,7 @@ EQUIPMENT_STATUS = (
     ('Used', 'Used'),
 )
 
-
+# done
 class EquipmentType(models.Model):
     equipment_type = models.CharField('Equipment Type', max_length=200)
     # slug = models.SlugField(max_length=150, default='', unique=True, db_index=True)
@@ -32,7 +31,7 @@ class EquipmentType(models.Model):
     def __str__(self):
         return self.equipment_type
 
-
+# done
 class Equipment(models.Model):
     is_equipment_model = models.BooleanField(default=True, editable=False)
     user = models.ForeignKey(User, verbose_name='Agent Name', null=True, default='', on_delete=models.CASCADE)
@@ -50,7 +49,7 @@ class Equipment(models.Model):
     def __str__(self):
         return self.equipment_name
 
-
+# done
 class EquipmentImage(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='equipments/images/%Y/%m/%d', null=True)
@@ -115,7 +114,10 @@ class FillingStationDirectory(models.Model):
     def __str__(self):
         return self.filling_station_name
 
+    class Meta:
+        verbose_name_plural = 'Filling Stations Directory'
 
+# done
 class FillingStation(models.Model):
     name = models.ForeignKey(FillingStationDirectory, verbose_name="Filling Station Name", on_delete=models.CASCADE)
     location = models.CharField('Location', max_length=200, )
@@ -135,9 +137,19 @@ class FillingStation(models.Model):
             return 'No image found!'
     picture_tag.short_description = 'Image'
 
+# done
+class FinancialInstitutionDirectory(models.Model):
+    financial_institution_name = models.CharField('Financial Institution Name', max_length=200)
 
-class FinancialInstitutions(models.Model):
-    name = models.CharField('Name', max_length=200)
+    def __str__(self):
+        return self.financial_institution_name
+
+    class Meta:
+        verbose_name_plural = 'Financial Institutions Directory'
+
+# done
+class FinancialInstitution(models.Model):
+    name = models.ForeignKey(FinancialInstitutionDirectory, verbose_name='Name', on_delete=models.CASCADE)
     location = models.CharField('Location', max_length=200, )
     picture = models.ImageField(upload_to='financialinstitution/%Y/%m/%d', null=True, blank=True)
     coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
@@ -146,13 +158,21 @@ class FinancialInstitutions(models.Model):
     contact = models.CharField('Contact', max_length=200, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
+    def picture_tag(self):
+        if self.picture:
+            return mark_safe('<img src="%s" style="width: 50px; height: 50px;"/>' % self.picture.url)
+        else:
+            return 'No image found!'
+    picture_tag.short_description = 'Image'
 
-class MotorisedServices(models.Model):
-    name = models.CharField("name", max_length=200)
+# done
+class MotorisedService(models.Model):
+    name = models.CharField("Name", max_length=200)
+    city = models.ForeignKey(Location, verbose_name='City/Town', default='', on_delete=models.CASCADE)
     location = models.CharField('Location', max_length=200, )
-    picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
+    picture = models.ImageField(upload_to='motorizedservices/%Y/%m/%d', null=True, blank=True)
     coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
                                    help_text='Check name of the place on google maps or can use latitude and longitude (lati,longi)')
     contact = models.CharField('Contact', max_length=200, null=True, blank=True)
@@ -161,9 +181,41 @@ class MotorisedServices(models.Model):
     def __str__(self):
         return self.name
 
+    def picture_tag(self):
+        if self.picture:
+            return mark_safe('<img src="%s" style="width: 50px; height: 50px;"/>' % self.picture.url)
+        else:
+            return 'No image found!'
+    picture_tag.short_description = 'Image'
 
+# done
+class AutoEngineering(models.Model):
+    name = models.CharField("name", max_length=200)
+    city = models.ForeignKey(Location, verbose_name='City/Town', default='', on_delete=models.CASCADE)
+    location = models.CharField('Location', max_length=200, )
+    picture = models.ImageField(upload_to='autoengineering/%Y/%m/%d', null=True, blank=True)
+    coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
+                                   help_text='Check name of the place on google maps or can use latitude and longitude (lati,longi)')
+    contact = models.CharField('Contact', max_length=200, null=True, blank=True)
+    website_link = models.URLField(null=True, blank=True, help_text='Optional')
+
+    def __str__(self):
+        return self.name
+
+    def picture_tag(self):
+        if self.picture:
+            return mark_safe('<img src="%s" style="width: 50px; height: 50px;"/>' % self.picture.url)
+        else:
+            return 'No image found!'
+    picture_tag.short_description = 'Image'
+
+    class Meta:
+        verbose_name_plural = 'Auto Engineering Services'
+
+# done
 class EarthMoving(models.Model):
     name = models.CharField("name", max_length=200)
+    city = models.ForeignKey(Location, verbose_name='City/Town', default='', on_delete=models.CASCADE)
     location = models.CharField('Location', max_length=200, )
     picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
     coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
@@ -173,10 +225,21 @@ class EarthMoving(models.Model):
 
     def __str__(self):
         return self.name
+
+    def picture_tag(self):
+        if self.picture:
+            return mark_safe('<img src="%s" style="width: 50px; height: 50px;"/>' % self.picture.url)
+        else:
+            return 'No image found!'
+    picture_tag.short_description = 'Image'
+
+    class Meta:
+        verbose_name_plural = 'Earth Moving Services'
 
 
 class Training(models.Model):
     name = models.CharField("name", max_length=200)
+    city = models.ForeignKey(Location, verbose_name='City/Town', default='', on_delete=models.CASCADE)
     location = models.CharField('Location', max_length=200, )
     picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
     coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
@@ -187,22 +250,20 @@ class Training(models.Model):
     def __str__(self):
         return self.name
 
+    def picture_tag(self):
+        if self.picture:
+            return mark_safe('<img src="%s" style="width: 50px; height: 50px;"/>' % self.picture.url)
+        else:
+            return 'No image found!'
+    picture_tag.short_description = 'Image'
 
-class AutoEngineering(models.Model):
-    name = models.CharField("name", max_length=200)
-    location = models.CharField('Location', max_length=200, )
-    picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
-    coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
-                                   help_text='Check name of the place on google maps or can use latitude and longitude (lati,longi)')
-    contact = models.CharField('Contact', max_length=200, null=True, blank=True)
-    website_link = models.URLField(null=True, blank=True, help_text='Optional')
-
-    def __str__(self):
-        return self.name
+    class Meta:
+        verbose_name_plural = 'Training Services'
 
 
 class Transportation(models.Model):
     name = models.CharField("name", max_length=200)
+    city = models.ForeignKey(Location, verbose_name='City/Town', default='', on_delete=models.CASCADE)
     location = models.CharField('Location', max_length=200, )
     picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
     coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
@@ -212,3 +273,13 @@ class Transportation(models.Model):
 
     def __str__(self):
         return self.name
+
+    def picture_tag(self):
+        if self.picture:
+            return mark_safe('<img src="%s" style="width: 50px; height: 50px;"/>' % self.picture.url)
+        else:
+            return 'No image found!'
+    picture_tag.short_description = 'Image'
+
+    class Meta:
+        verbose_name_plural = 'Transportation Services'

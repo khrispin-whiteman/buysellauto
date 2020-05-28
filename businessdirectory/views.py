@@ -2,7 +2,8 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, HttpResponse
 from aboutus.models import CompanyContactDetails, CompanySocialMediaLinks
 from agents.models import Agent
-from businessdirectory.models import Equipment, EquipmentType, AutoShopAndCarWash, FillingStation
+from businessdirectory.models import Equipment, EquipmentType, AutoShopAndCarWash, FillingStation, FinancialInstitution, \
+    MotorisedService, AutoEngineering, EarthMoving, Training, Transportation
 from orders.forms import OrderForm
 from store.models import EventType, Location, Product
 from django.core.mail import send_mail as sm
@@ -360,13 +361,19 @@ def auto_shop_detail(request, id):
 # filling station list
 def filling_stations_list(request):
     filling_stations = FillingStation.objects.all()
+    keywords = request.GET.get('q')
+    if keywords:
+        filling_stations = filling_stations.filter(
+            Q(name__filling_station_name__icontains=keywords) | Q(location__icontains=keywords))
+
     return render(request, 'businessdirectory/filling_stations/filling_station_list.html',
                   {
                       'filling_stations': filling_stations,
+                      'keywords': keywords,
                   })
 
 
-# filling station list
+# filling station detail
 def filling_stations_detail(request, id):
     filling_station = FillingStation.objects.get(id=id)
     other_filling_stations = FillingStation.objects.filter(name=filling_station.name)
@@ -374,4 +381,164 @@ def filling_stations_detail(request, id):
                   {
                       'filling_station': filling_station,
                       'other_filling_stations': other_filling_stations,
+                  })
+
+
+# financial station list
+def financial_institutions_list(request):
+    financial_institutions = FinancialInstitution.objects.all()
+    keywords = request.GET.get('q')
+    if keywords:
+        financial_institutions = financial_institutions.filter(
+            Q(name__financial_institution_name__icontains=keywords) | Q(location__icontains=keywords))
+
+    return render(request, 'businessdirectory/financial_institutions/financial_institutions_list.html',
+                  {
+                      'financial_institutions': financial_institutions,
+                      'keywords': keywords,
+                  })
+
+
+# financial station list
+def financial_institutions_detail(request, id):
+    financial_institution = FinancialInstitution.objects.get(id=id)
+    other_financial_institutions = FinancialInstitution.objects.filter(name=financial_institution.name)
+    return render(request, 'businessdirectory/financial_institutions/financial_institution_detail.html',
+                  {
+                      'financial_institution': financial_institution,
+                      'other_financial_institutions': other_financial_institutions,
+                  })
+
+
+# motorized_service list
+def motorized_services_list(request):
+    motorized_services = MotorisedService.objects.all()
+    keywords = request.GET.get('q')
+    if keywords:
+        motorized_services = motorized_services.filter(
+            Q(name__icontains=keywords) | Q(location__icontains=keywords) |
+            Q(city__location_name__icontains=keywords))
+
+    return render(request, 'businessdirectory/motorized_services/motorized_services_list.html',
+                  {
+                      'motorized_services': motorized_services,
+                      'keywords': keywords,
+                  })
+
+
+# motorized_service detail
+def motorized_service_detail(request, id):
+    motorized_service = MotorisedService.objects.get(id=id)
+    other_motorized_services = MotorisedService.objects.filter(city=motorized_service.city)
+    return render(request, 'businessdirectory/motorized_services/motorized_service_detail.html',
+                  {
+                      'motorized_service': motorized_service,
+                      'other_motorized_services': other_motorized_services,
+                  })
+
+
+# auto_engineering_list
+def auto_engineering_list(request):
+    auto_engineerings = AutoEngineering.objects.all()
+    keywords = request.GET.get('q')
+    if keywords:
+        auto_engineerings = auto_engineerings.filter(
+            Q(name__icontains=keywords) | Q(location__icontains=keywords) |
+            Q(city__location_name__icontains=keywords))
+
+    return render(request, 'businessdirectory/auto_engineerings/auto_engineerings_list.html',
+                  {
+                      'auto_engineerings': auto_engineerings,
+                      'keywords': keywords,
+                  })
+
+
+# auto_engineering_detail
+def auto_engineering_detail(request, id):
+    auto_engineering = AutoEngineering.objects.get(id=id)
+    other_auto_engineerings = AutoEngineering.objects.filter(city=auto_engineering.city)
+    return render(request, 'businessdirectory/auto_engineerings/auto_engineering_detail.html',
+                  {
+                      'auto_engineering': auto_engineering,
+                      'other_auto_engineerings': other_auto_engineerings,
+                  })
+
+# auto_engineering_list
+def earth_moving_list(request):
+    earth_movings = EarthMoving.objects.all()
+    keywords = request.GET.get('q')
+    if keywords:
+        earth_movings = earth_movings.filter(
+            Q(name__icontains=keywords) | Q(location__icontains=keywords) |
+            Q(city__location_name__icontains=keywords))
+
+    return render(request, 'businessdirectory/earth_moving/earth_moving_list.html',
+                  {
+                      'earth_movings': earth_movings,
+                      'keywords': keywords,
+                  })
+
+
+# auto_engineering_detail
+def earth_moving_detail(request, id):
+    earth_moving = EarthMoving.objects.get(id=id)
+    other_earth_movings = EarthMoving.objects.filter(city=earth_moving.city)
+    return render(request, 'businessdirectory/earth_moving/earth_moving_detail.html',
+                  {
+                      'earth_moving': earth_moving,
+                      'other_earth_movings': other_earth_movings,
+                  })
+
+
+# auto_engineering_list
+def training_services_list(request):
+    training_services = Training.objects.all()
+    keywords = request.GET.get('q')
+    if keywords:
+        training_services = training_services.filter(
+            Q(name__icontains=keywords) | Q(location__icontains=keywords) |
+            Q(city__location_name__icontains=keywords))
+
+    return render(request, 'businessdirectory/training_services/training_services_list.html',
+                  {
+                      'training_services': training_services,
+                      'keywords': keywords,
+                  })
+
+
+# auto_engineering_detail
+def training_service_detail(request, id):
+    training_service = Training.objects.get(id=id)
+    other_training_services = Training.objects.filter(city=training_service.city)
+    return render(request, 'businessdirectory/training_services/training_service_detail.html',
+                  {
+                      'training_service': training_service,
+                      'other_training_services': other_training_services,
+                  })
+
+
+# transportation_services_list
+def transportation_services_list(request):
+    transportation_services = Transportation.objects.all()
+    keywords = request.GET.get('q')
+    if keywords:
+        transportation_services = transportation_services.filter(
+            Q(name__icontains=keywords) | Q(location__icontains=keywords) |
+            Q(city__location_name__icontains=keywords))
+
+    return render(request, 'businessdirectory/transportation_services/transportation_services_list.html',
+                  {
+                      'transportation_services': transportation_services,
+                      'keywords': keywords,
+                  })
+
+
+# auto_engineering_detail
+def transportation_service_detail(request, id):
+    transportation_service = Transportation.objects.get(id=id)
+    other_transportation_services = Transportation.objects.filter(city=transportation_service.city)
+    return render(request, 'businessdirectory/transportation_services/transportation_service_detail.html',
+                  {
+                      'transportation_service': transportation_service,
+                      'other_transportation_services': other_transportation_services,
                   })

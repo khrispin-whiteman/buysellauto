@@ -1,0 +1,83 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Motorized Services{% endblock %}
+
+{% block content %}
+    <!-- Page Content -->
+    <div class="container">
+        <a href="{% url 'motorized_services_list' %}">Motorized Services</a> | {{ motorized_service.name | capfirst }}
+        <hr>
+        <!-- Portfolio Item Heading -->
+        <h2 class="my-4">{{ motorized_service.name | capfirst }}
+            <small>({{ motorized_service.location | capfirst }})</small>
+        </h2>
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+
+            <div class="col-md-8">
+                {% if motorized_service.picture %}
+                    <img class="card-img-top img-fluid" alt="Product" src="{{ motorized_service.picture.url }}"/>
+                {% else %}
+                    <img class="card-img-top img-fluid" alt="Product"
+                         src="{% static 'img/motorized_service_thumbnail.png' %}"/>
+                {% endif %}
+
+                <br>
+
+                Map View
+            <hr>
+                <iframe src="https://www.google.com/maps/embed/v1/directions?origin=current+location&destination=
+                        {% if motorized_service.coordinates %}{{ motorized_service.coordinates }}{% else %}{% for cd in companycontactdetails %}{{ cd.location }}{% endfor %}{% endif %}&key=AIzaSyC-5CY9mOCeg5Y3IhPqi_Yd0-DZtWrJl-E"
+                        width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""
+                        aria-hidden="false"
+                        tabindex="0">
+                </iframe>
+            </div>
+
+            <div class="col-md-4">
+                <h3 class="my-3">Details</h3>
+                <ul>
+                    <li><b>Location:</b></li>
+                    {{ motorized_service.location }}
+                    {% if motorized_service.contact %}
+                        <li><b>Contact:</b></li>
+                        <a href="tel://{{ motorized_service.contact }}">{{ motorized_service.contact }}</a>
+                    {% endif %}
+                    {% if motorized_service.website_link %}
+                        <li><b>Website:</b></li>
+                        <a href="{{ motorized_service.website_link }}">{{ motorized_service.website_link }}</a>
+                    {% endif %}
+                </ul>
+            </div>
+
+        </div>
+        <!-- /.row -->
+<br><br>
+        <!-- Related Projects Row -->
+        <h3 class="my-4">Other Motorized Services in {{ motorized_service.city | capfirst }}</h3>
+
+        <div class="row">
+            {% for other_motorized_service in other_motorized_services|slice:":4" reversed %}
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <a href="{% url 'motorized_service_detail' other_motorized_service.id %}">
+                        {% if other_motorized_service.picture %}
+                            <img class="card-img-top img-fluid" alt="Product" src="{{ other_motorized_service.picture.url }}"/>
+                        {% else %}
+                            <img class="card-img-top img-fluid" alt="Product"
+                                 src="{% static 'img/motorized_service_thumbnail.png' %}"/>
+                        {% endif %}
+
+                    <h5>{{ other_motorized_service.name | capfirst }}</h5>
+                    <p>({{ other_motorized_service.location }})</p>
+                    </a>
+                </div>
+            {% endfor %}
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+{% endblock %}

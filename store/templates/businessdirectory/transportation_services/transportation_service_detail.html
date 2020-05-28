@@ -1,0 +1,83 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Transportation Services{% endblock %}
+
+{% block content %}
+    <!-- Page Content -->
+    <div class="container">
+        <a href="{% url 'transportation_services_list' %}">Transportation Services</a> | {{ transportation_service.name | capfirst }}
+        <hr>
+        <!-- Portfolio Item Heading -->
+        <h2 class="my-4">{{ transportation_service.name | capfirst }}
+            <small>({{ transportation_service.location | capfirst }})</small>
+        </h2>
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+
+            <div class="col-md-8">
+                {% if transportation_service.picture %}
+                    <img class="card-img-top img-fluid" alt="Product" src="{{ transportation_service.picture.url }}"/>
+                {% else %}
+                    <img class="card-img-top img-fluid" alt="Product"
+                         src="{% static 'img/transportation_service_thumbnail.png' %}"/>
+                {% endif %}
+
+                <br>
+
+                Map View
+            <hr>
+                <iframe src="https://www.google.com/maps/embed/v1/directions?origin=current+location&destination=
+                        {% if transportation_service.coordinates %}{{ transportation_service.coordinates }}{% else %}{% for cd in companycontactdetails %}{{ cd.location }}{% endfor %}{% endif %}&key=AIzaSyC-5CY9mOCeg5Y3IhPqi_Yd0-DZtWrJl-E"
+                        width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""
+                        aria-hidden="false"
+                        tabindex="0">
+                </iframe>
+            </div>
+
+            <div class="col-md-4">
+                <h3 class="my-3">Details</h3>
+                <ul>
+                    <li><b>Location:</b></li>
+                    {{ transportation_service.location }}
+                    {% if transportation_service.contact %}
+                        <li><b>Contact:</b></li>
+                        <a href="tel://{{ transportation_service.contact }}">{{ transportation_service.contact }}</a>
+                    {% endif %}
+                    {% if transportation_service.website_link %}
+                        <li><b>Website:</b></li>
+                        <a href="{{ transportation_service.website_link }}">{{ transportation_service.website_link }}</a>
+                    {% endif %}
+                </ul>
+            </div>
+
+        </div>
+        <!-- /.row -->
+<br><br>
+        <!-- Related Projects Row -->
+        <h3 class="my-4">Other Transportation Services in {{ transportation_service.city | capfirst }}</h3>
+
+        <div class="row">
+            {% for other_transportation_service in other_transportation_services|slice:":4" reversed %}
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <a href="{% url 'transportation_service_detail' other_transportation_service.id %}">
+                        {% if other_transportation_service.picture %}
+                            <img class="card-img-top img-fluid" alt="Product" src="{{ other_transportation_service.picture.url }}"/>
+                        {% else %}
+                            <img class="card-img-top img-fluid" alt="Product"
+                                 src="{% static 'img/transportation_service_thumbnail.png' %}"/>
+                        {% endif %}
+
+                    <h5>{{ other_transportation_service.name | capfirst }}</h5>
+                    <p>({{ other_transportation_service.location }})</p>
+                    </a>
+                </div>
+            {% endfor %}
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+{% endblock %}
