@@ -176,7 +176,7 @@ def submit_order(request, id, slug):
     return render(request, 'store/car_detail.html')
 
 
-def product_detail(request, i_d, slug):
+def product_detail(request, slug):
     global cart_items_num
     # globals
     form = OrderForm()
@@ -189,7 +189,7 @@ def product_detail(request, i_d, slug):
     clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
 
     # other
-    product = get_object_or_404(Product, id=i_d, slug=slug, active=True)
+    product = get_object_or_404(Product, slug=slug, active=True)
     images = product.productimage_set.all()
 
     # if request.user.is_authenticated:

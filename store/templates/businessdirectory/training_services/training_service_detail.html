@@ -61,7 +61,7 @@
         <div class="row">
             {% for other_training_service in other_training_services|slice:":4" reversed %}
                 <div class="col-md-3 col-sm-6 mb-4">
-                    <a href="{% url 'training_service_detail' other_training_service.id %}">
+                    <a href="{% url 'training_service_detail' other_training_service.slug %}">
                         {% if other_training_service.picture %}
                             <img class="card-img-top img-fluid" alt="Product" src="{{ other_training_service.picture.url }}"/>
                         {% else %}

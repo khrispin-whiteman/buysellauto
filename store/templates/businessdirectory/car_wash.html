@@ -358,7 +358,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-12">
                     <div class="card product_item">
                         <div class="body">
-                            <a href="{% url 'car_wash_detail' carwash.id %}">
+                            <a href="{% url 'car_wash_detail' carwash.slug %}">
                                 <div class="cp_img">
                                     {% if carwash.profilepic %}
                                         <img class="img-fluid" alt="Product" src="{{ carwash.profilepic.url }}"/>

@@ -358,7 +358,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-12">
                     <div class="card product_item">
                         <div class="body">
-                            <a href="{% url 'auto_shop_detail' autoshop.id %}">
+                            <a href="{% url 'auto_shop_detail' autoshop.slug %}">
                                 <div class="cp_img">
                                     {% if autoshop.profilepic %}
                                         <img class="img-fluid" alt="Product" src="{{ autoshop.profilepic.url }}"/>

@@ -61,7 +61,7 @@
         <div class="row">
             {% for other_earth_moving in other_earth_movings|slice:":4" reversed %}
                 <div class="col-md-3 col-sm-6 mb-4">
-                    <a href="{% url 'earth_moving_detail' other_earth_moving.id %}">
+                    <a href="{% url 'earth_moving_detail' other_earth_moving.slug %}">
                         {% if other_earth_moving.picture %}
                             <img class="card-img-top img-fluid" alt="Product" src="{{ other_earth_moving.picture.url }}"/>
                         {% else %}

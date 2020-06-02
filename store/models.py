@@ -118,7 +118,7 @@ class Product(models.Model):
         return self.price
 
     def get_absolute_url(self):
-        return reverse('product_detail', args=[self.id, self.slug])
+        return reverse('product_detail', args=[self.slug, ])
 
 
 class ProductImage(models.Model):
@@ -183,6 +183,9 @@ class EventType(models.Model):
     def __str__(self):
         return self.event_type_name
 
+    def get_absolute_url(self):
+        return reverse('event_types', args=[self.slug])
+
 
 class Event(models.Model):
     is_event_model = models.BooleanField(default=True)
@@ -197,6 +200,9 @@ class Event(models.Model):
     def __str__(self):
         return self.event_name
 
+    def get_absolute_url(self):
+        return reverse('event_detail', args=[self.slug])
+
 
 class QuickLinks(models.Model):
     is_quicklinks_model = models.BooleanField(default=True)
@@ -205,6 +211,27 @@ class QuickLinks(models.Model):
 
     def __str__(self):
         return self.link_name
+
+
+RATINGS = (
+    ('0', '0'),
+    ('1', '1'),
+    ('2', '2'),
+    ('3', '3'),
+    ('4', '4'),
+    ('5', '5'),
+)
+
+
+class ProductReview(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    rating = models.CharField('Rating', max_length=200, choices=RATINGS, default=0)
+    description = models.TextField()
+    date_time = models.DateTimeField(auto_now_add=True)
+    name = models.CharField('Name', max_length=200, default='Unknown', help_text='Optional')
+
+    def __str__(self):
+        return self.description
 
 
 

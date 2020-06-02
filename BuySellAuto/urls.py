@@ -18,7 +18,32 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views
+from django.contrib.sitemaps.views import sitemap
 from django.urls import path, include
+
+from store.sitemaps import ProductsSitemap, ProductCategorySitemap, FillingStationsSitemap, \
+    FinancialInstitutionDirectorySitemap, FinancialInstitutionsSitemap, EquipmentsSitemap, \
+    FillingStationDirectorySitemap, EquipmentCategorySitemap, EventsSitemap, EventtypesSitemap, \
+    MotorizedServicesSitemap, AutoEngineeringServicesSitemap, EarthMovingServicesSitemap, TrainingServicesSitemap, \
+    TransportationServicesSitemap
+
+sitemaps = {
+    'products': ProductsSitemap,
+    'product_categories': ProductCategorySitemap,
+    'equipments': EquipmentsSitemap,
+    'equipment_types': EquipmentCategorySitemap,
+    'filling_stations': FillingStationsSitemap,
+    'filling_stations_names': FillingStationDirectorySitemap,
+    'financial_institutions': FinancialInstitutionsSitemap,
+    'financial_institutions_names': FinancialInstitutionDirectorySitemap,
+    'events': EventsSitemap,
+    'motorized_services': MotorizedServicesSitemap,
+    'auto_engineering_services': AutoEngineeringServicesSitemap,
+    'earth_moving_services': EarthMovingServicesSitemap,
+    'event_types': EventtypesSitemap,
+    'traininng_services': TrainingServicesSitemap,
+    'transportation_services': TransportationServicesSitemap,
+}
 
 urlpatterns = [
     # path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
@@ -29,7 +54,8 @@ urlpatterns = [
     path('', include('agents.urls')),
     path('', include('businessdirectory.urls')),
     path('', include('orders.urls')),
-    url(r'^tinymce/', include('tinymce.urls')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
+    path('tinymce/', include('tinymce.urls')),
     # path('accounts/', include('django.contrib.auth.urls')),
     # path('accounts/login/', views.LoginView.as_view(), name='login'),
     path('accounts/logout/', views.LogoutView.as_view(), name='logout', kwargs={'next_page': '/'}),

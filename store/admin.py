@@ -5,7 +5,8 @@ from django.utils.safestring import mark_safe
 from import_export.admin import ImportExportModelAdmin
 from django import forms
 
-from store.models import Product, Category, ProductImage, ProductVariation, Location, EventType, Event, User
+from store.models import Product, Category, ProductImage, ProductVariation, Location, EventType, Event, User, \
+    ProductReview
 
 
 # Register your models here.
@@ -84,6 +85,14 @@ class EventAdmin(ImportExportModelAdmin):
     date_hierarchy = 'posted_on'
 
 
+class ProductReviewAdmin(ImportExportModelAdmin):
+    list_display = ('product', 'description', 'rating', 'date_time', 'name', )
+    list_filter = ('rating', )
+    search_fields = ('product__title', 'description', 'name')
+    list_per_page = 10
+    date_hierarchy = 'date_time'
+
+
 admin.site.register(User, TheUserAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
@@ -92,3 +101,4 @@ admin.site.register(ProductVariation, ProductVariationAdmin)
 admin.site.register(Location, LocationAdmin)
 admin.site.register(EventType, EventTypeAdmin)
 admin.site.register(Event, EventAdmin)
+admin.site.register(ProductReview, ProductReviewAdmin)

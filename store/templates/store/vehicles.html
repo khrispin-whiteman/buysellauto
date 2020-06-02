@@ -1,8 +1,447 @@
 {% extends 'store/base.html' %}
 {% load static %}
 
-{% block title %}Equipments{% endblock %}
+{% block title %}Vehicles{% endblock %}
 
+{% block topheader %}
+    <div id="small-dialog1" class="mfp-hide">
+        <div class="select-city">
+            <h3>
+                <i class="fas fa-map-marker"></i> Please Select Your Location</h3>
+            <select class="list_of_cities">
+                <option>All Locations</option>
+                {% for loc in location %}
+                    <option>{{ loc.location_name | capfirst }}</option>
+                {% endfor %}
+            </select>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="agile-main-top">
+        <div class="container-fluid">
+            <div class="row main-top-w3l py-2">
+                <div class="col-lg-4 header-most-top">
+                    <p class="text-white text-lg-left text-center">Offer Zone Top Deals & Discounts
+                        {#                                        <i class="fas fa-shopping-cart ml-1"></i>#}
+                    </p>
+                </div>
+                <div class="col-lg-8 header-right mt-lg-0 mt-2">
+                    <!-- header lists -->
+                    <ul>
+                        <li class="text-center border-right text-white">
+                            <a class="play-icon popup-with-zoom-anim text-white" href="#small-dialog1">
+                                <i class="fas fa-map-marker mr-2"></i>
+                                Select Location
+                            </a>
+                        </li>
+                        <li class="text-center border-right text-white">
+                            <a href="{% url 'contactus' %}" class="text-white">
+                                <i class="fas fa-envelope mr-2"></i>
+                                Contact Us
+                            </a>
+                        </li>
+                        <li class="text-center border-right text-white">
+                            <i class="fas fa-phone mr-2"></i> 001 234 5678
+                        </li>
+                        <li class="text-center border-right text-white">
+                            <i class="fas fa-mail-reply mr-2"></i> example@gmail.com
+                        </li>
+                        <li class="text-center border-right text-white pull-right">
+                            <a href="#" data-toggle="modal" data-target="#exampleModal" class="text-white">
+                                <i class="fas fa-sign-in-alt mr-2"></i>
+                                Log In
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- //header lists -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modals -->
+    <!-- log in -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">Sign in</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="signin-form">
+                        <form action="{% url 'login' %}" method="POST">
+                            {% csrf_token %}
+                            <p class="hint-text">Sign in with your social media account</p>
+                            <div class="social-btn text-center">
+                                <a href="#" class="btn btn-primary btn-lg" title="Facebook"><i
+                                        class="fab fa-facebook"></i></a>
+                                <a href="#" class="btn btn-info btn-lg" title="Twitter"><i
+                                        class="fab fa-twitter"></i></a>
+                                <a href="#" class="btn btn-danger btn-lg" title="Google"><i
+                                        class="fab fa-google"></i></a>
+                            </div>
+                            <div class="or-seperator"><b>or</b></div>
+                            <div class="form-group">
+                                <input type="text" class="form-control input-lg" id="username" name="username"
+                                       placeholder="Username" required="required">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control input-lg" name="password"
+                                       placeholder="Password" required="required">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-lg btn-block signup-btn">Sign in
+                                </button>
+                            </div>
+                            <div class="text-center small"><a href="#">Forgot Your password?</a></div>
+                        </form>
+                        <div class="text-center small">Don't have an account? <a href="{% url 'agentregister' %}">Sign
+                            up</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="agentRegistration" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">Sign in</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="signin-form">
+                        <form action="{% url 'login' %}" method="POST">
+                            {% csrf_token %}
+                            <p class="hint-text">Sign in with your social media account</p>
+                            <div class="social-btn text-center">
+                                <a href="#" class="btn btn-primary btn-lg" title="Facebook"><i
+                                        class="fa fa-facebook"></i></a>
+                                <a href="#" class="btn btn-info btn-lg" title="Twitter"><i
+                                        class="fa fa-twitter"></i></a>
+                                <a href="#" class="btn btn-danger btn-lg" title="Google"><i
+                                        class="fa fa-google"></i></a>
+                            </div>
+                            <div class="or-seperator"><b>or</b></div>
+                            <div class="form-group">
+                                <input type="text" class="form-control input-lg" id="username" name="username"
+                                       placeholder="Username" required="required">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control input-lg" name="password"
+                                       placeholder="Password" required="required">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-lg btn-block signup-btn">Sign in
+                                </button>
+                            </div>
+                            <div class="text-center small"><a href="#">Forgot Your password?</a></div>
+                        </form>
+                        <div class="text-center small">Don't have an account? <a href="{% url 'agentregister' %}">Sign
+                            up</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="agaentLogin" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">Log In</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <label class="col-form-label">Username</label>
+                            <input type="text" class="form-control" placeholder=" " name="Name" required="">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Password</label>
+                            <input type="password" class="form-control" placeholder=" " name="Password" required="">
+                        </div>
+                        <div class="right-w3l">
+                            <input type="submit" class="form-control" value="Log in">
+                        </div>
+                        <div class="sub-w3l">
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                                <label class="custom-control-label" for="customControlAutosizing">Remember me?</label>
+                            </div>
+                        </div>
+                        <p class="text-center dont-do mt-3">Don't have an account?
+                            <a href="#" data-toggle="modal" data-target="#exampleModal2">
+                                Register Now</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- register -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Register</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <label class="col-form-label">Your Name</label>
+                            <input type="text" class="form-control" placeholder=" " name="Name" required="">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Email</label>
+                            <input type="email" class="form-control" placeholder=" " name="Email" required="">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Password</label>
+                            <input type="password" class="form-control" placeholder=" " name="Password" id="password1"
+                                   required="">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Confirm Password</label>
+                            <input type="password" class="form-control" placeholder=" " name="Confirm Password"
+                                   id="password2" required="">
+                        </div>
+                        <div class="right-w3l">
+                            <input type="submit" class="form-control" value="Register">
+                        </div>
+                        <div class="sub-w3l">
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing2">
+                                <label class="custom-control-label" for="customControlAutosizing2">I Accept to the Terms
+                                    & Conditions</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //modal -->
+    <!-- //top-header -->
+
+    <!-- header-bottom-->
+
+    <!-- shop locator (popup) -->
+    <!-- //header-bottom -->
+    <!-- navigation -->
+    <div class="navbar-inner">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="agileits-navi_search ">
+                    <ul class="navbar-nav ml-auto text-center mr-xl-5 ">
+                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2 ">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Vehicle Types
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'vehicles' %}">All Filling Stations</a>
+
+                                {% for c in categories %}
+                                    <a class="dropdown-item" href="{{ c.get_absolute_url }}" class="">
+                                        {{ c.category_name }}
+                                    </a>
+
+                                {% endfor %}
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto text-center mr-xl-5">
+                        <li class="nav-item active mr-lg-2 mb-lg-0 mb-2">
+                            <a class="nav-link" href="{% url 'index' %}">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Business Directory
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="agile_inner_drop_nav_info p-4">
+                                    <h5 class="mb-3">Easy Access Filters</h5>
+                                    <div class="row">
+                                        <div class="col-sm-6 multi-gd-img">
+                                            <ul class="multi-column-dropdown">
+                                                <li>
+                                                    <a href="{% url 'equipments' %}">Agricultural Equipments (0)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'auto_engineerings_list' %}">Auto Engineering
+                                                        (0)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'auto_shop_view' %}">Auto Shops (0)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'for_hire' %}">Car Hire
+                                                        ({{ hire_cars | length }})</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'car_wash_view' %}">Car Wash (0)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'clearing_agents' %}">Clearing Agents
+                                                        ({{ all_agents| length }})</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'earth_movings_list' %}">Earth Moving
+                                                        Services(0)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'filling_stations_list' %}">Filling/Service Stations
+                                                        (0)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'financial_institutions_list' %}">Financial
+                                                        Institution (0)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'motorized_services_list' %}">Motorized Services
+                                                        (0)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'training_services_list' %}">Training
+                                                        Services(0)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'transportation_services_list' %}">Transportation
+                                                        Services (0)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{% url 'vehicles' %}">Vehicles (0)</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Car Manager
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'index' %}">Motor Vehicles</a>
+                                <a class="dropdown-item" href="{% url 'for_sale' %}">Vehicles For Sale</a>
+                                <a class="dropdown-item" href="{% url 'for_hire' %}">Vehicles For Hire</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'classified' %}">Classified Vehicles</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Agent
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" data-toggle="modal" data-target="#agaentLogin" href="">Agent
+                                    Login</a>
+                                <a class="dropdown-item" href="#">Agent Registration</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'agents_list' %}">View Agents</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Other Activities
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="agile_inner_drop_nav_info p-4">
+                                    <h5 class="mb-3"><a href="{% url 'all_events' %}">Events Directory</a></h5>
+                                    <h5 class="mb-3"><a href="">News Directory</a></h5>
+
+                                    {% for et in event_types|slice:":6" reversed %}
+                                        <div class="range border-bottom py-2">
+                                            <h3 class="agileits-sear-head mb-3">{{ et.event_type_name }}</h3>
+                                            <div class="w3l-range">
+                                                <ul>
+                                                    {% for event in et.event_set.all %}
+                                                        <li>
+                                                            <a href="{% url 'event_detail' event.slug %}">
+                                                                <span class="fa fa-angle-right"></span> {{ event }}
+                                                            </a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+                                    <div class="row">
+                                        <div class="col-sm-6 multi-gd-img">
+                                            <ul class="multi-column-dropdown">
+                                                <li>
+                                                    <a href="#">Televisions</a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#">Camera Accessories</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </li>
+                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                About Us
+                            </a>
+
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Legal</a>
+                                <a class="dropdown-item" href="#">Disclaimer</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Privacy</a>
+                                <a class="dropdown-item" href="#">Security</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Payment Methods</a>
+                                <a class="dropdown-item" href="#">Feedback</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- //navigation -->
+    <br><br>
+{% endblock %}
 
 {% block content %}
 

@@ -24,12 +24,15 @@ EQUIPMENT_STATUS = (
 # done
 class EquipmentType(models.Model):
     equipment_type = models.CharField('Equipment Type', max_length=200)
-    # slug = models.SlugField(max_length=150, default='', unique=True, db_index=True)
+    slug = models.SlugField(unique=True, default='', db_index=True)
     # created_at = models.DateTimeField(auto_now_add=True, default='',)
     # updated_at = models.DateTimeField(auto_now=True, default='',)
 
     def __str__(self):
         return self.equipment_type
+
+    def get_absolute_url(self):
+        return reverse('equipment_list_by_category', args=[self.slug])
 
 # done
 class Equipment(models.Model):
@@ -37,6 +40,7 @@ class Equipment(models.Model):
     user = models.ForeignKey(User, verbose_name='Agent Name', null=True, default='', on_delete=models.CASCADE)
     equipment_type = models.ForeignKey(EquipmentType, on_delete=models.CASCADE)
     equipment_name = models.CharField(max_length=200,)
+    slug = models.SlugField(unique=True, default='')
     equipment_brand = models.CharField(max_length=200, default='')
     equipment_stock = models.IntegerField(null=True, blank=True, default=1)
     equipment_sold = models.IntegerField(null=True, blank=True, default=0)
@@ -48,6 +52,9 @@ class Equipment(models.Model):
 
     def __str__(self):
         return self.equipment_name
+
+    def get_absolute_url(self):
+        return reverse('equipment_detail', args=[self.slug, ])
 
 # done
 class EquipmentImage(models.Model):
@@ -66,15 +73,12 @@ class EquipmentImage(models.Model):
             return 'No image found!'
     image_tag.short_description = 'Image'
 
-
-# class AutoEngineering(models.Model):
-# class AutoEngineering(models.Model):
-
-# Auto shops/Car was/etc
+# done
 class AutoShopAndCarWash(models.Model):
     is_autoshopandcarwash_model = models.BooleanField(default=True, editable=False)
     category = models.CharField('Category', choices=AUTOSHOPANDCARWASH, max_length=200)
     name = models.CharField('Name', max_length=200, help_text='name of car wash')
+    slug = models.SlugField(unique=True, default='', db_index=True)
     location = models.CharField('Location', max_length=200, help_text='location of car wash')
     contact = models.CharField('Contact Details', max_length=200, help_text='cell/tell/fax')
     description = HTMLField(help_text='Services offered...')
@@ -110,17 +114,22 @@ class AutoShopAndCarWash(models.Model):
 # done
 class FillingStationDirectory(models.Model):
     filling_station_name = models.CharField('Filling Station Name', max_length=200)
+    slug = models.SlugField(unique=True, default='', db_index=True)
 
     def __str__(self):
         return self.filling_station_name
 
     class Meta:
-        verbose_name_plural = 'Filling Stations Directory'
+        verbose_name_plural = 'Filling Stations Directory/Names'
+
+    def get_absolute_url(self):
+        return reverse('filling_station_list_by_name', args=[self.slug])
 
 # done
 class FillingStation(models.Model):
     name = models.ForeignKey(FillingStationDirectory, verbose_name="Filling Station Name", on_delete=models.CASCADE)
     location = models.CharField('Location', max_length=200, )
+    slug = models.SlugField(unique=True, default='', db_index=True)
     picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
     coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
                                    help_text='Check name of the place on google maps or can use latitude and longitude (lati,longi)')
@@ -137,9 +146,16 @@ class FillingStation(models.Model):
             return 'No image found!'
     picture_tag.short_description = 'Image'
 
+    def get_absolute_url(self):
+        return reverse('filling_stations_detail', args=[self.name.filling_station_name, self.slug])
+
+    class Meta:
+        verbose_name_plural = 'Filling Stations Locations'
+
 # done
 class FinancialInstitutionDirectory(models.Model):
     financial_institution_name = models.CharField('Financial Institution Name', max_length=200)
+    slug = models.SlugField(unique=True, default='', db_index=True)
 
     def __str__(self):
         return self.financial_institution_name
@@ -147,10 +163,14 @@ class FinancialInstitutionDirectory(models.Model):
     class Meta:
         verbose_name_plural = 'Financial Institutions Directory'
 
+    def get_absolute_url(self):
+        return reverse('financial_institution_list_by_name', args=[self.slug])
+
 # done
 class FinancialInstitution(models.Model):
     name = models.ForeignKey(FinancialInstitutionDirectory, verbose_name='Name', on_delete=models.CASCADE)
     location = models.CharField('Location', max_length=200, )
+    slug = models.SlugField(unique=True, default='', db_index=True)
     picture = models.ImageField(upload_to='financialinstitution/%Y/%m/%d', null=True, blank=True)
     coordinates = models.CharField('Coordinates', null=True, blank=True, max_length=200, default='',
                                    help_text='Check name of the place on google maps or can use latitude and longitude (lati,longi)')
@@ -167,9 +187,13 @@ class FinancialInstitution(models.Model):
             return 'No image found!'
     picture_tag.short_description = 'Image'
 
+    def get_absolute_url(self):
+        return reverse('financial_institutions_detail', args=[self.name.financial_institution_name, self.slug])
+
 # done
 class MotorisedService(models.Model):
     name = models.CharField("Name", max_length=200)
+    slug = models.SlugField(unique=True, default='', db_index=True)
     city = models.ForeignKey(Location, verbose_name='City/Town', default='', on_delete=models.CASCADE)
     location = models.CharField('Location', max_length=200, )
     picture = models.ImageField(upload_to='motorizedservices/%Y/%m/%d', null=True, blank=True)
@@ -188,9 +212,14 @@ class MotorisedService(models.Model):
             return 'No image found!'
     picture_tag.short_description = 'Image'
 
+    def get_absolute_url(self):
+        return reverse('motorized_service_detail', args=[self.slug])
+
+
 # done
 class AutoEngineering(models.Model):
     name = models.CharField("name", max_length=200)
+    slug = models.SlugField(unique=True, default='', db_index=True)
     city = models.ForeignKey(Location, verbose_name='City/Town', default='', on_delete=models.CASCADE)
     location = models.CharField('Location', max_length=200, )
     picture = models.ImageField(upload_to='autoengineering/%Y/%m/%d', null=True, blank=True)
@@ -212,9 +241,14 @@ class AutoEngineering(models.Model):
     class Meta:
         verbose_name_plural = 'Auto Engineering Services'
 
+    def get_absolute_url(self):
+        return reverse('auto_engineering_detail', args=[self.slug])
+
+
 # done
 class EarthMoving(models.Model):
     name = models.CharField("name", max_length=200)
+    slug = models.SlugField(unique=True, default='', db_index=True)
     city = models.ForeignKey(Location, verbose_name='City/Town', default='', on_delete=models.CASCADE)
     location = models.CharField('Location', max_length=200, )
     picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
@@ -236,9 +270,13 @@ class EarthMoving(models.Model):
     class Meta:
         verbose_name_plural = 'Earth Moving Services'
 
+    def get_absolute_url(self):
+        return reverse('earth_moving_detail', args=[self.slug])
+
 
 class Training(models.Model):
     name = models.CharField("name", max_length=200)
+    slug = models.SlugField(unique=True, default='', db_index=True)
     city = models.ForeignKey(Location, verbose_name='City/Town', default='', on_delete=models.CASCADE)
     location = models.CharField('Location', max_length=200, )
     picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
@@ -260,9 +298,13 @@ class Training(models.Model):
     class Meta:
         verbose_name_plural = 'Training Services'
 
+    def get_absolute_url(self):
+        return reverse('training_service_detail', args=[self.slug])
+
 
 class Transportation(models.Model):
     name = models.CharField("name", max_length=200)
+    slug = models.SlugField(unique=True, default='', db_index=True)
     city = models.ForeignKey(Location, verbose_name='City/Town', default='', on_delete=models.CASCADE)
     location = models.CharField('Location', max_length=200, )
     picture = models.ImageField(upload_to='fillingstation/%Y/%m/%d', null=True, blank=True)
@@ -283,3 +325,6 @@ class Transportation(models.Model):
 
     class Meta:
         verbose_name_plural = 'Transportation Services'
+
+    def get_absolute_url(self):
+        return reverse('transportation_service_detail', args=[self.slug])

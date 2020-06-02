@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect, HttpResponse
 from aboutus.models import CompanyContactDetails, CompanySocialMediaLinks
 from agents.models import Agent
 from businessdirectory.models import Equipment, EquipmentType, AutoShopAndCarWash, FillingStation, FinancialInstitution, \
-    MotorisedService, AutoEngineering, EarthMoving, Training, Transportation
+    MotorisedService, AutoEngineering, EarthMoving, Training, Transportation, FillingStationDirectory, \
+    FinancialInstitutionDirectory
 from orders.forms import OrderForm
 from store.models import EventType, Location, Product
 from django.core.mail import send_mail as sm
@@ -42,7 +43,7 @@ def equipments(request, category_slug=None):
 
     if category_slug:
         # category = get_object_or_404(Category, slug=category_slug)
-        equipments = Equipment.objects.filter(category__slug=category_slug)
+        equipments = Equipment.objects.filter(equipment_type__slug=category_slug)
         category = category_slug
 
     if keywords:
@@ -75,14 +76,14 @@ def equipments(request, category_slug=None):
     return render(request, 'businessdirectory/equipments.html', context)
 
 
-def equipment_detail(request, pk):
+def equipment_detail(request, slug):
     form = OrderForm()
     equipment_type = EquipmentType.objects.all()
     companycontactdetails = CompanyContactDetails.objects.all()
     companysocialmedialinks = CompanySocialMediaLinks.objects.all()
     location = Location.objects.all()
     event_types = EventType.objects.all()
-    equipment_details = Equipment.objects.get(active=True, id=pk)
+    equipment_details = Equipment.objects.get(active=True, slug=slug)
     clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
 
     if request.method == 'POST':
@@ -191,7 +192,7 @@ def car_wash_view(request, category_slug=None):
     return render(request, 'businessdirectory/car_wash.html', context)
 
 
-def car_wash_detail(request, id):
+def car_wash_detail(request, slug):
     category = None
     # globals
     form = OrderForm()
@@ -201,7 +202,7 @@ def car_wash_detail(request, id):
     location = Location.objects.all()
     event_types = EventType.objects.all()
     clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
-    car_wash = AutoShopAndCarWash.objects.get(id=id, category='Car Wash')
+    car_wash = AutoShopAndCarWash.objects.get(slug=slug, category='Car Wash')
     print(car_wash)
 
     # other
@@ -302,7 +303,7 @@ def auto_shop_view(request, category_slug=None):
     return render(request, 'businessdirectory/auto_shop.html', context)
 
 
-def auto_shop_detail(request, id):
+def auto_shop_detail(request, slug):
     category = None
     # globals
     form = OrderForm()
@@ -312,7 +313,7 @@ def auto_shop_detail(request, id):
     location = Location.objects.all()
     event_types = EventType.objects.all()
     clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
-    auto_shop = AutoShopAndCarWash.objects.get(id=id, category='Auto Shop')
+    auto_shop = AutoShopAndCarWash.objects.get(slug=slug, category='Auto Shop')
 
 
     # other
@@ -359,8 +360,23 @@ def auto_shop_detail(request, id):
 
 
 # filling station list
-def filling_stations_list(request):
+def filling_stations_list(request, category_slug=None):
+    category = None
+    filling_stations_directory = FillingStationDirectory.objects.all()
+    companycontactdetails = CompanyContactDetails.objects.all()
+    companysocialmedialinks = CompanySocialMediaLinks.objects.all()
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+    clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
     filling_stations = FillingStation.objects.all()
+
+
+    if category_slug:
+        # category = get_object_or_404(Category, slug=category_slug)
+        filling_stations = FillingStation.objects.filter(location=category_slug)
+        category = category_slug
+
+
     keywords = request.GET.get('q')
     if keywords:
         filling_stations = filling_stations.filter(
@@ -368,25 +384,61 @@ def filling_stations_list(request):
 
     return render(request, 'businessdirectory/filling_stations/filling_station_list.html',
                   {
+                      'category_slug': category,
+                      'categories': filling_stations_directory,
+                      'companycontactdetails': companycontactdetails,
+                      'companysocialmedialinks': companysocialmedialinks,
+                      'location': location,
+                      'event_types': event_types,
+                      'clearing_agents': clearing_agents,
                       'filling_stations': filling_stations,
                       'keywords': keywords,
                   })
 
 
 # filling station detail
-def filling_stations_detail(request, id):
-    filling_station = FillingStation.objects.get(id=id)
+def filling_stations_detail(request, slug, name, category_slug=None):
+    filling_station = FillingStation.objects.get(slug=slug)
     other_filling_stations = FillingStation.objects.filter(name=filling_station.name)
+
+    category = None
+    filling_stations_directory = FillingStationDirectory.objects.all()
+    companycontactdetails = CompanyContactDetails.objects.all()
+    companysocialmedialinks = CompanySocialMediaLinks.objects.all()
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+    clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
+
     return render(request, 'businessdirectory/filling_stations/filling_station_detail.html',
                   {
                       'filling_station': filling_station,
                       'other_filling_stations': other_filling_stations,
+                      'category_slug': category,
+                      'categories': filling_stations_directory,
+                      'companycontactdetails': companycontactdetails,
+                      'companysocialmedialinks': companysocialmedialinks,
+                      'location': location,
+                      'event_types': event_types,
+                      'clearing_agents': clearing_agents,
                   })
 
 
 # financial station list
-def financial_institutions_list(request):
+def financial_institutions_list(request, category_slug=None):
     financial_institutions = FinancialInstitution.objects.all()
+    category = None
+    filling_stations_directory = FillingStationDirectory.objects.all()
+    companycontactdetails = CompanyContactDetails.objects.all()
+    companysocialmedialinks = CompanySocialMediaLinks.objects.all()
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+    clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
+
+    if category_slug:
+        # category = get_object_or_404(Category, slug=category_slug)
+        financial_institutions = FinancialInstitution.objects.filter(location=category_slug)
+        category = category_slug
+
     keywords = request.GET.get('q')
     if keywords:
         financial_institutions = financial_institutions.filter(
@@ -396,23 +448,51 @@ def financial_institutions_list(request):
                   {
                       'financial_institutions': financial_institutions,
                       'keywords': keywords,
+                      'category_slug': category,
+                      'categories': filling_stations_directory,
+                      'companycontactdetails': companycontactdetails,
+                      'companysocialmedialinks': companysocialmedialinks,
+                      'location': location,
+                      'event_types': event_types,
+                      'clearing_agents': clearing_agents,
                   })
 
 
 # financial station list
-def financial_institutions_detail(request, id):
-    financial_institution = FinancialInstitution.objects.get(id=id)
+def financial_institutions_detail(request, slug, name, category_slug=None):
+    financial_institution = FinancialInstitution.objects.get(slug=slug)
     other_financial_institutions = FinancialInstitution.objects.filter(name=financial_institution.name)
+    category = None
+    financial_institutions_directory = FinancialInstitutionDirectory.objects.all()
+    companycontactdetails = CompanyContactDetails.objects.all()
+    companysocialmedialinks = CompanySocialMediaLinks.objects.all()
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+    clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
+
     return render(request, 'businessdirectory/financial_institutions/financial_institution_detail.html',
                   {
                       'financial_institution': financial_institution,
                       'other_financial_institutions': other_financial_institutions,
+                      'category_slug': category,
+                      'categories': financial_institutions_directory,
+                      'companycontactdetails': companycontactdetails,
+                      'companysocialmedialinks': companysocialmedialinks,
+                      'location': location,
+                      'event_types': event_types,
+                      'clearing_agents': clearing_agents,
                   })
 
 
 # motorized_service list
-def motorized_services_list(request):
+def motorized_services_list(request,):
     motorized_services = MotorisedService.objects.all()
+    companycontactdetails = CompanyContactDetails.objects.all()
+    companysocialmedialinks = CompanySocialMediaLinks.objects.all()
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+    clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
+
     keywords = request.GET.get('q')
     if keywords:
         motorized_services = motorized_services.filter(
@@ -423,23 +503,43 @@ def motorized_services_list(request):
                   {
                       'motorized_services': motorized_services,
                       'keywords': keywords,
+                      'companycontactdetails': companycontactdetails,
+                      'companysocialmedialinks': companysocialmedialinks,
+                      'location': location,
+                      'event_types': event_types,
+                      'clearing_agents': clearing_agents,
                   })
 
 
 # motorized_service detail
-def motorized_service_detail(request, id):
-    motorized_service = MotorisedService.objects.get(id=id)
+def motorized_service_detail(request, slug):
+    motorized_service = MotorisedService.objects.get(slug=slug)
     other_motorized_services = MotorisedService.objects.filter(city=motorized_service.city)
+    companycontactdetails = CompanyContactDetails.objects.all()
+    companysocialmedialinks = CompanySocialMediaLinks.objects.all()
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+    clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
     return render(request, 'businessdirectory/motorized_services/motorized_service_detail.html',
                   {
                       'motorized_service': motorized_service,
                       'other_motorized_services': other_motorized_services,
+                      'companycontactdetails': companycontactdetails,
+                      'companysocialmedialinks': companysocialmedialinks,
+                      'location': location,
+                      'event_types': event_types,
+                      'clearing_agents': clearing_agents,
                   })
 
 
 # auto_engineering_list
 def auto_engineering_list(request):
     auto_engineerings = AutoEngineering.objects.all()
+    companycontactdetails = CompanyContactDetails.objects.all()
+    companysocialmedialinks = CompanySocialMediaLinks.objects.all()
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+    clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
     keywords = request.GET.get('q')
     if keywords:
         auto_engineerings = auto_engineerings.filter(
@@ -450,22 +550,42 @@ def auto_engineering_list(request):
                   {
                       'auto_engineerings': auto_engineerings,
                       'keywords': keywords,
+                      'companycontactdetails': companycontactdetails,
+                      'companysocialmedialinks': companysocialmedialinks,
+                      'location': location,
+                      'event_types': event_types,
+                      'clearing_agents': clearing_agents,
                   })
 
 
 # auto_engineering_detail
-def auto_engineering_detail(request, id):
-    auto_engineering = AutoEngineering.objects.get(id=id)
+def auto_engineering_detail(request, slug):
+    auto_engineering = AutoEngineering.objects.get(slug=slug)
     other_auto_engineerings = AutoEngineering.objects.filter(city=auto_engineering.city)
+    companycontactdetails = CompanyContactDetails.objects.all()
+    companysocialmedialinks = CompanySocialMediaLinks.objects.all()
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+    clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
     return render(request, 'businessdirectory/auto_engineerings/auto_engineering_detail.html',
                   {
                       'auto_engineering': auto_engineering,
                       'other_auto_engineerings': other_auto_engineerings,
+                      'companycontactdetails': companycontactdetails,
+                      'companysocialmedialinks': companysocialmedialinks,
+                      'location': location,
+                      'event_types': event_types,
+                      'clearing_agents': clearing_agents,
                   })
 
 # auto_engineering_list
 def earth_moving_list(request):
     earth_movings = EarthMoving.objects.all()
+    companycontactdetails = CompanyContactDetails.objects.all()
+    companysocialmedialinks = CompanySocialMediaLinks.objects.all()
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+    clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
     keywords = request.GET.get('q')
     if keywords:
         earth_movings = earth_movings.filter(
@@ -476,23 +596,43 @@ def earth_moving_list(request):
                   {
                       'earth_movings': earth_movings,
                       'keywords': keywords,
+                      'companycontactdetails': companycontactdetails,
+                      'companysocialmedialinks': companysocialmedialinks,
+                      'location': location,
+                      'event_types': event_types,
+                      'clearing_agents': clearing_agents,
                   })
 
 
 # auto_engineering_detail
-def earth_moving_detail(request, id):
-    earth_moving = EarthMoving.objects.get(id=id)
+def earth_moving_detail(request, slug):
+    earth_moving = EarthMoving.objects.get(slug=slug)
     other_earth_movings = EarthMoving.objects.filter(city=earth_moving.city)
+    companycontactdetails = CompanyContactDetails.objects.all()
+    companysocialmedialinks = CompanySocialMediaLinks.objects.all()
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+    clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
     return render(request, 'businessdirectory/earth_moving/earth_moving_detail.html',
                   {
                       'earth_moving': earth_moving,
                       'other_earth_movings': other_earth_movings,
+                      'companycontactdetails': companycontactdetails,
+                      'companysocialmedialinks': companysocialmedialinks,
+                      'location': location,
+                      'event_types': event_types,
+                      'clearing_agents': clearing_agents,
                   })
 
 
 # auto_engineering_list
 def training_services_list(request):
     training_services = Training.objects.all()
+    companycontactdetails = CompanyContactDetails.objects.all()
+    companysocialmedialinks = CompanySocialMediaLinks.objects.all()
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+    clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
     keywords = request.GET.get('q')
     if keywords:
         training_services = training_services.filter(
@@ -503,23 +643,43 @@ def training_services_list(request):
                   {
                       'training_services': training_services,
                       'keywords': keywords,
+                      'companycontactdetails': companycontactdetails,
+                      'companysocialmedialinks': companysocialmedialinks,
+                      'location': location,
+                      'event_types': event_types,
+                      'clearing_agents': clearing_agents,
                   })
 
 
 # auto_engineering_detail
-def training_service_detail(request, id):
-    training_service = Training.objects.get(id=id)
+def training_service_detail(request, slug):
+    training_service = Training.objects.get(slug=slug)
     other_training_services = Training.objects.filter(city=training_service.city)
+    companycontactdetails = CompanyContactDetails.objects.all()
+    companysocialmedialinks = CompanySocialMediaLinks.objects.all()
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+    clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
     return render(request, 'businessdirectory/training_services/training_service_detail.html',
                   {
                       'training_service': training_service,
                       'other_training_services': other_training_services,
+                      'companycontactdetails': companycontactdetails,
+                      'companysocialmedialinks': companysocialmedialinks,
+                      'location': location,
+                      'event_types': event_types,
+                      'clearing_agents': clearing_agents,
                   })
 
 
 # transportation_services_list
 def transportation_services_list(request):
     transportation_services = Transportation.objects.all()
+    companycontactdetails = CompanyContactDetails.objects.all()
+    companysocialmedialinks = CompanySocialMediaLinks.objects.all()
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+    clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
     keywords = request.GET.get('q')
     if keywords:
         transportation_services = transportation_services.filter(
@@ -530,15 +690,30 @@ def transportation_services_list(request):
                   {
                       'transportation_services': transportation_services,
                       'keywords': keywords,
+                      'companycontactdetails': companycontactdetails,
+                      'companysocialmedialinks': companysocialmedialinks,
+                      'location': location,
+                      'event_types': event_types,
+                      'clearing_agents': clearing_agents,
                   })
 
 
 # auto_engineering_detail
-def transportation_service_detail(request, id):
-    transportation_service = Transportation.objects.get(id=id)
+def transportation_service_detail(request, slug):
+    transportation_service = Transportation.objects.get(slug=slug)
     other_transportation_services = Transportation.objects.filter(city=transportation_service.city)
+    companycontactdetails = CompanyContactDetails.objects.all()
+    companysocialmedialinks = CompanySocialMediaLinks.objects.all()
+    location = Location.objects.all()
+    event_types = EventType.objects.all()
+    clearing_agents = Agent.objects.filter(agent_type__agent_type='Clearing Agent')
     return render(request, 'businessdirectory/transportation_services/transportation_service_detail.html',
                   {
                       'transportation_service': transportation_service,
                       'other_transportation_services': other_transportation_services,
+                      'companycontactdetails': companycontactdetails,
+                      'companysocialmedialinks': companysocialmedialinks,
+                      'location': location,
+                      'event_types': event_types,
+                      'clearing_agents': clearing_agents,
                   })
