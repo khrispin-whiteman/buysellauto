@@ -155,7 +155,7 @@ LOGOUT_REDIRECT_URL = '/'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
 EMAIL_HOST_PASSWORD = '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'
-EMAIL_PORT = 465
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # EMAIL_USE_TLS = True
