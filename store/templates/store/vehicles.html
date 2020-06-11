@@ -424,14 +424,14 @@
                             </a>
 
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Legal</a>
-                                <a class="dropdown-item" href="#">Disclaimer</a>
+                                <a class="dropdown-item" href="{% url 'legal' %}">Legal</a>
+                                <a class="dropdown-item" href="{% url 'disclaimer' %}">Disclaimer</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Privacy</a>
-                                <a class="dropdown-item" href="#">Security</a>
+                                <a class="dropdown-item" href="{% url 'privacy' %}">Privacy</a>
+                                <a class="dropdown-item" href="{% url 'security' %}">Security</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Payment Methods</a>
-                                <a class="dropdown-item" href="#">Feedback</a>
+                                <a class="dropdown-item" href="{% url 'payment_methods' %}">Payment Methods</a>
+                                <a class="dropdown-item" href="{% url 'feedback' %}">Feedback</a>
                             </div>
                         </li>
                     </ul>
@@ -768,23 +768,22 @@
             {% for product in products|slice:":6" reversed %}
 
                 <div class="col-md-4 ">
-                    <div class="card rounded h-75">
-                        <div class="card-image h-25">
+                    <div class="card rounded">
+                        <div class="card-image-top">
                             <span class="card-notify-badge">{{ product.listing_type | capfirst }}</span>
                             <span class="card-notify-year">{{ product.year }}</span>
                             {% for p_image in product.productimage_set.all|slice:":1" %}
-                                <img class="img-fluid"
+                                <img style="object-fit: contain;" class="img-fluid img-responsive"
                                      src="{% if p_image.image %}
-                                                                    {{ p_image.image.url }}
-                                                                {% else %}
-                                                                    {% static 'store/images/blank-car.jpg' %}
-                                                            {% endif %}"
+                                            {{ p_image.image.url }}
+                                           {% else %}
+                                               {% static 'store/images/blank-car.jpg' %}
+                                            {% endif %}"
                                      alt="Alternate Text"/>
                             {% endfor %}
                         </div>
-                        <br>
-                        <br>
-                        <br>
+                        <hr>
+
                         <div class="card-image-overlay">
                             <span class="card-detail-badge">{{ product.vehicle_status | capfirst }}</span>
                             <span class="card-detail-badge">K{{ product.price | upper }}</span>

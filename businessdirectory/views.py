@@ -8,19 +8,39 @@ from businessdirectory.models import Equipment, EquipmentType, AutoShopAndCarWas
 from orders.forms import OrderForm
 from store.models import EventType, Location, Product
 from django.core.mail import send_mail as sm
-
+#from mailjet_rest import Client
+import os
+# from __future__ import print_function
+# import time
+# import sib_api_v3_sdk
+# from sib_api_v3_sdk.rest import ApiException
+# from pprint import pprint
 
 # Create your views here.
-def send_mail(request):
-    res = sm(
-        subject = 'Subject Test',
-        message = 'Hello whiteman, just testing sending of emails via gmail smtp with django.',
-        from_email = 'chrispinkay@gmail.com',
-        recipient_list = ['khrispinwhiteman@gmail.com'],
-        fail_silently=False,
-    )
-
-    return HttpResponse(f"Email sent to {res} members")
+# def send_mail(request):
+#     sib_api_v3_sdk.configuration.api_key['api-key'] = 'YOUR_API_V3_KEY'
+#     api_instance = sib_api_v3_sdk.EmailCampaignsApi()
+#     # Define the campaign settings\
+#     email_campaigns = sib_api_v3_sdk.CreateEmailCampaign(
+#         name="Campaign sent via the API",
+#         subject="My subject",
+#         sender={"name": "From name", "email": "khrispinwhiteman@gmail.com"},
+#         type="classic",
+#         # Content that will be sent\
+#         html_content="Congratulations! You successfully sent this example campaign via the Sendinblue API.",
+#         # Select the recipients\
+#         recipients={"listIds": [2, 7]},
+#         # Schedule the sending in one hour\
+#         scheduled_at="2018-01-01 00:00:01"
+#     )
+#     # Make the call to the client\
+#     try:
+#         api_response = api_instance.create_email_campaign(email_campaigns)
+#     pprint(api_response)
+#     except ApiException as e:
+#     print("Exception when calling EmailCampaignsApi->create_email_campaign: %s\n" % e)
+#
+#     return HttpResponse(f"Email sent to {res} members")
 
 
 def equipments(request, category_slug=None):

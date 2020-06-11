@@ -910,14 +910,14 @@
                             </a>
 
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Legal</a>
-                                <a class="dropdown-item" href="#">Disclaimer</a>
+                                <a class="dropdown-item" href="{% url 'legal' %}">Legal</a>
+                                <a class="dropdown-item" href="{% url 'disclaimer' %}">Disclaimer</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Privacy</a>
-                                <a class="dropdown-item" href="#">Security</a>
+                                <a class="dropdown-item" href="{% url 'privacy' %}">Privacy</a>
+                                <a class="dropdown-item" href="{% url 'security' %}">Security</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Payment Methods</a>
-                                <a class="dropdown-item" href="#">Feedback</a>
+                                <a class="dropdown-item" href="{% url 'payment_methods' %}">Payment Methods</a>
+                                <a class="dropdown-item" href="{% url 'feedback' %}">Feedback</a>
                             </div>
                         </li>
                         {#						<li class="nav-item">#}

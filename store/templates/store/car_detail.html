@@ -365,6 +365,8 @@
     {#<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">#}
 
     <div class="col-sm-12 col-md-12 col-lg-12">
+            <a href="{% url 'vehicles' %}">All Vehicles</a> / {{ product.title | capfirst }}
+        <hr>
         <!-- product -->
         <div class="product-content product-wrap clearfix product-deatil">
             <div class="row">
@@ -672,14 +674,14 @@
                         {#                    <div class="col-sm-12 col-md-6 col-lg-6">#}
                         {#                        <a href="javascript:void(0);" class="btn btn-success btn-lg">Add to cart ($129.54)</a>#}
                         {#                    </div>#}
-                        <div class="col-sm-12 col-md-6 col-lg-6">
-                            <div class="btn-group pull-right">
-                                <button class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist
-                                </button>
-                                <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Contact Seller
-                                </button>
-                            </div>
-                        </div>
+{#                        <div class="col-sm-12 col-md-6 col-lg-6">#}
+{#                            <div class="btn-group pull-right">#}
+{#                                <button class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist#}
+{#                                </button>#}
+{#                                <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Contact Seller#}
+{#                                </button>#}
+{#                            </div>#}
+{#                        </div>#}
                     </div>
                 </div>
             </div>

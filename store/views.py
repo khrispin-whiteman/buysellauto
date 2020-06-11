@@ -142,16 +142,11 @@ def submit_order(request, id, slug):
             print('INSIDE VALID FORM')
             print('VEHICLE ID:: ', id)
             vehicle = Product.objects.get(id=id)
-            print(vehicle.title)
+            print('VEHICLE TITLE: ', vehicle.title)
             # order.contact_name = request.cleaned_data.get('contact_name')
             order.vehicle_of_interest = vehicle
             order.sub_total = vehicle.price
-            # order.phone_number = request.cleaned_data.get('phone_number')
-            # order.email = request.cleaned_data.get('email')
-            # order.country_region = request.cleaned_data.get('country_region')
-            # order.city = request.cleaned_data.get('city')
-            # order.street_address = request.cleaned_data.get('street_address')
-            # order.province = request.cleaned_data.get('province')
+
             order.save()
             messages.success(request, 'Order was successfully submitted.')
             return redirect('order_request_done')

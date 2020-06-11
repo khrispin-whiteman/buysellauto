@@ -144,9 +144,43 @@ AUTH_USER_MODEL = 'store.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-EMAIL_USE_TLS = True
+#SENDGRID_API_KEY = os.getenv('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')
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_PORT = 25
+# EMAIL_HOST_USER = 'khrispin'
+# EMAIL_HOST_PASSWORD = '@thachurchboy1'
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = 'chrispinkay@gmail.com'
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
+EMAIL_HOST_PASSWORD = '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'
 EMAIL_PORT = 587
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'chrispinkay@gmail.com'
-EMAIL_HOST_PASSWORD = '1yak73dan@'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'chrispinkay@gmail.com'
+# EMAIL_HOST_PASSWORD = '1yak73dan@'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST = 'smtp-relay.sendinblue.com'
+# EMAIL_HOST_USER = 'khrispinwhiteman@gmail.com'
+# EMAIL_HOST_PASSWORD = 'gh8M0GE3JmKqVS5P'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST = 'in-v3.mailjet.com'
+# EMAIL_HOST_USER = '0568eacc2d520f2c4e3967c2220f3053'
+# EMAIL_HOST_PASSWORD = '12d78e48d5d6ab0e9c5b05c031af25b7'
+
+# EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'
+# MAILJET_API_KEY = '0568eacc2d520f2c4e3967c2220f3053'
+# MAILJET_API_SECRET = '12d78e48d5d6ab0e9c5b05c031af25b7'
+
+#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
+#xsmtpsib-56d88994de4b28dc584914ab5cd2f7851e242b8136786d203fe73e5de68d52ff-DZNqwPgJYEmIAUtX

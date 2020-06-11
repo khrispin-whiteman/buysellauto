@@ -366,6 +366,8 @@
     </style>
 
     <div class="col-sm-12 col-md-12 col-lg-12">
+        <a href="{% url 'equipments' %}">All Equipments</a> / {{ equipment_details.equipment_name | capfirst }}
+        <hr>
         <!-- product -->
         <div class="product-content product-wrap clearfix product-deatil">
             <div class="row">
@@ -413,9 +415,9 @@
                 </div>
                 <div class="col-md-7 col-sm-12 col-xs-12">
                     <br>
-                    <h2 class="name">
-                        {{ equipment_details.equipment_name }} (<a
-                            href="">{{ equipment_details.equipment_type.equipment_type }}</a>)
+                    <h3 class="name">
+                        {{ equipment_details.equipment_name }} <small>(<a
+                            href="">{{ equipment_details.equipment_type.equipment_type }}</a>)</small>
                         <small>Product by <a href="javascript:void(0);">
                             {% if equipment_details.user.agent.company_name is "N/A" %}
                                 {{ equipment_details.user.agent.company_name }}
@@ -434,7 +436,7 @@
                         <i class="fa fa-star fa-2x text-muted"></i>
                         <span class="fa fa-2x"><h5>(109) Votes</h5></span>
                         <a href="javascript:void(0);">109 customer reviews</a>
-                    </h2>
+                    </h3>
                     <hr>
                     <h3 class="price-container">
                         ZMW{{ equipment_details.equipment_price }}
@@ -477,10 +479,105 @@
                                     <dt>REQUEST ORDER</dt>
                                     <hr>
 
-                                    <button type="button" class="btn btn-primary btn-md btn-block" data-toggle="modal"
-                                            data-target="#basicExampleModal">
-                                        Send Order Request
-                                    </button>
+                                    <form action="{% url 'submit_equipment_order' equipment_details.id equipment_details.slug %}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="form-row">
+                                            <!-- Grid column -->
+                                            <div class="col-md-4 col-xs-6">
+                                                <!-- Material input -->
+                                                <div class="md-form form-group">
+                                                    <i class="fa fa-user prefix"></i>
+                                                    <label for="inputEmail4MD">{{ form.contact_name.label }}</label>
+                                                    {{ form.contact_name }}
+                                                    {{ form.contact_name.errors }}
+                                                </div>
+                                            </div>
+                                            <!-- Grid column -->
+
+                                            <!-- Grid column -->
+                                            <div class="col-md-4 col-xs-6">
+                                                <!-- Material input -->
+                                                <div class="md-form form-group">
+                                                    <i class="fa fa-phone prefix"></i>
+                                                    <label for="inputPassword4MD">{{ form.phone_number.label }}</label>
+                                                    {{ form.phone_number }}
+                                                    {{ form.phone_number.errors }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col-md-4 col-xs-6">
+                                                <!-- Material input -->
+                                                <div class="md-form form-group">
+                                                    <i class="fa fa-envelope prefix"></i>
+                                                    <label for="inputPassword4MD">{{ form.email.label }}</label>
+                                                    {{ form.email }}
+                                                    {{ form.email.errors }}
+                                                </div>
+                                            </div>
+
+                                            <!-- Grid column -->
+                                            <div class="col-md-4 col-xs-6">
+                                                <!-- Material input -->
+                                                <div class="md-form form-group">
+                                                    <i class="fa fa-circle prefix"></i>
+                                                    <label for="inputEmail4MD">{{ form.country_region.label }}</label>
+                                                    {{ form.country_region }}
+                                                    {{ form.country_region.errors }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col-md-4 col-xs-6">
+                                                <!-- Material input -->
+                                                <div class="md-form form-group">
+                                                    <i class="fa fa-circle-o prefix"></i>
+                                                    <label for="inputPassword4MD">{{ form.province.label }}</label>
+                                                    {{ form.province }}
+                                                    {{ form.province.errors }}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 col-xs-6">
+                                                <!-- Material input -->
+                                                <div class="md-form form-group">
+                                                    <i class="fa fa-circle-o-notch prefix"></i>
+                                                    <label for="inputPassword4MD">{{ form.city.label }}</label>
+                                                    {{ form.city }}
+                                                    {{ form.city.errors }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col-md-4 col-xs-6">
+                                                <!-- Material input -->
+                                                <div class="md-form form-group">
+                                                    <i class="fa fa-box prefix"></i>
+                                                    <label for="inputPassword4MD">{{ form.street_address.label }}</label>
+                                                    {{ form.street_address }}
+                                                    {{ form.street_address.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-xs-6">
+                                                <!-- Material input -->
+                                                <div class="md-form form-group">
+                                                    <i class="fa fa-box prefix"></i>
+                                                    <label for="inputPassword4MD">Equipment Id</label>
+                                                    <input class="form-group-item form-control" type="text"
+                                                           name="vehicle_of_interest" value="{{ equipment_details.id }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary btn-md btn-block">Send Order
+                                            Request
+                                        </button>
+
+                                    </form>
                                     <br>
 
                                 </dl>
@@ -576,16 +673,16 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6 col-lg-6">
-                            <div class="btn-group pull-right">
-                                <button class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist
-                                </button>
-                                <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Contact Seller
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+{#                    <div class="row">#}
+{#                        <div class="col-sm-12 col-md-6 col-lg-6">#}
+{#                            <div class="btn-group pull-right">#}
+{#                                <button class="btn btn-white btn-default"><i class="fa fa-star"></i> Add to wishlist#}
+{#                                </button>#}
+{#                                <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Contact Seller#}
+{#                                </button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
                 </div>
             </div>
         </div>
@@ -715,5 +812,6 @@
             </div>
         </div>
     </div>
+
 
 {% endblock %}
