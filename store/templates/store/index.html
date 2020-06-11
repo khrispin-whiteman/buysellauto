@@ -461,15 +461,15 @@
 
                             <div class="row" id="ads">
                                 <!-- Category Card -->
-                                {% for product in products|slice:":6" reversed %}
+                                {% for product in products|slice:":12" reversed %}
 
-                                    <div class="col-md-4 ">
-                                        <div class="card rounded h-75">
-                                            <div class="card-image h-25">
+                                    <div class="col-md-4">
+                                        <div class="card rounded">
+                                            <div class="card-image-top">
                                                 <span class="card-notify-badge">{{ product.listing_type | capfirst }}</span>
                                                 <span class="card-notify-year">{{ product.year }}</span>
                                                 {% for p_image in product.productimage_set.all|slice:":1" %}
-                                                    <img class="img-fluid"
+                                                    <img class="img-fluid img-responsive"
                                                          src="{% if p_image.image %}
                                                                     {{ p_image.image.url }}
                                                                 {% else %}
@@ -478,9 +478,7 @@
                                                          alt="Alternate Text"/>
                                                 {% endfor %}
                                             </div>
-                                            <br>
-                                            <br>
-                                            <br>
+                                            <hr>
                                             <div class="card-image-overlay">
                                                 <span class="card-detail-badge">{{ product.vehicle_status | capfirst }}</span>
                                                 <span class="card-detail-badge">K{{ product.price | upper }}</span>
@@ -507,50 +505,50 @@
                         </div>
                         <!-- //first section -->
 
-                        <div class="row">
-                            <div class="container">
-                                <br>
-                                <h4>Another View</h4>
-                                <br>
-                                <div class="row" id="ads">
-                                    <!-- Category Card -->
-                                    {% for product in products|slice:":6" reversed %}
-
-                                        <div class="col-md-4 ">
-                                            <div class="card rounded h-75">
-                                                <div class="card-image h-25">
-                                                    <span class="card-notify-badge">{{ product.listing_type | capfirst }}</span>
-                                                    <span class="card-notify-year">{{ product.year }}</span>
-                                                    {% for p_image in product.productimage_set.all|slice:":1" %}
-                                                        <img class="img-fluid"
-                                                             src="{% if p_image.image %}
-                                                                    {{ p_image.image.url }}
-                                                                {% else %}
-                                                                    {% static 'store/images/blank-car.jpg' %}
-                                                            {% endif %}"
-                                                             alt="Alternate Text"/>
-                                                    {% endfor %}
-                                                </div>
-                                                <br>
-                                                <br>
-                                                <br>
-                                                <div class="card-image-overlay">
-                                                    <span class="card-detail-badge">{{ product.vehicle_status | capfirst }}</span>
-                                                    <span class="card-detail-badge">K{{ product.price | upper }}</span>
-                                                </div>
-                                                <div class="card-body text-center">
-                                                    <div class="ad-title m-auto">
-                                                        <p>{{ product.title | upper }}</p>
-                                                    </div>
-                                                    <a class="btn btn-outline-primary btn-sm btn-block"
-                                                       href="{{ product.get_absolute_url }}">View</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
+{#                        <div class="row">#}
+{#                            <div class="container">#}
+{#                                <br>#}
+{#                                <h4>Another View</h4>#}
+{#                                <br>#}
+{#                                <div class="row" id="ads">#}
+{#                                    <!-- Category Card -->#}
+{#                                    {% for product in products|slice:":6" reversed %}#}
+{##}
+{#                                        <div class="col-md-4 ">#}
+{#                                            <div class="card rounded h-75">#}
+{#                                                <div class="card-image h-25">#}
+{#                                                    <span class="card-notify-badge">{{ product.listing_type | capfirst }}</span>#}
+{#                                                    <span class="card-notify-year">{{ product.year }}</span>#}
+{#                                                    {% for p_image in product.productimage_set.all|slice:":1" %}#}
+{#                                                        <img class="img-fluid"#}
+{#                                                             src="{% if p_image.image %}#}
+{#                                                                    {{ p_image.image.url }}#}
+{#                                                                {% else %}#}
+{#                                                                    {% static 'store/images/blank-car.jpg' %}#}
+{#                                                            {% endif %}"#}
+{#                                                             alt="Alternate Text"/>#}
+{#                                                    {% endfor %}#}
+{#                                                </div>#}
+{#                                                <br>#}
+{#                                                <br>#}
+{#                                                <br>#}
+{#                                                <div class="card-image-overlay">#}
+{#                                                    <span class="card-detail-badge">{{ product.vehicle_status | capfirst }}</span>#}
+{#                                                    <span class="card-detail-badge">K{{ product.price | upper }}</span>#}
+{#                                                </div>#}
+{#                                                <div class="card-body text-center">#}
+{#                                                    <div class="ad-title m-auto">#}
+{#                                                        <p>{{ product.title | upper }}</p>#}
+{#                                                    </div>#}
+{#                                                    <a class="btn btn-outline-primary btn-sm btn-block"#}
+{#                                                       href="{{ product.get_absolute_url }}">View</a>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    {% endfor %}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
 
 
                         <!-- second section -->
@@ -558,7 +556,7 @@
                             <h3 class="card-tittle text-center font-weight-bold">Equipments</h3>
                             <br>
                             <div class="row">
-                                {% for product in equipments|slice:":6" reversed %}
+                                {% for product in equipments|slice:":12" reversed %}
                                     <div class="col-sm-4">
                                         <div class="card">
                                             {% for p_image in product.equipmentimage_set.all|slice:":1" %}
