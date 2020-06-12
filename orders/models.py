@@ -154,7 +154,6 @@ class Order(models.Model):
                           'Has been Cancelled with the reason below!' \
                           '\n' \
                           '\n*CANCELLATION REASON*' \
-                          '\n*ORDER DETAILS*' \
                           '\n%s' \
                           '\n' \
                           '\nOUR CONTACTS:' \
@@ -295,7 +294,6 @@ class EquipmentOrder(models.Model):
                           'Has been Cancelled with the reason below!' \
                           '\n' \
                           '\n*CANCELLATION REASON*' \
-                          '\n*ORDER DETAILS*' \
                           '\n%s' \
                           '\n' \
                           '\nOUR CONTACTS:' \
