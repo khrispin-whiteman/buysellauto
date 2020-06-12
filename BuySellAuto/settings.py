@@ -152,20 +152,21 @@ LOGOUT_REDIRECT_URL = '/'
 # EMAIL_USE_TLS = True
 # DEFAULT_FROM_EMAIL = 'chrispinkay@gmail.com'
 
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
-EMAIL_HOST_PASSWORD = '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'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'noreply@buysellauto.com'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
+# EMAIL_HOST_PASSWORD = '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'
 # EMAIL_PORT = 587
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'chrispinkay@gmail.com'
-# EMAIL_HOST_PASSWORD = '1yak73dan@'
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = 'noreply@buysellauto.com'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'chrispinkay@gmail.com'
+EMAIL_HOST_PASSWORD = 'iyodlyaeiokjladh'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@buysellauto.com'
 
 # EMAIL_USE_TLS = True
 # EMAIL_PORT = 587
