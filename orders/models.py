@@ -63,6 +63,10 @@ class Order(models.Model):
     def __str__(self):
         return self.contact_name + ' Order: ' + str(self.order_id)
 
+    class Meta:
+        verbose_name_plural = 'Vehicle Orders'
+        verbose_name = 'Vehicle Orders'
+
     def save(self, **kwargs):
         global cell, tell, email1, email2, location
         for detail in CompanyContactDetails.objects.all():
@@ -203,6 +207,11 @@ class EquipmentOrder(models.Model):
 
     def __str__(self):
         return self.contact_name + ' Order: ' + str(self.order_id)
+
+    class Meta:
+        verbose_name_plural = 'Equipment Orders'
+        verbose_name = 'Equipment Orders'
+
 
     def save(self, **kwargs):
         global cell, tell, email1, email2, location

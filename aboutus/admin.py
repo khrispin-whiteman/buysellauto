@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
+
 from aboutus.models import CompanyContactDetails, CompanySocialMediaLinks
 
 
@@ -21,3 +23,4 @@ class CompanySocialMediaLinksAdmin(admin.ModelAdmin):
 
 admin.site.register(CompanyContactDetails, CompanyContactDetailsAdmin)
 admin.site.register(CompanySocialMediaLinks, CompanySocialMediaLinksAdmin)
+admin.site.unregister(Group)
