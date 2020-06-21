@@ -2,7 +2,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.views import LoginView
 from django.core.exceptions import ValidationError
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
@@ -39,7 +41,6 @@ class AgentRegisterView(CreateView):
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
-
         user = form.save()
         # if self.request.FILES:
         #     user.picture = self.request.FILES['picture']
@@ -47,38 +48,58 @@ class AgentRegisterView(CreateView):
         return redirect('login')
 
 
-class AgentLoginView(View):
-    def get(self, request):
-        return render(request, 'registration/agent_login.html', {'form':  AuthenticationForm})
+# class AgentLoginView(View):
+#     def get(self, request):
+#         return render(request, 'registration/agent_login.html', {'form': AuthenticationForm})
+#
+#     # really low level
+#     def post(self, request):
+#         form = AuthenticationForm(request, data=request.POST)
+#         if form.is_valid():
+#             user = authenticate(
+#                 request,
+#                 username=form.cleaned_data.get('username'),
+#                 password=form.cleaned_data.get('password')
+#             )
+#
+#             if user is None:
+#                 print('USER IS NONE')
+#                 return render(
+#                     request,
+#                     'registration/agent_login.html',
+#                     {'form': form, 'invalid_creds': True}
+#                 )
+#
+#             try:
+#                 form.confirm_login_allowed(user)
+#             except ValidationError:
+#                 return render(
+#                     request,
+#                     'registration/agent_login.html',
+#                     {'form': form, 'invalid_creds': True}
+#                 )
+#             login(request, user)
+#
+#             return redirect(reverse('agentdashboard'))
 
-    # really low level
-    def post(self, request):
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = authenticate(
-                request,
-                username=form.cleaned_data.get('username'),
-                password=form.cleaned_data.get('password')
-            )
 
-            if user is None:
-                return render(
-                    request,
-                    'registration/agent_login.html',
-                    { 'form': form, 'invalid_creds': True }
-                )
-
-            try:
-                form.confirm_login_allowed(user)
-            except ValidationError:
-                return render(
-                    request,
-                    'registration/agent_login.html',
-                    { 'form': form, 'invalid_creds': True }
-                )
-            login(request, user)
-
-            return redirect(reverse('agentdashboard'))
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('agentdashboard'))
+            else:
+                messages.success(request, "Your account is inactive.")
+                return render(request, 'registration/agent_login.html', {})
+        elif user is None:
+            messages.error(request, "Invalid login details given")
+            return render(request, 'registration/agent_login.html', {})
+    else:
+        return render(request, 'registration/agent_login.html', {})
 
 
 @login_required
@@ -88,7 +109,7 @@ def agent_dashboard(request):
     active_vehicles = Product.objects.filter(user=request.user, active=True)
     all_equipments = Equipment.objects.filter(user=request.user)
     active_equipments = Equipment.objects.filter(user=request.user, active=True)
-    #orders = Order.objects.filter(vehicle_of_interest__user__product=request.user)
+    # orders = Order.objects.filter(vehicle_of_interest__user__product=request.user)
 
     return render(request, 'agents/dashboard.html',
                   {
@@ -181,7 +202,7 @@ def agent_profile_update(request):
         user.city = request.POST.get('city')
         user.address = request.POST.get('address')
         user.postal_code = request.POST.get('postal_code')
-        #user.picture = request.FILES.get['picture']
+        # user.picture = request.FILES.get['picture']
         if request.FILES:
             user.picture = request.FILES['picture']
         user.save()
@@ -219,7 +240,6 @@ def agent_profile_update(request):
                       'agent_types': agent_types,
                       'form': form
                   })
-
 
 
 @agent_required

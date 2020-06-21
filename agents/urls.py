@@ -4,7 +4,7 @@ from agents import views
 
 urlpatterns = [
   path('register/', views.AgentRegisterView.as_view(), name='agentregister'),
-  path('login/', views.AgentLoginView.as_view(), name='login'),
+  path('login/', views.user_login, name='login'),
   path('dashboard/', views.agent_dashboard, name='agentdashboard'),
   path('profile/', views.agent_profile, name='agent_profile'),
   path('profile/update', views.agent_profile_update, name='agent_profile_update'),
