@@ -11,8 +11,8 @@ from store.models import Product, Category, ProductImage, ProductVariation, Loca
 
 # Register your models here.
 class TheUserAdmin(UserAdmin):
-    list_display = ('id', 'username', 'first_name', 'last_name', 'phone', 'address', 'email', 'is_agent', 'is_employee', )
-    list_display_links = ('id', 'first_name', 'last_name', 'phone', 'address', 'email', 'is_agent', 'is_employee', )
+    list_display = ('id', 'picture', 'username', 'first_name', 'last_name', 'phone', 'address', 'email', 'is_agent', 'is_employee', )
+    list_display_links = ('id', 'picture', 'first_name', 'last_name', 'phone', 'address', 'email', 'is_agent', 'is_employee', )
     list_per_page = 10
     search_fields = ('id', 'username', 'first_name', 'last_name', 'phone', 'address', 'email', 'is_agent', 'is_employee', )
 

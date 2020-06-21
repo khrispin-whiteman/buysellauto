@@ -19,6 +19,28 @@ class AgentAddForm(UserCreationForm):
         label="Username",
     )
 
+    password1 = forms.CharField(
+        max_length=50,
+        widget=forms.PasswordInput(
+            attrs={
+                'type': 'password',
+                'class': 'form-control',
+            }
+        ),
+        label="Password",
+    )
+
+    password2 = forms.CharField(
+        max_length=50,
+        widget=forms.PasswordInput(
+            attrs={
+                'type': 'password',
+                'class': 'form-control',
+            }
+        ),
+        label="Confirm Password",
+    )
+
 
     firstname = forms.CharField(
         max_length=50,
@@ -129,6 +151,26 @@ class AgentAddForm(UserCreationForm):
         label="Postal Code",
     )
 
+    experience = forms.CharField(
+        max_length=200,
+        widget=forms.TextInput(
+            attrs={
+                'type': 'text',
+                'class': 'form-control',
+            }
+        ),
+        label="Experience",
+    )
+
+    # picture = forms.ImageField(
+    #     widget=forms.FileInput(
+    #         attrs={
+    #             'type': 'file',
+    #             'class': 'form-control'
+    #         }
+    #     )
+    # )
+
     agent_type = forms.ModelChoiceField(queryset=AgentType.objects.all(),
                                          widget=forms.Select(
                                              attrs={'class': 'btn-block form-control',
@@ -138,12 +180,18 @@ class AgentAddForm(UserCreationForm):
 
 
 
-    description = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 5}))
+    description = forms.CharField(
+        widget=TinyMCE(
+            attrs={
+                'cols': 80, 'rows': 5,
+                'class': 'form-control',
+            }))
 
 
     class Meta(UserCreationForm.Meta):
         model = User
         #fields = ('firstname', 'lastname', 'password1', 'password2', 'email', 'address', 'phone', 'portfolio_site', 'description')
+
 
     @transaction.atomic()
     def save(self, commit=True):
@@ -158,10 +206,11 @@ class AgentAddForm(UserCreationForm):
         user.postal_code = self.cleaned_data.get('postal_code')
         user.address = self.cleaned_data.get('address')
         user.email = self.cleaned_data.get('email')
+        user.picture = self.cleaned_data.get('picture')
         if commit:
             user.save()
 
-        agent = Agent.objects.create(user=user, agent_type=self.cleaned_data.get('agent_type'), company_name=self.cleaned_data.get('company_name'), description=self.cleaned_data.get('description'))
+        agent, created = Agent.objects.get_or_create(user=user, agent_type=self.cleaned_data.get('agent_type'), company_name=self.cleaned_data.get('company_name'), description=self.cleaned_data.get('description'))
         agent.save()
 
         return user

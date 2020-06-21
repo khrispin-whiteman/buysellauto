@@ -10,66 +10,173 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
+                        <div class="col-md-4">
+                            <div class="card card-user" style="margin: 20px;">
+                                <div class="content" style="margin: 20px;">
+                                    <div class="author">
+                                        <a href="#" title="Upload Picture">
+                                            <img class="avatar img-fluid border-gray img-responsive" src="
+                                                {% if agent.user.picture %}
+                                                    {{ agent.user.picture.url }}
+                                                {% else %}
+                                                    {% static 'agents/assets/img/faces/img_avatar.png' %}
+                                                {% endif %}
+                                                "
+                                                 alt="..."/>
+                                            <div class="text-center">
+                                                {{ agent.user.get_full_name }} (
+                                                <small>{{ agent.user.username }}</small>
+                                                )<br/>
+                                                <small><a href="mailto:{{ agent.user.email }}"
+                                                          style="color: deepskyblue">{{ agent.user.email }}</a></small>
+                                                <br>
+                                                <small><a href="tell:{{ agent.user.phone }}">{{ agent.user.phone }}</a>
+                                                </small>
+                                                <br>
+                                                {% if agent.user.portfolio_site %}
+                                                    <small><a
+                                                            href="{{ agent.user.portfolio_site }}"> {{ agent.user.portfolio_site }}</a>
+                                                    </small><br>
+                                                {% endif %}
+                                            </div>
+                                            <hr>
+                                            <div class="">
+                                                <b>Other Details</b><br>
+                                                {% if agent.company_name %}
+                                                    <small>Company: {{ agent.company_name }}</small><br>
+                                                {% endif %}
+                                                <small>Type: {{ agent.agent_type }}</small>
+                                                <br>
+                                                {% if agent.experience %}
+                                                    <small>Experience: {{ agent.experience }}</small><br>
+                                                {% endif %}
+                                                {% if agent.user.country %}
+                                                    <small>Country: {{ agent.user.country }}</small><br>
+                                                {% endif %}
+                                                {% if agent.user.city %}
+                                                    <small>City: {{ agent.user.city }}</small><br>
+                                                {% endif %}
+                                                {% if agent.user.address %}
+                                                    <small>Street Address: {{ agent.user.address }}</small><br>
+                                                {% endif %}
+                                                {% if agent.user.postal_code %}
+                                                    <small>Postal Address: {{ agent.user.postal_code }}</small><br>
+                                                {% endif %}
+
+
+                                            </div>
+
+                                        </a>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="" style="margin-left: 20px;">
+                                    <b>About/Services</b><br>
+                                    {{ agent.description | safe }}
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="col-md-8">
-                            <div class="card">
-                                <div class="header">
+                            <div class="card" style="margin: 20px">
+                                <div class="header" style="margin: 20px">
                                     <h4 class="title">Edit Profile</h4>
                                 </div>
-                                <div class="content">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Company (disabled)</label>
-                                                    <input type="text" class="form-control"
-                                                           placeholder="Company"
-                                                           value="{{ request.user.company_name }}">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Username</label>
-                                                    <input type="text" class="form-control" placeholder="Username"
-                                                           value="{{ request.user.username }}">
-                                                </div>
-                                            </div>
-
-                                        </div>
-
+                                <div class="content " style="margin: 20px">
+                                    <form method="post" action="{% url 'agent_profile_update' %}">
+                                        {% csrf_token %}
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>First Name</label>
-                                                    <input type="text" class="form-control" placeholder="Company"
+                                                    <input name="first_name" type="text" class="form-control"
+                                                           placeholder="Company"
                                                            value="{{ request.user.first_name }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Last Name</label>
-                                                    <input type="text" class="form-control" placeholder="Last Name"
+                                                    <input name="last_name" type="text" class="form-control"
+                                                           placeholder="Last Name"
                                                            value="{{ request.user.last_name }}">
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Email address</label>
-                                                    <input type="email" class="form-control" placeholder="Email"
+                                                    <label>Email</label>
+                                                    <input name="email" type="text" class="form-control"
+                                                           placeholder="Company"
                                                            value="{{ request.user.email }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Phone Number</label>
+                                                    <input name="phone" type="text" class="form-control"
+                                                           placeholder="Last Name"
+                                                           value="{{ request.user.phone }}">
                                                 </div>
                                             </div>
                                         </div>
 
-
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label>Address</label>
-                                                    <input type="text" class="form-control" placeholder="Home Address"
-                                                           value="{{ request.user.address }}">
+                                                    <label>Agent Type</label>
+                                                    <select name="agent_type" class="form-control">
+                                                        {% for atype in agent_types %}
+                                                            {% if atype.agent_type == agent.agent_type.agent_type %}
+                                                                <option value="{{ atype.id }}" selected>{{ atype.agent_type }}</option>
+                                                            {% endif %}
+                                                            <option value="{{ atype.id }}">{{ atype.agent_type }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Website</label>
+                                                    <input name="portfolio_site" type="text" class="form-control"
+                                                           placeholder="Username"
+                                                           value="{{ agent.user.portfolio_site }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Company</label>
+                                                    <input name="company_name" type="text" class="form-control"
+                                                           placeholder="Company"
+                                                           value="{{ agent.company_name }}">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Experience</label>
+                                                    <input name="experience" type="text" class="form-control"
+                                                           placeholder="Experience"
+                                                           value="{{ agent.experience }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Country</label>
+                                                    <input name="country" type="text" class="form-control"
+                                                           placeholder="Country"
+                                                           value="{{ agent.user.country }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -78,21 +185,24 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>City</label>
-                                                    <input type="text" class="form-control" placeholder="City"
+                                                    <input name="city" type="text" class="form-control"
+                                                           placeholder="City"
                                                            value="{{ request.user.city }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Country</label>
-                                                    <input type="text" class="form-control" placeholder="Country"
-                                                           value="{{ request.user.country }}">
+                                                    <label>Street Address</label>
+                                                    <input name="address" type="text" class="form-control"
+                                                           placeholder="Street Address"
+                                                           value="{{ agent.user.address }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Postal Code</label>
-                                                    <input type="number" class="form-control" placeholder="{{ request.user.postal_code }}">
+                                                    <input name="postal_code" type="number" class="form-control"
+                                                           placeholder="{{ agent.user.postal_code }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -100,9 +210,23 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label>About Me</label>
-                                                    <textarea rows="5" class="form-control"
-                                                              placeholder="Here can be your description">{{ request.user.description | safe }}</textarea>
+                                                    <label>Picture</label>
+                                                    <input name="picture" type="file" class="form-control"
+                                                           value="
+                                                                    {% if agent.user.picture %}
+                                                                        {{ agent.user.picture.url }}
+                                                                    {% endif %}
+                                                                  ">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>About Me/Services</label>
+                                                    <textarea name="description" rows="5" class="form-control"
+                                                              placeholder="Here can be your description">{{ agent.description | safe }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -114,38 +238,6 @@
                                 </div>
                             </div>
                         </div>
-                        <br>
-{#                        <div class="col-md-4">#}
-{#                            <div class="card card-user">#}
-{#                                <div class="image">#}
-{#                                    <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400"#}
-{#                                         alt="..."/>#}
-{#                                </div>#}
-{#                                <div class="content">#}
-{#                                    <div class="author">#}
-{#                                        <a href="#" title="Upload Picture">#}
-{#                                            <img class="avatar border-gray img-responsive" src="{% static 'agents/assets/img/faces/img_avatar.png' %}"#}
-{#                                                 alt="..."/>#}
-{##}
-{#                                            <h4 class="title" style="color: #005cbf">{{ agent.user.get_full_name }}<br/>#}
-{#                                                <small><a href="mail_to://{{ agent.user.email }}" style="color: #5a6268">{{ agent.user.email }}</a></small>#}
-{#                                                <small>{{ agent.user.username }}</small>#}
-{#                                            </h4>#}
-{#                                        </a>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                                <hr>#}
-{#                                <div class="text-center">#}
-{#                                    <button href="#" class="btn btn-simple"><i class="fa fa-facebook-square"></i>#}
-{#                                    </button>#}
-{#                                    <button href="#" class="btn btn-simple"><i class="fa fa-twitter"></i></button>#}
-{#                                    <button href="#" class="btn btn-simple"><i class="fa fa-google-plus-square"></i>#}
-{#                                    </button>#}
-{##}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-
                     </div>
                 </div>
             </div>

@@ -26,7 +26,7 @@ class Agent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     company_name = models.CharField('Company Name', max_length=200, default='N/A')
     agent_type = models.ForeignKey(AgentType, default='', on_delete=models.CASCADE)
-    experience = models.CharField('Experiance', max_length=200, default='')
+    experience = models.CharField('Experience', max_length=200, default='')
     # about = HTMLField(help_text='About me...', default='')
     description = HTMLField(help_text='Services offered...')
 

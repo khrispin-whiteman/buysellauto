@@ -1,7 +1,9 @@
 {% extends 'agents/base.html' %}
 {% load static %}
 
-{% block title %}{% endblock %}
+{% block title %}
+    {{ vehicle_details.title }}
+{% endblock %}
 
 {% block content %}
     <br>
@@ -13,7 +15,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{% url 'agent_vehicles' %}">Vehicles</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'agent_vehicles' %}">All Vehicles</a></li>
                         <li class="breadcrumb-item active">{{ vehicle_details.title |capfirst }}</li>
                     </ol>
                 </div>
@@ -66,32 +68,32 @@
                             <h2 class="mb-0">
                                 ZMW {{ vehicle_details.price }}
                             </h2>
-                            <h4 class="mt-0">
-                                <small>Ex Tax: $80.00</small>
-                            </h4>
+{#                            <h4 class="mt-0">#}
+{#                                <small>Ex Tax: $80.00</small>#}
+{#                            </h4>#}
                         </div>
 
-                        <div class="mt-4">
-                            <div class="btn btn-default btn-lg btn-flat">
-                                <i class="fas fa-heart fa-lg mr-2"></i>
-                                Add to Wishlist
-                            </div>
-                        </div>
+{#                        <div class="mt-4">#}
+{#                            <div class="btn btn-default btn-lg btn-flat">#}
+{#                                <i class="fas fa-heart fa-lg mr-2"></i>#}
+{#                                Add to Wishlist#}
+{#                            </div>#}
+{#                        </div>#}
 
-                        <div class="mt-4 product-share">
-                            <a href="#" class="text-gray">
-                                <i class="fab fa-facebook-square fa-2x"></i>
-                            </a>
-                            <a href="#" class="text-gray">
-                                <i class="fab fa-twitter-square fa-2x"></i>
-                            </a>
-                            <a href="#" class="text-gray">
-                                <i class="fas fa-envelope-square fa-2x"></i>
-                            </a>
-                            <a href="#" class="text-gray">
-                                <i class="fas fa-rss-square fa-2x"></i>
-                            </a>
-                        </div>
+{#                        <div class="mt-4 product-share">#}
+{#                            <a href="#" class="text-gray">#}
+{#                                <i class="fab fa-facebook-square fa-2x"></i>#}
+{#                            </a>#}
+{#                            <a href="#" class="text-gray">#}
+{#                                <i class="fab fa-twitter-square fa-2x"></i>#}
+{#                            </a>#}
+{#                            <a href="#" class="text-gray">#}
+{#                                <i class="fas fa-envelope-square fa-2x"></i>#}
+{#                            </a>#}
+{#                            <a href="#" class="text-gray">#}
+{#                                <i class="fas fa-rss-square fa-2x"></i>#}
+{#                            </a>#}
+{#                        </div>#}
 
                     </div>
                 </div>

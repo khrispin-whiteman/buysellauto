@@ -7,6 +7,7 @@ urlpatterns = [
   path('login/', views.AgentLoginView.as_view(), name='login'),
   path('dashboard/', views.agent_dashboard, name='agentdashboard'),
   path('profile/', views.agent_profile, name='agent_profile'),
+  path('profile/update', views.agent_profile_update, name='agent_profile_update'),
   path('agent/vehicles', views.agent_vehicles, name='agent_vehicles'),
   path('agent/vehicles/<int:pk>/', views.agent_vehicle_detail, name='agent_vehicle_detail'),
   path('agent/equipment', views.agent_equipments, name='agent_equipments'),

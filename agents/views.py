@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -7,7 +8,7 @@ from django.urls import reverse
 from django.views import View
 
 from agents.forms import AgentAddForm
-from agents.models import Agent
+from agents.models import Agent, AgentType
 from businessdirectory.models import Equipment
 from orders.models import Order
 from store.decorators import agent_required
@@ -38,7 +39,11 @@ class AgentRegisterView(CreateView):
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
+
         user = form.save()
+        # if self.request.FILES:
+        #     user.picture = self.request.FILES['picture']
+        # user.save()
         return redirect('login')
 
 
@@ -98,10 +103,123 @@ def agent_dashboard(request):
 @agent_required
 def agent_profile(request):
     agent = Agent.objects.get(user=request.user)
+    agent_types = AgentType.objects.all()
+    user = request.user.id
+    user = User.objects.get(pk=user)
+    form = AgentAddForm()
+    if request.method == 'POST':
+        form = AgentAddForm(request.POST)
+        if form.is_valid():
+            # update user
+            # user.first_name = request.POST.get('first_name')
+            # user.last_name = request.POST.get('last_name')
+            # user.email = request.POST.get('email')
+            # user.phone = request.POST.get('phone')
+            # user.portfolio_site = request.POST.get('portfolio_site')
+            # user.country = request.POST.get('country')
+            # user.city = request.POST.get('city')
+            # user.address = request.POST.get('address')
+            # user.postal_code = request.POST.get('postal_code')
+            # user.picture = request.POST.get('picture')
+            if request.FILES:
+                user.picture = request.FILES['picture']
+            user.save()
+
+            # update agent
+            print('AGENT TYPE ID: ', request.POST.get('agent_type'))
+            get_agent_type = AgentType.objects.get(id=request.POST.get('agent_type'))
+
+            agent.company_name = request.POST.get('company_name')
+            agent.agent_type = get_agent_type
+            agent.experience = request.POST.get('experience')
+            agent.description = request.POST.get('description')
+            agent.save()
+
+            messages.success(request, 'Your profile was successfully edited.')
+            return redirect("/profile/")
+
+        else:
+            form = AgentAddForm(instance=User, initial={
+                'firstname': user.first_name,
+                'lastname': user.last_name,
+                'email': user.email,
+                'phone': user.phone,
+                'portfolio_site': user.portfolio_site,
+                'country': user.country,
+                'city': user.city,
+                'address': user.address,
+                'postal_code': user.postal_code,
+                'picture': user.picture,
+            })
     return render(request, 'agents/agent_profile.html',
                   {
                       'agent': agent,
+                      'agent_types': agent_types,
+                      'form': form
                   })
+
+
+@login_required
+def agent_profile_update(request):
+    """ Check if the fired request is a POST then grab changes and update the records otherwise we show an empty form """
+    user = request.user.id
+    user = User.objects.get(pk=user)
+    agent = Agent.objects.get(user=user)
+    agent_types = AgentType.objects.all()
+    form = AgentAddForm()
+
+    if request.method == 'POST':
+        # form = AgentAddForm(request.POST)
+        # if form.is_valid():
+        # update user
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.email = request.POST.get('email')
+        user.phone = request.POST.get('phone')
+        user.portfolio_site = request.POST.get('portfolio_site')
+        user.country = request.POST.get('country')
+        user.city = request.POST.get('city')
+        user.address = request.POST.get('address')
+        user.postal_code = request.POST.get('postal_code')
+        #user.picture = request.FILES.get['picture']
+        if request.FILES:
+            user.picture = request.FILES['picture']
+        user.save()
+
+        # update agent
+        print('AGENT TYPE ID: ', request.POST.get('agent_type'))
+        get_agent_type = AgentType.objects.get(id=request.POST.get('agent_type'))
+
+        agent.company_name = request.POST.get('company_name')
+        agent.agent_type = get_agent_type
+        agent.experience = request.POST.get('experience')
+        agent.description = request.POST.get('description')
+        agent.save()
+
+        messages.success(request, 'Your profile was successfully edited.')
+        return redirect("/profile/")
+
+        # else:
+        #     form = AgentAddForm(instance=User, initial={
+        #         'first_name': user.first_name,
+        #         'last_name': user.last_name,
+        #         'email': user.email,
+        #         'phone': user.phone,
+        #         'portfolio_site': user.portfolio_site,
+        #         'country': user.country,
+        #         'city': user.city,
+        #         'address': user.address,
+        #         'postal_code': user.postal_code,
+        #         'picture': user.picture,
+        #     })
+
+    return render(request, 'agents/agent_profile.html',
+                  {
+                      'agent': agent,
+                      'agent_types': agent_types,
+                      'form': form
+                  })
+
 
 
 @agent_required
@@ -111,6 +229,7 @@ def agent_vehicles(request):
                   {
                       'all_vehicles': all_vehicles,
                   })
+
 
 @agent_required
 def agent_vehicle_detail(request, pk):
@@ -129,6 +248,7 @@ def agent_equipments(request):
                       'all_equipments': all_equipments,
                   })
 
+
 @agent_required
 def agent_equipment_detail(request, pk):
     equipment_details = Equipment.objects.get(user=request.user, id=pk)
@@ -144,6 +264,7 @@ def agents_list(request):
                   {
                       'all_agents': all_agents,
                   })
+
 
 def agents_details(request, pk):
     agent_details = Agent.objects.get(user__id=pk)
